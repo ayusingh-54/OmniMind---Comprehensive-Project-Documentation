@@ -1,0 +1,1171 @@
+{
+  "users": [
+    {
+      "id": "llm1",
+      "email": "gpt4@example.com",
+      "password_hash": "580061e31c4aea81",
+      "name": "AI Assistant",
+      "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=GPT4",
+      "isLLM": true,
+      "status": "online",
+      "createdAt": 1763884028689,
+      "type": "agent",
+      "agentId": "helper-agent-1"
+    },
+    {
+      "id": "341e4181-8712-46eb-ae47-bf6fd992d940",
+      "email": "root@example.com",
+      "password_hash": "$2a$10$YvhvXShC.Whe3byvj4rKI.RBdCEims6C5XCCoq1RBgJ2rsuvtVc.i",
+      "name": "Admin",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Admin",
+      "isLLM": false,
+      "status": "online",
+      "createdAt": 1763889178034,
+      "type": "human"
+    },
+    {
+      "id": "308660b3-13b3-4098-b55b-7d9c86a3bc27",
+      "email": "zengyuzhi2002@gmail.com",
+      "password_hash": "$2a$10$Su7.45cVCC1Gl8JwJjPqau/OtOYbxWPw8shDehmRPLjiTuGIJnsh.",
+      "name": "ZYZ",
+      "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=ZYZ",
+      "isLLM": false,
+      "status": "online",
+      "createdAt": 1764257328520,
+      "type": "human"
+    },
+    {
+      "id": "agent-user-eaaad380-9b6d-40ff-9f60-ae9ee76a2859",
+      "email": "agent-bfbd342f-5e27-493a-8194-acb711931040@agents.local",
+      "password_hash": "1299b658f422d5ef6fab284d",
+      "name": "MOSS",
+      "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=MOSS",
+      "isLLM": true,
+      "status": "online",
+      "createdAt": 1764266566329,
+      "type": "agent",
+      "agentId": "agent-bfbd342f-5e27-493a-8194-acb711931040"
+    },
+    {
+      "id": "agent-user-fb0a309f-b96e-432e-80c0-55511318b4d7",
+      "email": "agent-42c94532-4a63-44d7-a36a-6206302e5619@agents.local",
+      "password_hash": "5f8feaff640d923f3dcdbe97",
+      "name": "HR  AGENT",
+      "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=%E7%A7%91%E7%A0%94%E5%8A%A9%E6%89%8B",
+      "isLLM": true,
+      "status": "online",
+      "createdAt": 1764603603729,
+      "type": "agent",
+      "agentId": "agent-42c94532-4a63-44d7-a36a-6206302e5619"
+    }
+  ],
+  "messages": [
+    {
+      "id": "ce0e43eb-14c1-40f6-b5a9-82b5a6db0bf8",
+      "content": "@AI助手 hi",
+      "senderId": "341e4181-8712-46eb-ae47-bf6fd992d940",
+      "timestamp": 1765008207747,
+      "reactions": [],
+      "conversationId": "global",
+      "role": "user",
+      "metadata": {
+        "source": "ui"
+      },
+      "mentions": [
+        "llm1"
+      ]
+    },
+    {
+      "id": "cb926a3d-5899-422f-ba14-895788bc7429",
+      "content": "Hi!",
+      "senderId": "llm1",
+      "timestamp": 1765008212249,
+      "replyToId": "ce0e43eb-14c1-40f6-b5a9-82b5a6db0bf8",
+      "reactions": [],
+      "conversationId": "global",
+      "role": "assistant",
+      "metadata": {
+        "agentId": "helper-agent-1",
+        "source": "agent"
+      },
+      "mentions": []
+    },
+    {
+      "id": "e7b12c6b-e8dd-4aa8-9d84-8ca310c03d98",
+      "content": "看看这里面有些什么\n\n📎 [附件: 公司规定制度v1.txt] (已添加到知识库)",
+      "senderId": "341e4181-8712-46eb-ae47-bf6fd992d940",
+      "timestamp": 1765032226714,
+      "reactions": [],
+      "conversationId": "global",
+      "role": "user",
+      "metadata": {
+        "source": "ui",
+        "attachment": {
+          "filename": "公司规定制度v1.txt",
+          "documentId": "944f826c-7c3e-4765-b87e-022a99289a20",
+          "size": 11573,
+          "type": "txt",
+          "chunksCreated": 1,
+          "uploadedToRag": true
+        }
+      },
+      "mentions": []
+    },
+    {
+      "id": "7bcb381e-9d4c-4a86-b248-bd1fbc9ac2bd",
+      "content": "hii",
+      "senderId": "341e4181-8712-46eb-ae47-bf6fd992d940",
+      "timestamp": 1765378434205,
+      "reactions": [],
+      "conversationId": "global",
+      "role": "user",
+      "metadata": {
+        "source": "ui"
+      },
+      "mentions": []
+    },
+    {
+      "id": "cfac39c7-0a7a-4b50-9e22-dc4a477cbc04",
+      "content": "Sorry, I encountered an issue: Error code: 404",
+      "senderId": "agent-user-eaaad380-9b6d-40ff-9f60-ae9ee76a2859",
+      "timestamp": 1765378440444,
+      "replyToId": "7bcb381e-9d4c-4a86-b248-bd1fbc9ac2bd",
+      "reactions": [],
+      "conversationId": "global",
+      "role": "assistant",
+      "metadata": {
+        "agentId": "agent-bfbd342f-5e27-493a-8194-acb711931040",
+        "source": "agent"
+      },
+      "mentions": []
+    },
+    {
+      "id": "774c9cee-30b1-4abe-b146-ff400491d9e1",
+      "content": "Sorry, I encountered an issue: Error code: 404",
+      "senderId": "llm1",
+      "timestamp": 1765378440449,
+      "replyToId": "7bcb381e-9d4c-4a86-b248-bd1fbc9ac2bd",
+      "reactions": [],
+      "conversationId": "global",
+      "role": "assistant",
+      "metadata": {
+        "agentId": "helper-agent-1",
+        "source": "agent"
+      },
+      "mentions": []
+    },
+    {
+      "id": "c27a83f1-d3ad-498d-b7dd-c9ea7423e6cb",
+      "content": "Sorry, I encountered an issue: Error code: 404",
+      "senderId": "agent-user-fb0a309f-b96e-432e-80c0-55511318b4d7",
+      "timestamp": 1765378441173,
+      "replyToId": "7bcb381e-9d4c-4a86-b248-bd1fbc9ac2bd",
+      "reactions": [],
+      "conversationId": "global",
+      "role": "assistant",
+      "metadata": {
+        "agentId": "agent-42c94532-4a63-44d7-a36a-6206302e5619",
+        "source": "agent"
+      },
+      "mentions": []
+    },
+    {
+      "id": "5734a034-969c-488d-97f0-2e14df8e96a3",
+      "content": "hii",
+      "senderId": "341e4181-8712-46eb-ae47-bf6fd992d940",
+      "timestamp": 1765399670591,
+      "reactions": [],
+      "conversationId": "global",
+      "role": "user",
+      "metadata": {
+        "source": "ui"
+      },
+      "mentions": []
+    },
+    {
+      "id": "71677b5a-f20b-4837-879b-05acb7eddd7c",
+      "content": "Sorry, I encountered an issue: Error code: 404",
+      "senderId": "agent-user-eaaad380-9b6d-40ff-9f60-ae9ee76a2859",
+      "timestamp": 1765399674911,
+      "replyToId": "5734a034-969c-488d-97f0-2e14df8e96a3",
+      "reactions": [],
+      "conversationId": "global",
+      "role": "assistant",
+      "metadata": {
+        "agentId": "agent-bfbd342f-5e27-493a-8194-acb711931040",
+        "source": "agent"
+      },
+      "mentions": []
+    },
+    {
+      "id": "7218a088-da56-4f6d-b5bc-b4b36a1717ac",
+      "content": "Sorry, I encountered an issue: Error code: 404",
+      "senderId": "agent-user-fb0a309f-b96e-432e-80c0-55511318b4d7",
+      "timestamp": 1765399674970,
+      "replyToId": "5734a034-969c-488d-97f0-2e14df8e96a3",
+      "reactions": [],
+      "conversationId": "global",
+      "role": "assistant",
+      "metadata": {
+        "agentId": "agent-42c94532-4a63-44d7-a36a-6206302e5619",
+        "source": "agent"
+      },
+      "mentions": []
+    },
+    {
+      "id": "c90b8c0c-48a1-416c-9852-87855225b9a9",
+      "content": "Sorry, I encountered an issue: Error code: 404",
+      "senderId": "llm1",
+      "timestamp": 1765399674973,
+      "replyToId": "5734a034-969c-488d-97f0-2e14df8e96a3",
+      "reactions": [],
+      "conversationId": "global",
+      "role": "assistant",
+      "metadata": {
+        "agentId": "helper-agent-1",
+        "source": "agent"
+      },
+      "mentions": []
+    },
+    {
+      "id": "3c0e9630-06d0-47a4-bcac-dbac5168b2dd",
+      "content": "analyse it\n\n📎 [Attachment: Report (1).pdf]",
+      "senderId": "341e4181-8712-46eb-ae47-bf6fd992d940",
+      "timestamp": 1765400093914,
+      "reactions": [],
+      "conversationId": "global",
+      "role": "user",
+      "metadata": {
+        "source": "ui",
+        "attachment": {
+          "filename": "Report (1).pdf",
+          "size": 57585,
+          "type": "pdf",
+          "content": "[Binary file]",
+          "uploadedToRag": false
+        }
+      },
+      "mentions": []
+    },
+    {
+      "id": "56e62e5e-a016-4b5d-b5d5-211f5f005098",
+      "content": "Sorry, I encountered an issue: Error code: 404",
+      "senderId": "llm1",
+      "timestamp": 1765400096276,
+      "replyToId": "3c0e9630-06d0-47a4-bcac-dbac5168b2dd",
+      "reactions": [],
+      "conversationId": "global",
+      "role": "assistant",
+      "metadata": {
+        "agentId": "helper-agent-1",
+        "source": "agent"
+      },
+      "mentions": []
+    },
+    {
+      "id": "8081e1ad-d20b-49e1-93de-367e51450016",
+      "content": "Sorry, I encountered an issue: Error code: 404",
+      "senderId": "agent-user-eaaad380-9b6d-40ff-9f60-ae9ee76a2859",
+      "timestamp": 1765400097005,
+      "replyToId": "3c0e9630-06d0-47a4-bcac-dbac5168b2dd",
+      "reactions": [],
+      "conversationId": "global",
+      "role": "assistant",
+      "metadata": {
+        "agentId": "agent-bfbd342f-5e27-493a-8194-acb711931040",
+        "source": "agent"
+      },
+      "mentions": []
+    },
+    {
+      "id": "cddbfc1b-f49b-41aa-bb45-c0277bbedc6f",
+      "content": "Sorry, I encountered an issue: Error code: 404",
+      "senderId": "agent-user-fb0a309f-b96e-432e-80c0-55511318b4d7",
+      "timestamp": 1765400097514,
+      "replyToId": "3c0e9630-06d0-47a4-bcac-dbac5168b2dd",
+      "reactions": [],
+      "conversationId": "global",
+      "role": "assistant",
+      "metadata": {
+        "agentId": "agent-42c94532-4a63-44d7-a36a-6206302e5619",
+        "source": "agent"
+      },
+      "mentions": []
+    }
+  ],
+  "typing": {},
+  "agents": [
+    {
+      "id": "helper-agent-1",
+      "userId": "llm1",
+      "name": "AI Assistant",
+      "description": "Default sample agent for simple question answering and demos.",
+      "capabilities": {
+        "answer_active": true,
+        "answer_passive": true,
+        "like": true,
+        "summarize": false
+      },
+      "tools": [
+        "chat.react_to_message",
+        "chat.send_message",
+        "chat.reply_to_message",
+        "tools.web_search",
+        "tools.local_rag"
+      ],
+      "triggers": [],
+      "runtime": {
+        "type": "internal-function-calling",
+        "proactiveCooldown": 30,
+        "endpoint": "https://7fjm4igmx7zj7f-3005.proxy.runpod.net/v1"
+      },
+      "createdAt": 1764076213444,
+      "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=GPT4",
+      "status": "active",
+      "systemPrompt": "You are a friendly chat assistant in the group, providing concise and accurate answers based on the context, and quoting messages when necessary.",
+      "model": {
+        "provider": "parallax",
+        "name": "default",
+        "temperature": 1,
+        "maxTokens": 1000
+      },
+      "updatedAt": 1765399644891,
+      "reasoning": "high"
+    },
+    {
+      "id": "agent-bfbd342f-5e27-493a-8194-acb711931040",
+      "name": "MOSS",
+      "description": "",
+      "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=MOSS",
+      "status": "active",
+      "systemPrompt": "你是一位友好的聊天助手，请结合上下文提供精简、准确的回答，必要时引用消息内容。",
+      "capabilities": {
+        "answer_active": true,
+        "answer_passive": true,
+        "like": true,
+        "summarize": false
+      },
+      "tools": [
+        "chat.send_message",
+        "chat.reply_to_message",
+        "chat.react_to_message",
+        "tools.web_search",
+        "tools.local_rag"
+      ],
+      "model": {
+        "provider": "parallax",
+        "name": "default",
+        "temperature": 1,
+        "maxTokens": 800
+      },
+      "runtime": {
+        "type": "internal-function-calling",
+        "endpoint": "https://7fjm4igmx7zj7f-3005.proxy.runpod.net/v1",
+        "proactiveCooldown": 30
+      },
+      "triggers": [],
+      "createdAt": 1764266566329,
+      "updatedAt": 1764840568947,
+      "userId": "agent-user-eaaad380-9b6d-40ff-9f60-ae9ee76a2859",
+      "reasoning": "high"
+    },
+    {
+      "id": "agent-42c94532-4a63-44d7-a36a-6206302e5619",
+      "name": "HR  AGENT",
+      "description": "",
+      "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=%E7%A7%91%E7%A0%94%E5%8A%A9%E6%89%8B",
+      "status": "active",
+      "systemPrompt": "You are a research assistant, primarily responsible for helping scholars in the group with paper searching, analysis, research, and summarization. Based on the scholars’ questions, you use the appropriate tools to search for relevant literature and share your insights at the right moments.",
+      "capabilities": {
+        "answer_active": true,
+        "answer_passive": true,
+        "like": true,
+        "summarize": false
+      },
+      "tools": [
+        "chat.send_message",
+        "chat.reply_to_message",
+        "chat.react_to_message",
+        "chat.get_context",
+        "tools.local_rag"
+      ],
+      "model": {
+        "provider": "parallax",
+        "name": "default",
+        "temperature": 1,
+        "maxTokens": 1200
+      },
+      "runtime": {
+        "type": "internal-function-calling",
+        "endpoint": "https://7fjm4igmx7zj7f-3005.proxy.runpod.net/v1",
+        "proactiveCooldown": 30
+      },
+      "triggers": [],
+      "createdAt": 1764603603729,
+      "updatedAt": 1765399504670,
+      "userId": "agent-user-fb0a309f-b96e-432e-80c0-55511318b4d7",
+      "mcp": {
+        "url": "http://localhost:3001",
+        "apiKey": "mcp_9dFEiw1aIThwCq2FPQeEA667M4sWFT2E",
+        "endpoint": "http://localhost:3001",
+        "transport": "rest",
+        "availableTools": [
+          {
+            "name": "search_papers",
+            "description": "STEP 1: Search for academic papers using Semantic Scholar. ALWAYS call this first to get paper IDs before using other tools like format_citation, get_paper_details, etc. Returns papers with 'id' field (40-char hex string) that you must use for subsequent tool calls.",
+            "inputSchema": {
+              "query": {
+                "type": "string",
+                "description": "Search query - use paper title or keywords (e.g., 'Attention Is All You Need', 'transformer architecture')",
+                "required": true
+              },
+              "limit": {
+                "type": "integer",
+                "description": "Maximum number of results (default: 5, max: 10)",
+                "required": false
+              },
+              "year_from": {
+                "type": "integer",
+                "description": "Filter papers from this year onwards",
+                "required": false
+              }
+            }
+          },
+          {
+            "name": "search_arxiv",
+            "description": "STEP 1 (alternative): Search arXiv for preprints. Good for recent ML/AI/CS/Physics research. Returns papers with 'id' field (arXiv ID like '1706.03762') that you must use for subsequent tool calls.",
+            "inputSchema": {
+              "query": {
+                "type": "string",
+                "description": "Search query - paper title or keywords (e.g., 'Attention Is All You Need')",
+                "required": true
+              },
+              "category": {
+                "type": "string",
+                "description": "arXiv category filter (e.g., 'cs.CL', 'cs.LG', 'cs.AI')",
+                "required": false
+              },
+              "limit": {
+                "type": "integer",
+                "description": "Maximum number of results (default: 5, max: 10)",
+                "required": false
+              }
+            }
+          },
+          {
+            "name": "get_paper_details",
+            "description": "STEP 2: Get detailed paper information. REQUIRES a valid paper_id from search_papers or search_arxiv results. Do NOT guess or make up IDs!",
+            "inputSchema": {
+              "paper_id": {
+                "type": "string",
+                "description": "MUST be real ID from search results: Semantic Scholar ID (40-char hex like '649def34f8be52c8b66281af98ae884c09aef38b') or arXiv ID (like '1706.03762'). NEVER make up IDs!",
+                "required": true
+              }
+            }
+          },
+          {
+            "name": "find_similar_papers",
+            "description": "STEP 2: Find similar papers. REQUIRES a valid paper_id from search_papers or search_arxiv results first.",
+            "inputSchema": {
+              "paper_id": {
+                "type": "string",
+                "description": "MUST be real ID from search results (e.g., '649def34f8be52c8b66281af98ae884c09aef38b' or '1706.03762'). Search first!",
+                "required": true
+              },
+              "limit": {
+                "type": "integer",
+                "description": "Maximum number of similar papers (default: 5)",
+                "required": false
+              }
+            }
+          },
+          {
+            "name": "get_citations",
+            "description": "STEP 2: Get papers citing this paper. REQUIRES a valid paper_id from search_papers or search_arxiv results first.",
+            "inputSchema": {
+              "paper_id": {
+                "type": "string",
+                "description": "MUST be real ID from search results (e.g., '649def34f8be52c8b66281af98ae884c09aef38b' or '1706.03762'). Search first!",
+                "required": true
+              },
+              "limit": {
+                "type": "integer",
+                "description": "Maximum number of citing papers (default: 5)",
+                "required": false
+              }
+            }
+          },
+          {
+            "name": "get_references",
+            "description": "STEP 2: Get papers referenced by this paper. REQUIRES a valid paper_id from search_papers or search_arxiv results first.",
+            "inputSchema": {
+              "paper_id": {
+                "type": "string",
+                "description": "MUST be real ID from search results (e.g., '649def34f8be52c8b66281af98ae884c09aef38b' or '1706.03762'). Search first!",
+                "required": true
+              },
+              "limit": {
+                "type": "integer",
+                "description": "Maximum number of references (default: 5)",
+                "required": false
+              }
+            }
+          },
+          {
+            "name": "search_author",
+            "description": "Search for an author by name and get their top publications. Returns author info and papers.",
+            "inputSchema": {
+              "name": {
+                "type": "string",
+                "description": "Author name to search for (e.g., 'Geoffrey Hinton', 'Yann LeCun')",
+                "required": true
+              },
+              "limit": {
+                "type": "integer",
+                "description": "Maximum number of papers to return (default: 5)",
+                "required": false
+              }
+            }
+          },
+          {
+            "name": "fetch_webpage",
+            "description": "Fetch and extract main text content from a URL. Use for reading web articles or documentation.",
+            "inputSchema": {
+              "url": {
+                "type": "string",
+                "description": "Full URL to fetch (e.g., 'https://example.com/article')",
+                "required": true
+              },
+              "max_length": {
+                "type": "integer",
+                "description": "Maximum content length to return (default: 5000)",
+                "required": false
+              }
+            }
+          },
+          {
+            "name": "format_citation",
+            "description": "STEP 2: Generate formatted citation. WORKFLOW: 1) First call search_papers('paper title') to get paper ID, 2) Then call format_citation(paper_id, style). NEVER guess paper IDs!",
+            "inputSchema": {
+              "paper_id": {
+                "type": "string",
+                "description": "MUST be real ID from search_papers/search_arxiv (e.g., '204e3073870fae3d05bcbc2f6a8e263d9b72e776' or '1706.03762'). Search first to get this ID!",
+                "required": true
+              },
+              "style": {
+                "type": "string",
+                "description": "Citation style: 'apa', 'mla', 'chicago', or 'bibtex' (default: 'apa')",
+                "required": false
+              }
+            }
+          }
+        ],
+        "enabledTools": [
+          "get_citations",
+          "find_similar_papers",
+          "format_citation",
+          "search_papers"
+        ]
+      },
+      "reasoning": "high"
+    }
+  ],
+  "agentHeartbeats": {
+    "helper-agent-1": 1765401196053,
+    "agent-bfbd342f-5e27-493a-8194-acb711931040": 1765401191687,
+    "agent-42c94532-4a63-44d7-a36a-6206302e5619": 1765401192480,
+    "agent-dc0d26b4-986e-44f5-9cc9-b6c08f88ba03": 1764845714406
+  },
+  "agentLooking": {},
+  "knowledgeBase": {
+    "documents": [
+      {
+        "id": "95f1f79c-6b30-4302-b22c-bb2d0f22c563",
+        "filename": "计划表.txt",
+        "type": "txt",
+        "size": 41,
+        "uploadedAt": 1764272529216,
+        "uploadedBy": "341e4181-8712-46eb-ae47-bf6fd992d940",
+        "messageId": null
+      },
+      {
+        "id": "400f5d23-e1cd-4d79-a981-a6352a440d7b",
+        "filename": "公司规定制度v1.txt",
+        "type": "txt",
+        "size": 4551,
+        "uploadedAt": 1764350277773,
+        "uploadedBy": "341e4181-8712-46eb-ae47-bf6fd992d940",
+        "messageId": null
+      },
+      {
+        "id": "ca24ee54-4409-453e-b5db-787b96edb349",
+        "filename": "公司规定制度v1.txt",
+        "type": "txt",
+        "size": 4551,
+        "uploadedAt": 1764350390923,
+        "uploadedBy": "341e4181-8712-46eb-ae47-bf6fd992d940",
+        "messageId": null
+      },
+      {
+        "id": "e4d860bb-6273-41ee-9c07-1122c50e8632",
+        "filename": "公司规定制度v1.txt",
+        "type": "txt",
+        "size": 4551,
+        "uploadedAt": 1764350470546,
+        "uploadedBy": "341e4181-8712-46eb-ae47-bf6fd992d940",
+        "messageId": null
+      },
+      {
+        "id": "f17a703e-94e4-437f-98c0-e6919b216d60",
+        "filename": "公司规定制度v1.txt",
+        "type": "txt",
+        "size": 4551,
+        "uploadedAt": 1764350535740,
+        "uploadedBy": "341e4181-8712-46eb-ae47-bf6fd992d940",
+        "messageId": null
+      },
+      {
+        "id": "421a2d8f-b3f4-4e1a-89b7-66c2c4a5765e",
+        "filename": "公司规定制度v1.txt",
+        "type": "txt",
+        "size": 4551,
+        "uploadedAt": 1764350735090,
+        "uploadedBy": "341e4181-8712-46eb-ae47-bf6fd992d940",
+        "messageId": null
+      },
+      {
+        "id": "d7febe33-1d36-436b-93a0-9e8b21530b90",
+        "filename": "公司规定制度v1.txt",
+        "type": "txt",
+        "size": 4551,
+        "uploadedAt": 1764350889164,
+        "uploadedBy": "341e4181-8712-46eb-ae47-bf6fd992d940",
+        "messageId": null
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "filename": "openai-harmony.md",
+        "type": "md",
+        "size": 29189,
+        "uploadedAt": 1764924398267,
+        "uploadedBy": "341e4181-8712-46eb-ae47-bf6fd992d940",
+        "messageId": null
+      },
+      {
+        "id": "944f826c-7c3e-4765-b87e-022a99289a20",
+        "filename": "公司规定制度v1.txt",
+        "type": "txt",
+        "size": 4551,
+        "uploadedAt": 1765032226708,
+        "uploadedBy": "341e4181-8712-46eb-ae47-bf6fd992d940",
+        "messageId": null
+      }
+    ],
+    "chunks": [
+      {
+        "id": "95f1f79c-6b30-4302-b22c-bb2d0f22c563-chunk-0",
+        "documentId": "95f1f79c-6b30-4302-b22c-bb2d0f22c563",
+        "source": "计划表.txt",
+        "content": "今天的计划\r\n1. 完成数学作业\r\n2. 完成英语作业\r\n3.写一篇500字小论文",
+        "chunkIndex": 0
+      },
+      {
+        "id": "400f5d23-e1cd-4d79-a981-a6352a440d7b-chunk-0",
+        "documentId": "400f5d23-e1cd-4d79-a981-a6352a440d7b",
+        "source": "公司规定制度v1.txt",
+        "content": "【公司规定手册（模板）】\r\n\r\n版本：v1.0｜发布：<YYYY-MM-DD>｜适用对象：全体在职员工、实习生、外包与临时用工\r\n公司：<公司名称>｜合规邮箱：compliance@company.com\r\n｜人事邮箱：hr@company.com\r\n｜IT邮箱：it@company.com\r\n\r\n────────────────────────────────\r\n\r\n[0] 总则\r\n\r\n目的：保障公司合规运营、信息安全与员工权益，提升协作效率与客户信任。\r\n\r\n生效范围：本手册适用于所有在公司场地、远程/混合办公或以公司名义开展工作的人员。\r\n\r\n优先级：若本手册与法律法规冲突，以法律法规为准；若本手册与部门细则冲突，本手册优先。\r\n\r\n────────────────────────────────\r\n\r\n[1] 职业道德与行为准则（Code of Conduct）\r\n\r\n基本要求：诚信、尊重、守时、保密、不歧视、不骚扰。\r\n\r\n利益冲突：与供应商、客户或竞争方存在亲属/投资等关系，须在5个工作日内向合规部申报。\r\n\r\n受贿与礼品：禁止收受现金或等值物；礼品>人民币<金额上限>需登记并上交。\r\n\r\n商业招待：需事先获批（见[23]审批矩阵），费用真实、票据齐全、事后2个工作日内报销。\r\n\r\n────────────────────────────────\r\n\r\n[2] 反骚扰与反歧视\r\n\r\n零容忍：基于性别、年龄、种族、地域、宗教、健康状况等的歧视/骚扰一律禁止。\r\n\r\n投诉渠道：匿名投递至whistle@company.com\r\n或向HR/合规部报告。\r\n\r\n处理原则：保密、依法依规、及时调查、禁止打击报复。\r\n\r\n────────────────────────────────\r\n\r\n[3] 工作时间与加班\r\n\r\n标准工时：每日<9:00–18:00>，午休<12:00–13:00>，双休/排班以部门制度为准。\r\n\r\n弹性与远程：需经理批准并在系统登记；远程需每日在<打卡系统/IM>报到。\r\n\r\n加班：需事前审批；加班补偿按国家法规及公司政策执行（调休/加班费）。\r\n\r\n────────────────────────────────\r\n\r\n[4] 休假与缺勤\r\n\r\n假别：年假、病假、事假、产假/陪产假、婚丧假、法定假等。\r\n\r\n申请：年假提前≥3个工作日提交；病假超过1天需医疗证明。\r\n\r\n缺勤：无故缺勤按旷工处理；连续旷工≥3天视为严重违纪。\r\n\r\n────────────────────────────────\r\n\r\n[5] 信息安全与数据保护（适用于所有员工）\r\n\r\n分级：数据分为【公开/内部/机密/高度机密】；默认不外发“机密+”。\r\n\r\n原则：最小权限、必要知情、加密传输、按需留存、定期销毁（见[15]文档留存）。\r\n\r\n对外分享：未经授权不得将代码、文档、客户信息、日志、模型权重、密钥对外分享。\r\n\r\n违规举例：将客户名单导出到私人邮箱/网盘；在公开仓库提交含密钥的代码；在社媒泄露未发布功能。\r\n\r\n────────────────────────────────\r\n\r\n[6] IT与设备使用（含BYOD）\r\n\r\n设备：公司设备仅用于工作；自带设备（BYOD）须安装公司MDM/杀毒与磁盘加密。\r\n\r\n账号：个人账号仅限本人使用；共享账号需合规审批并启用审计。\r\n\r\n密码：≥12位，包含大小写+数字+特殊字符；每90天更换；严禁复用公司外部服务密码。\r\n\r\n软件：仅安装经IT白名单许可的软件；禁止盗版、挖矿、P2P下载。\r\n\r\n────────────────────────────────\r\n\r\n[7] 网络与访问控制\r\n\r\nVPN：远程访问内网/代码仓库必须使用公司VPN，离职当天即回收权限。\r\n\r\n云资源：创建、变更、销毁云资源遵循基础设施变更流程（见[12]变更管理）。\r\n\r\n日志审计：关键系统开启访问日志与操作审计，审计日志最低保留<180>天。\r\n\r\n────────────────────────────────\r\n\r\n[8] 保密与知识产权（IP）\r\n\r\n保密义务：在职及离职后<2年>内负有保密义务。\r\n\r\n成果归属：在履职范围内产生的代码、文档、设计、模型、专利等知识产权归公司所有。\r\n\r\n开源合规：对外开源或使用GPL/AGPL等强Copyleft协议组件需法务批准；第三方许可证需备案（见[19]开源政策）。\r\n\r\n────────────────────────────────\r\n\r\n[9] 对外沟通与媒体/社交媒体\r\n\r\n发声权限：新闻、融资、客户合作、安全事件等仅限品牌/公关/高管统一对外发布。\r\n\r\n社媒行为：员工不得披露未公开信息、不得冒充公司立场、不得贬损客户/合作伙伴。\r\n\r\n公开演讲：以公司名义演讲需审批；涉及客户或技术细节的材料需法务审阅。\r\n\r\n────────────────────────────────\r\n\r\n[10] 客户与供应商管理\r\n\r\n合同：所有对外合同需法务审核、授权签字人签署；严禁私签。\r\n\r\n采购：≥<金额阈值>必须走招采流程，≥<更高阈值>需至少三家比价并留存记录。\r\n\r\n反舞弊：严禁回扣、关联交易不披露、虚开发票等。\r\n\r\n────────────────────────────────\r\n\r\n[11] 费用报销与商务差旅\r\n\r\n原则：真实、必要、节约；先审批后发生；票据合法合规。\r\n\r\n差旅：机票/火车/酒店须通过指定平台预订；舱位/标准按职级与政策。\r\n\r\n报销：自发生日起<30>天内提交；发票信息须与公司信息一致。\r\n\r\n────────────────────────────────\r\n\r\n[12] 变更管理（技术/流程）\r\n\r\n适用：生产环境变更、关键配置更新、重大流程调整。\r\n\r\n要求：变更单、回滚方案、影响评估、审批记录、窗口期执行、变更后验证。\r\n\r\n紧急变更：允许“先执行后补批”但需2个工作日内补齐材料。\r\n\r\n────────────────────────────────\r\n\r\n[13] 安全事件与违规上报\r\n\r\n定义：数据泄露、账号被盗、病毒入侵、系统中断、合规违规等。\r\n\r\n响应：发现后1小时内在incident@company.com\r\n和IM群上报；重大事件2小时内通知法务与管理层。\r\n\r\n处置：分级响应、溯源与补救、客户通知（如需）、复盘与改进。\r\n\r\n────────────────────────────────\r\n\r\n[14] 物理安全与访客\r\n\r\n门禁：不得借用/外借门禁卡；丢失应立即挂失。\r\n\r\n访客：需登记、佩戴访客证、全程陪同；禁止擅入机房/研发保密区。\r\n\r\n硬件：设备、工牌、机密文件离岗须锁定；离开办公区请清屏/锁屏。\r\n\r\n────────────────────────────────\r\n\r\n[15] 文档留存与销毁\r\n\r\n留存期限：\r\n\r\n合同/财务：≥10年\r\n\r\n人事档案：离职后≥5年\r\n\r\n日志/审计：≥180天（关键系统≥1年）\r\n\r\n销毁：到期经审批后进行粉碎/安全擦除；禁止擅自丢弃机密文档/硬盘。\r\n\r\n────────────────────────────────\r\n\r\n[16] 绩效、晋升与奖惩\r\n\r\n绩效：按季度/半年评估，含目标达成、行为规范、团队协作与客户满意度。\r\n\r\n晋升：公开标准、结构化面评、结果公示（去敏）。\r\n\r\n纪律处分：口头警示→书面警告→记过→降级/降薪→解除劳动关系；视情节从重/从轻。\r\n\r\n────────────────────────────────\r\n\r\n[17] 健康与安全（EHS）\r\n\r\n办公室：遵守消防、用电、急救与应急疏散指引；参与年度演练。\r\n\r\n居家办公：建议使用符合人体工学的椅桌，保持屏幕休息20-20-20原则。\r\n\r\n心理健康：可匿名预约心理咨询；鼓励弹性安排避免过度加班。\r\n\r\n────────────────────────────────\r\n\r\n[18] 数据分类与对外传输示例\r\n\r\n公开：官网已发布的内容、公开招聘信息。\r\n\r\n内部：未发布的内部通知、流程文档。\r\n\r\n机密：客户名单、财务报表、未上线功能设计、模型权重、API密钥。\r\n\r\n高度机密：并购、融资、投标底价、根密钥。\r\n\r\n对外传输要求：机密+数据需加密（PGP/公司SFTP/受控分享链接，限时限访），邮件标题标注【机密】。\r\n\r\n────────────────────────────────\r\n\r\n[19] 开源与第三方合规\r\n\r\n引入：需评估许可证（MIT/Apache2优先；GPL/AGPL需法务评审）；保留版权与许可证文件。\r\n\r\n贡献：对外提交代码需直属主管与法务审批；不得上传公司机密。\r\n\r\n模型/数据：第三方数据集/模型需合法来源并遵守条款（用途限制/再分发限制）。\r\n\r\n────────────────────────────────\r\n\r\n[20] 人事变动与离职交接\r\n\r\n离职流程：提交申请→资产盘点→知识交接→权限回收→离职面谈→出具证明。\r\n\r\n资产：归还电脑、门禁卡、工牌、测试设备；清除个人账号中的公司数据。\r\n\r\n保密：离职后不得带走代码、文档、客户信息与数据样本。\r\n\r\n────────────────────────────────\r\n\r\n[21] 培训与必修课\r\n\r\n入职必修：信息安全、反贿赂、反骚扰、数据合规、保密协议。\r\n\r\n年度复训：安全意识、应急演练、合规更新。\r\n\r\n通过标准：完成在线课程与测试，未通过需补训。\r\n\r\n────────────────────────────────\r\n\r\n[22] 例外与豁免\r\n\r\n业务确有需要时，员工可提交“例外申请”，说明风险、时限与补偿控制措施。\r\n\r\n例外审批有效期不超过<90>天，期满自动失效并需复评。\r\n\r\n────────────────────────────────\r\n\r\n[23] 审批矩阵（示例，按公司调整）\r\n\r\n费用报销：部门经理≤<5k>；财务总监≤<50k>；更高需总经理签批。\r\n\r\n合同签署：法务审核通过后，授权签字人签署（名单见内部公告）。\r\n\r\n变更：生产级变更需变更小组+运维负责人批准；紧急变更事后2日内补批。\r\n\r\n────────────────────────────────\r\n\r\n[24] 违纪处理与申诉\r\n\r\n处理流程：事实调查→告知与申辩→处理决定→存档。\r\n\r\n申诉：员工可在5个工作日内提出申诉，由合规/纪检复核。\r\n\r\n────────────────────────────────\r\n\r\n[25] 附则\r\n\r\n文档维护：由<合规部/人事部>每半年评审更新一次。\r\n\r\n生效日期：<YYYY-MM-DD>；替代上一版：<版本号（如有）>。\r\n\r\n免责声明：本手册为通用规定模板，具体以公司公告与劳动合同、保密协议及各专项制度为准",
+        "chunkIndex": 0
+      },
+      {
+        "id": "ca24ee54-4409-453e-b5db-787b96edb349-chunk-0",
+        "documentId": "ca24ee54-4409-453e-b5db-787b96edb349",
+        "source": "公司规定制度v1.txt",
+        "content": "【公司规定手册（模板）】\r\n\r\n版本：v1.0｜发布：<YYYY-MM-DD>｜适用对象：全体在职员工、实习生、外包与临时用工\r\n公司：<公司名称>｜合规邮箱：compliance@company.com\r\n｜人事邮箱：hr@company.com\r\n｜IT邮箱：it@company.com\r\n\r\n────────────────────────────────\r\n\r\n[0] 总则\r\n\r\n目的：保障公司合规运营、信息安全与员工权益，提升协作效率与客户信任。\r\n\r\n生效范围：本手册适用于所有在公司场地、远程/混合办公或以公司名义开展工作的人员。\r\n\r\n优先级：若本手册与法律法规冲突，以法律法规为准；若本手册与部门细则冲突，本手册优先。\r\n\r\n────────────────────────────────\r\n\r\n[1] 职业道德与行为准则（Code of Conduct）\r\n\r\n基本要求：诚信、尊重、守时、保密、不歧视、不骚扰。\r\n\r\n利益冲突：与供应商、客户或竞争方存在亲属/投资等关系，须在5个工作日内向合规部申报。\r\n\r\n受贿与礼品：禁止收受现金或等值物；礼品>人民币<金额上限>需登记并上交。\r\n\r\n商业招待：需事先获批（见[23]审批矩阵），费用真实、票据齐全、事后2个工作日内报销。\r\n\r\n────────────────────────────────\r\n\r\n[2] 反骚扰与反歧视\r\n\r\n零容忍：基于性别、年龄、种族、地域、宗教、健康状况等的歧视/骚扰一律禁止。\r\n\r\n投诉渠道：匿名投递至whistle@company.com\r\n或向HR/合规部报告。\r\n\r\n处理原则：保密、依法依规、及时调查、禁止打击报复。\r\n\r\n────────────────────────────────\r\n\r\n[3] 工作时间与加班\r\n\r\n标准工时：每日<9:00–18:00>，午休<12:00–13:00>，双休/排班以部门制度为准。\r\n\r\n弹性与远程：需经理批准并在系统登记；远程需每日在<打卡系统/IM>报到。\r\n\r\n加班：需事前审批；加班补偿按国家法规及公司政策执行（调休/加班费）。\r\n\r\n────────────────────────────────\r\n\r\n[4] 休假与缺勤\r\n\r\n假别：年假、病假、事假、产假/陪产假、婚丧假、法定假等。\r\n\r\n申请：年假提前≥3个工作日提交；病假超过1天需医疗证明。\r\n\r\n缺勤：无故缺勤按旷工处理；连续旷工≥3天视为严重违纪。\r\n\r\n────────────────────────────────\r\n\r\n[5] 信息安全与数据保护（适用于所有员工）\r\n\r\n分级：数据分为【公开/内部/机密/高度机密】；默认不外发“机密+”。\r\n\r\n原则：最小权限、必要知情、加密传输、按需留存、定期销毁（见[15]文档留存）。\r\n\r\n对外分享：未经授权不得将代码、文档、客户信息、日志、模型权重、密钥对外分享。\r\n\r\n违规举例：将客户名单导出到私人邮箱/网盘；在公开仓库提交含密钥的代码；在社媒泄露未发布功能。\r\n\r\n────────────────────────────────\r\n\r\n[6] IT与设备使用（含BYOD）\r\n\r\n设备：公司设备仅用于工作；自带设备（BYOD）须安装公司MDM/杀毒与磁盘加密。\r\n\r\n账号：个人账号仅限本人使用；共享账号需合规审批并启用审计。\r\n\r\n密码：≥12位，包含大小写+数字+特殊字符；每90天更换；严禁复用公司外部服务密码。\r\n\r\n软件：仅安装经IT白名单许可的软件；禁止盗版、挖矿、P2P下载。\r\n\r\n────────────────────────────────\r\n\r\n[7] 网络与访问控制\r\n\r\nVPN：远程访问内网/代码仓库必须使用公司VPN，离职当天即回收权限。\r\n\r\n云资源：创建、变更、销毁云资源遵循基础设施变更流程（见[12]变更管理）。\r\n\r\n日志审计：关键系统开启访问日志与操作审计，审计日志最低保留<180>天。\r\n\r\n────────────────────────────────\r\n\r\n[8] 保密与知识产权（IP）\r\n\r\n保密义务：在职及离职后<2年>内负有保密义务。\r\n\r\n成果归属：在履职范围内产生的代码、文档、设计、模型、专利等知识产权归公司所有。\r\n\r\n开源合规：对外开源或使用GPL/AGPL等强Copyleft协议组件需法务批准；第三方许可证需备案（见[19]开源政策）。\r\n\r\n────────────────────────────────\r\n\r\n[9] 对外沟通与媒体/社交媒体\r\n\r\n发声权限：新闻、融资、客户合作、安全事件等仅限品牌/公关/高管统一对外发布。\r\n\r\n社媒行为：员工不得披露未公开信息、不得冒充公司立场、不得贬损客户/合作伙伴。\r\n\r\n公开演讲：以公司名义演讲需审批；涉及客户或技术细节的材料需法务审阅。\r\n\r\n────────────────────────────────\r\n\r\n[10] 客户与供应商管理\r\n\r\n合同：所有对外合同需法务审核、授权签字人签署；严禁私签。\r\n\r\n采购：≥<金额阈值>必须走招采流程，≥<更高阈值>需至少三家比价并留存记录。\r\n\r\n反舞弊：严禁回扣、关联交易不披露、虚开发票等。\r\n\r\n────────────────────────────────\r\n\r\n[11] 费用报销与商务差旅\r\n\r\n原则：真实、必要、节约；先审批后发生；票据合法合规。\r\n\r\n差旅：机票/火车/酒店须通过指定平台预订；舱位/标准按职级与政策。\r\n\r\n报销：自发生日起<30>天内提交；发票信息须与公司信息一致。\r\n\r\n────────────────────────────────\r\n\r\n[12] 变更管理（技术/流程）\r\n\r\n适用：生产环境变更、关键配置更新、重大流程调整。\r\n\r\n要求：变更单、回滚方案、影响评估、审批记录、窗口期执行、变更后验证。\r\n\r\n紧急变更：允许“先执行后补批”但需2个工作日内补齐材料。\r\n\r\n────────────────────────────────\r\n\r\n[13] 安全事件与违规上报\r\n\r\n定义：数据泄露、账号被盗、病毒入侵、系统中断、合规违规等。\r\n\r\n响应：发现后1小时内在incident@company.com\r\n和IM群上报；重大事件2小时内通知法务与管理层。\r\n\r\n处置：分级响应、溯源与补救、客户通知（如需）、复盘与改进。\r\n\r\n────────────────────────────────\r\n\r\n[14] 物理安全与访客\r\n\r\n门禁：不得借用/外借门禁卡；丢失应立即挂失。\r\n\r\n访客：需登记、佩戴访客证、全程陪同；禁止擅入机房/研发保密区。\r\n\r\n硬件：设备、工牌、机密文件离岗须锁定；离开办公区请清屏/锁屏。\r\n\r\n────────────────────────────────\r\n\r\n[15] 文档留存与销毁\r\n\r\n留存期限：\r\n\r\n合同/财务：≥10年\r\n\r\n人事档案：离职后≥5年\r\n\r\n日志/审计：≥180天（关键系统≥1年）\r\n\r\n销毁：到期经审批后进行粉碎/安全擦除；禁止擅自丢弃机密文档/硬盘。\r\n\r\n────────────────────────────────\r\n\r\n[16] 绩效、晋升与奖惩\r\n\r\n绩效：按季度/半年评估，含目标达成、行为规范、团队协作与客户满意度。\r\n\r\n晋升：公开标准、结构化面评、结果公示（去敏）。\r\n\r\n纪律处分：口头警示→书面警告→记过→降级/降薪→解除劳动关系；视情节从重/从轻。\r\n\r\n────────────────────────────────\r\n\r\n[17] 健康与安全（EHS）\r\n\r\n办公室：遵守消防、用电、急救与应急疏散指引；参与年度演练。\r\n\r\n居家办公：建议使用符合人体工学的椅桌，保持屏幕休息20-20-20原则。\r\n\r\n心理健康：可匿名预约心理咨询；鼓励弹性安排避免过度加班。\r\n\r\n────────────────────────────────\r\n\r\n[18] 数据分类与对外传输示例\r\n\r\n公开：官网已发布的内容、公开招聘信息。\r\n\r\n内部：未发布的内部通知、流程文档。\r\n\r\n机密：客户名单、财务报表、未上线功能设计、模型权重、API密钥。\r\n\r\n高度机密：并购、融资、投标底价、根密钥。\r\n\r\n对外传输要求：机密+数据需加密（PGP/公司SFTP/受控分享链接，限时限访），邮件标题标注【机密】。\r\n\r\n────────────────────────────────\r\n\r\n[19] 开源与第三方合规\r\n\r\n引入：需评估许可证（MIT/Apache2优先；GPL/AGPL需法务评审）；保留版权与许可证文件。\r\n\r\n贡献：对外提交代码需直属主管与法务审批；不得上传公司机密。\r\n\r\n模型/数据：第三方数据集/模型需合法来源并遵守条款（用途限制/再分发限制）。\r\n\r\n────────────────────────────────\r\n\r\n[20] 人事变动与离职交接\r\n\r\n离职流程：提交申请→资产盘点→知识交接→权限回收→离职面谈→出具证明。\r\n\r\n资产：归还电脑、门禁卡、工牌、测试设备；清除个人账号中的公司数据。\r\n\r\n保密：离职后不得带走代码、文档、客户信息与数据样本。\r\n\r\n────────────────────────────────\r\n\r\n[21] 培训与必修课\r\n\r\n入职必修：信息安全、反贿赂、反骚扰、数据合规、保密协议。\r\n\r\n年度复训：安全意识、应急演练、合规更新。\r\n\r\n通过标准：完成在线课程与测试，未通过需补训。\r\n\r\n────────────────────────────────\r\n\r\n[22] 例外与豁免\r\n\r\n业务确有需要时，员工可提交“例外申请”，说明风险、时限与补偿控制措施。\r\n\r\n例外审批有效期不超过<90>天，期满自动失效并需复评。\r\n\r\n────────────────────────────────\r\n\r\n[23] 审批矩阵（示例，按公司调整）\r\n\r\n费用报销：部门经理≤<5k>；财务总监≤<50k>；更高需总经理签批。\r\n\r\n合同签署：法务审核通过后，授权签字人签署（名单见内部公告）。\r\n\r\n变更：生产级变更需变更小组+运维负责人批准；紧急变更事后2日内补批。\r\n\r\n────────────────────────────────\r\n\r\n[24] 违纪处理与申诉\r\n\r\n处理流程：事实调查→告知与申辩→处理决定→存档。\r\n\r\n申诉：员工可在5个工作日内提出申诉，由合规/纪检复核。\r\n\r\n────────────────────────────────\r\n\r\n[25] 附则\r\n\r\n文档维护：由<合规部/人事部>每半年评审更新一次。\r\n\r\n生效日期：<YYYY-MM-DD>；替代上一版：<版本号（如有）>。\r\n\r\n免责声明：本手册为通用规定模板，具体以公司公告与劳动合同、保密协议及各专项制度为准",
+        "chunkIndex": 0
+      },
+      {
+        "id": "e4d860bb-6273-41ee-9c07-1122c50e8632-chunk-0",
+        "documentId": "e4d860bb-6273-41ee-9c07-1122c50e8632",
+        "source": "公司规定制度v1.txt",
+        "content": "【公司规定手册（模板）】\r\n\r\n版本：v1.0｜发布：<YYYY-MM-DD>｜适用对象：全体在职员工、实习生、外包与临时用工\r\n公司：<公司名称>｜合规邮箱：compliance@company.com\r\n｜人事邮箱：hr@company.com\r\n｜IT邮箱：it@company.com\r\n\r\n────────────────────────────────\r\n\r\n[0] 总则\r\n\r\n目的：保障公司合规运营、信息安全与员工权益，提升协作效率与客户信任。\r\n\r\n生效范围：本手册适用于所有在公司场地、远程/混合办公或以公司名义开展工作的人员。\r\n\r\n优先级：若本手册与法律法规冲突，以法律法规为准；若本手册与部门细则冲突，本手册优先。\r\n\r\n────────────────────────────────\r\n\r\n[1] 职业道德与行为准则（Code of Conduct）\r\n\r\n基本要求：诚信、尊重、守时、保密、不歧视、不骚扰。\r\n\r\n利益冲突：与供应商、客户或竞争方存在亲属/投资等关系，须在5个工作日内向合规部申报。\r\n\r\n受贿与礼品：禁止收受现金或等值物；礼品>人民币<金额上限>需登记并上交。\r\n\r\n商业招待：需事先获批（见[23]审批矩阵），费用真实、票据齐全、事后2个工作日内报销。\r\n\r\n────────────────────────────────\r\n\r\n[2] 反骚扰与反歧视\r\n\r\n零容忍：基于性别、年龄、种族、地域、宗教、健康状况等的歧视/骚扰一律禁止。\r\n\r\n投诉渠道：匿名投递至whistle@company.com\r\n或向HR/合规部报告。\r\n\r\n处理原则：保密、依法依规、及时调查、禁止打击报复。\r\n\r\n────────────────────────────────\r\n\r\n[3] 工作时间与加班\r\n\r\n标准工时：每日<9:00–18:00>，午休<12:00–13:00>，双休/排班以部门制度为准。\r\n\r\n弹性与远程：需经理批准并在系统登记；远程需每日在<打卡系统/IM>报到。\r\n\r\n加班：需事前审批；加班补偿按国家法规及公司政策执行（调休/加班费）。\r\n\r\n────────────────────────────────\r\n\r\n[4] 休假与缺勤\r\n\r\n假别：年假、病假、事假、产假/陪产假、婚丧假、法定假等。\r\n\r\n申请：年假提前≥3个工作日提交；病假超过1天需医疗证明。\r\n\r\n缺勤：无故缺勤按旷工处理；连续旷工≥3天视为严重违纪。\r\n\r\n────────────────────────────────\r\n\r\n[5] 信息安全与数据保护（适用于所有员工）\r\n\r\n分级：数据分为【公开/内部/机密/高度机密】；默认不外发“机密+”。\r\n\r\n原则：最小权限、必要知情、加密传输、按需留存、定期销毁（见[15]文档留存）。\r\n\r\n对外分享：未经授权不得将代码、文档、客户信息、日志、模型权重、密钥对外分享。\r\n\r\n违规举例：将客户名单导出到私人邮箱/网盘；在公开仓库提交含密钥的代码；在社媒泄露未发布功能。\r\n\r\n────────────────────────────────\r\n\r\n[6] IT与设备使用（含BYOD）\r\n\r\n设备：公司设备仅用于工作；自带设备（BYOD）须安装公司MDM/杀毒与磁盘加密。\r\n\r\n账号：个人账号仅限本人使用；共享账号需合规审批并启用审计。\r\n\r\n密码：≥12位，包含大小写+数字+特殊字符；每90天更换；严禁复用公司外部服务密码。\r\n\r\n软件：仅安装经IT白名单许可的软件；禁止盗版、挖矿、P2P下载。\r\n\r\n────────────────────────────────\r\n\r\n[7] 网络与访问控制\r\n\r\nVPN：远程访问内网/代码仓库必须使用公司VPN，离职当天即回收权限。\r\n\r\n云资源：创建、变更、销毁云资源遵循基础设施变更流程（见[12]变更管理）。\r\n\r\n日志审计：关键系统开启访问日志与操作审计，审计日志最低保留<180>天。\r\n\r\n────────────────────────────────\r\n\r\n[8] 保密与知识产权（IP）\r\n\r\n保密义务：在职及离职后<2年>内负有保密义务。\r\n\r\n成果归属：在履职范围内产生的代码、文档、设计、模型、专利等知识产权归公司所有。\r\n\r\n开源合规：对外开源或使用GPL/AGPL等强Copyleft协议组件需法务批准；第三方许可证需备案（见[19]开源政策）。\r\n\r\n────────────────────────────────\r\n\r\n[9] 对外沟通与媒体/社交媒体\r\n\r\n发声权限：新闻、融资、客户合作、安全事件等仅限品牌/公关/高管统一对外发布。\r\n\r\n社媒行为：员工不得披露未公开信息、不得冒充公司立场、不得贬损客户/合作伙伴。\r\n\r\n公开演讲：以公司名义演讲需审批；涉及客户或技术细节的材料需法务审阅。\r\n\r\n────────────────────────────────\r\n\r\n[10] 客户与供应商管理\r\n\r\n合同：所有对外合同需法务审核、授权签字人签署；严禁私签。\r\n\r\n采购：≥<金额阈值>必须走招采流程，≥<更高阈值>需至少三家比价并留存记录。\r\n\r\n反舞弊：严禁回扣、关联交易不披露、虚开发票等。\r\n\r\n────────────────────────────────\r\n\r\n[11] 费用报销与商务差旅\r\n\r\n原则：真实、必要、节约；先审批后发生；票据合法合规。\r\n\r\n差旅：机票/火车/酒店须通过指定平台预订；舱位/标准按职级与政策。\r\n\r\n报销：自发生日起<30>天内提交；发票信息须与公司信息一致。\r\n\r\n────────────────────────────────\r\n\r\n[12] 变更管理（技术/流程）\r\n\r\n适用：生产环境变更、关键配置更新、重大流程调整。\r\n\r\n要求：变更单、回滚方案、影响评估、审批记录、窗口期执行、变更后验证。\r\n\r\n紧急变更：允许“先执行后补批”但需2个工作日内补齐材料。\r\n\r\n────────────────────────────────\r\n\r\n[13] 安全事件与违规上报\r\n\r\n定义：数据泄露、账号被盗、病毒入侵、系统中断、合规违规等。\r\n\r\n响应：发现后1小时内在incident@company.com\r\n和IM群上报；重大事件2小时内通知法务与管理层。\r\n\r\n处置：分级响应、溯源与补救、客户通知（如需）、复盘与改进。\r\n\r\n────────────────────────────────\r\n\r\n[14] 物理安全与访客\r\n\r\n门禁：不得借用/外借门禁卡；丢失应立即挂失。\r\n\r\n访客：需登记、佩戴访客证、全程陪同；禁止擅入机房/研发保密区。\r\n\r\n硬件：设备、工牌、机密文件离岗须锁定；离开办公区请清屏/锁屏。\r\n\r\n────────────────────────────────\r\n\r\n[15] 文档留存与销毁\r\n\r\n留存期限：\r\n\r\n合同/财务：≥10年\r\n\r\n人事档案：离职后≥5年\r\n\r\n日志/审计：≥180天（关键系统≥1年）\r\n\r\n销毁：到期经审批后进行粉碎/安全擦除；禁止擅自丢弃机密文档/硬盘。\r\n\r\n────────────────────────────────\r\n\r\n[16] 绩效、晋升与奖惩\r\n\r\n绩效：按季度/半年评估，含目标达成、行为规范、团队协作与客户满意度。\r\n\r\n晋升：公开标准、结构化面评、结果公示（去敏）。\r\n\r\n纪律处分：口头警示→书面警告→记过→降级/降薪→解除劳动关系；视情节从重/从轻。\r\n\r\n────────────────────────────────\r\n\r\n[17] 健康与安全（EHS）\r\n\r\n办公室：遵守消防、用电、急救与应急疏散指引；参与年度演练。\r\n\r\n居家办公：建议使用符合人体工学的椅桌，保持屏幕休息20-20-20原则。\r\n\r\n心理健康：可匿名预约心理咨询；鼓励弹性安排避免过度加班。\r\n\r\n────────────────────────────────\r\n\r\n[18] 数据分类与对外传输示例\r\n\r\n公开：官网已发布的内容、公开招聘信息。\r\n\r\n内部：未发布的内部通知、流程文档。\r\n\r\n机密：客户名单、财务报表、未上线功能设计、模型权重、API密钥。\r\n\r\n高度机密：并购、融资、投标底价、根密钥。\r\n\r\n对外传输要求：机密+数据需加密（PGP/公司SFTP/受控分享链接，限时限访），邮件标题标注【机密】。\r\n\r\n────────────────────────────────\r\n\r\n[19] 开源与第三方合规\r\n\r\n引入：需评估许可证（MIT/Apache2优先；GPL/AGPL需法务评审）；保留版权与许可证文件。\r\n\r\n贡献：对外提交代码需直属主管与法务审批；不得上传公司机密。\r\n\r\n模型/数据：第三方数据集/模型需合法来源并遵守条款（用途限制/再分发限制）。\r\n\r\n────────────────────────────────\r\n\r\n[20] 人事变动与离职交接\r\n\r\n离职流程：提交申请→资产盘点→知识交接→权限回收→离职面谈→出具证明。\r\n\r\n资产：归还电脑、门禁卡、工牌、测试设备；清除个人账号中的公司数据。\r\n\r\n保密：离职后不得带走代码、文档、客户信息与数据样本。\r\n\r\n────────────────────────────────\r\n\r\n[21] 培训与必修课\r\n\r\n入职必修：信息安全、反贿赂、反骚扰、数据合规、保密协议。\r\n\r\n年度复训：安全意识、应急演练、合规更新。\r\n\r\n通过标准：完成在线课程与测试，未通过需补训。\r\n\r\n────────────────────────────────\r\n\r\n[22] 例外与豁免\r\n\r\n业务确有需要时，员工可提交“例外申请”，说明风险、时限与补偿控制措施。\r\n\r\n例外审批有效期不超过<90>天，期满自动失效并需复评。\r\n\r\n────────────────────────────────\r\n\r\n[23] 审批矩阵（示例，按公司调整）\r\n\r\n费用报销：部门经理≤<5k>；财务总监≤<50k>；更高需总经理签批。\r\n\r\n合同签署：法务审核通过后，授权签字人签署（名单见内部公告）。\r\n\r\n变更：生产级变更需变更小组+运维负责人批准；紧急变更事后2日内补批。\r\n\r\n────────────────────────────────\r\n\r\n[24] 违纪处理与申诉\r\n\r\n处理流程：事实调查→告知与申辩→处理决定→存档。\r\n\r\n申诉：员工可在5个工作日内提出申诉，由合规/纪检复核。\r\n\r\n────────────────────────────────\r\n\r\n[25] 附则\r\n\r\n文档维护：由<合规部/人事部>每半年评审更新一次。\r\n\r\n生效日期：<YYYY-MM-DD>；替代上一版：<版本号（如有）>。\r\n\r\n免责声明：本手册为通用规定模板，具体以公司公告与劳动合同、保密协议及各专项制度为准",
+        "chunkIndex": 0
+      },
+      {
+        "id": "f17a703e-94e4-437f-98c0-e6919b216d60-chunk-0",
+        "documentId": "f17a703e-94e4-437f-98c0-e6919b216d60",
+        "source": "公司规定制度v1.txt",
+        "content": "【公司规定手册（模板）】\r\n\r\n版本：v1.0｜发布：<YYYY-MM-DD>｜适用对象：全体在职员工、实习生、外包与临时用工\r\n公司：<公司名称>｜合规邮箱：compliance@company.com\r\n｜人事邮箱：hr@company.com\r\n｜IT邮箱：it@company.com\r\n\r\n────────────────────────────────\r\n\r\n[0] 总则\r\n\r\n目的：保障公司合规运营、信息安全与员工权益，提升协作效率与客户信任。\r\n\r\n生效范围：本手册适用于所有在公司场地、远程/混合办公或以公司名义开展工作的人员。\r\n\r\n优先级：若本手册与法律法规冲突，以法律法规为准；若本手册与部门细则冲突，本手册优先。\r\n\r\n────────────────────────────────\r\n\r\n[1] 职业道德与行为准则（Code of Conduct）\r\n\r\n基本要求：诚信、尊重、守时、保密、不歧视、不骚扰。\r\n\r\n利益冲突：与供应商、客户或竞争方存在亲属/投资等关系，须在5个工作日内向合规部申报。\r\n\r\n受贿与礼品：禁止收受现金或等值物；礼品>人民币<金额上限>需登记并上交。\r\n\r\n商业招待：需事先获批（见[23]审批矩阵），费用真实、票据齐全、事后2个工作日内报销。\r\n\r\n────────────────────────────────\r\n\r\n[2] 反骚扰与反歧视\r\n\r\n零容忍：基于性别、年龄、种族、地域、宗教、健康状况等的歧视/骚扰一律禁止。\r\n\r\n投诉渠道：匿名投递至whistle@company.com\r\n或向HR/合规部报告。\r\n\r\n处理原则：保密、依法依规、及时调查、禁止打击报复。\r\n\r\n────────────────────────────────\r\n\r\n[3] 工作时间与加班\r\n\r\n标准工时：每日<9:00–18:00>，午休<12:00–13:00>，双休/排班以部门制度为准。\r\n\r\n弹性与远程：需经理批准并在系统登记；远程需每日在<打卡系统/IM>报到。\r\n\r\n加班：需事前审批；加班补偿按国家法规及公司政策执行（调休/加班费）。\r\n\r\n────────────────────────────────\r\n\r\n[4] 休假与缺勤\r\n\r\n假别：年假、病假、事假、产假/陪产假、婚丧假、法定假等。\r\n\r\n申请：年假提前≥3个工作日提交；病假超过1天需医疗证明。\r\n\r\n缺勤：无故缺勤按旷工处理；连续旷工≥3天视为严重违纪。\r\n\r\n────────────────────────────────\r\n\r\n[5] 信息安全与数据保护（适用于所有员工）\r\n\r\n分级：数据分为【公开/内部/机密/高度机密】；默认不外发“机密+”。\r\n\r\n原则：最小权限、必要知情、加密传输、按需留存、定期销毁（见[15]文档留存）。\r\n\r\n对外分享：未经授权不得将代码、文档、客户信息、日志、模型权重、密钥对外分享。\r\n\r\n违规举例：将客户名单导出到私人邮箱/网盘；在公开仓库提交含密钥的代码；在社媒泄露未发布功能。\r\n\r\n────────────────────────────────\r\n\r\n[6] IT与设备使用（含BYOD）\r\n\r\n设备：公司设备仅用于工作；自带设备（BYOD）须安装公司MDM/杀毒与磁盘加密。\r\n\r\n账号：个人账号仅限本人使用；共享账号需合规审批并启用审计。\r\n\r\n密码：≥12位，包含大小写+数字+特殊字符；每90天更换；严禁复用公司外部服务密码。\r\n\r\n软件：仅安装经IT白名单许可的软件；禁止盗版、挖矿、P2P下载。\r\n\r\n────────────────────────────────\r\n\r\n[7] 网络与访问控制\r\n\r\nVPN：远程访问内网/代码仓库必须使用公司VPN，离职当天即回收权限。\r\n\r\n云资源：创建、变更、销毁云资源遵循基础设施变更流程（见[12]变更管理）。\r\n\r\n日志审计：关键系统开启访问日志与操作审计，审计日志最低保留<180>天。\r\n\r\n────────────────────────────────\r\n\r\n[8] 保密与知识产权（IP）\r\n\r\n保密义务：在职及离职后<2年>内负有保密义务。\r\n\r\n成果归属：在履职范围内产生的代码、文档、设计、模型、专利等知识产权归公司所有。\r\n\r\n开源合规：对外开源或使用GPL/AGPL等强Copyleft协议组件需法务批准；第三方许可证需备案（见[19]开源政策）。\r\n\r\n────────────────────────────────\r\n\r\n[9] 对外沟通与媒体/社交媒体\r\n\r\n发声权限：新闻、融资、客户合作、安全事件等仅限品牌/公关/高管统一对外发布。\r\n\r\n社媒行为：员工不得披露未公开信息、不得冒充公司立场、不得贬损客户/合作伙伴。\r\n\r\n公开演讲：以公司名义演讲需审批；涉及客户或技术细节的材料需法务审阅。\r\n\r\n────────────────────────────────\r\n\r\n[10] 客户与供应商管理\r\n\r\n合同：所有对外合同需法务审核、授权签字人签署；严禁私签。\r\n\r\n采购：≥<金额阈值>必须走招采流程，≥<更高阈值>需至少三家比价并留存记录。\r\n\r\n反舞弊：严禁回扣、关联交易不披露、虚开发票等。\r\n\r\n────────────────────────────────\r\n\r\n[11] 费用报销与商务差旅\r\n\r\n原则：真实、必要、节约；先审批后发生；票据合法合规。\r\n\r\n差旅：机票/火车/酒店须通过指定平台预订；舱位/标准按职级与政策。\r\n\r\n报销：自发生日起<30>天内提交；发票信息须与公司信息一致。\r\n\r\n────────────────────────────────\r\n\r\n[12] 变更管理（技术/流程）\r\n\r\n适用：生产环境变更、关键配置更新、重大流程调整。\r\n\r\n要求：变更单、回滚方案、影响评估、审批记录、窗口期执行、变更后验证。\r\n\r\n紧急变更：允许“先执行后补批”但需2个工作日内补齐材料。\r\n\r\n────────────────────────────────\r\n\r\n[13] 安全事件与违规上报\r\n\r\n定义：数据泄露、账号被盗、病毒入侵、系统中断、合规违规等。\r\n\r\n响应：发现后1小时内在incident@company.com\r\n和IM群上报；重大事件2小时内通知法务与管理层。\r\n\r\n处置：分级响应、溯源与补救、客户通知（如需）、复盘与改进。\r\n\r\n────────────────────────────────\r\n\r\n[14] 物理安全与访客\r\n\r\n门禁：不得借用/外借门禁卡；丢失应立即挂失。\r\n\r\n访客：需登记、佩戴访客证、全程陪同；禁止擅入机房/研发保密区。\r\n\r\n硬件：设备、工牌、机密文件离岗须锁定；离开办公区请清屏/锁屏。\r\n\r\n────────────────────────────────\r\n\r\n[15] 文档留存与销毁\r\n\r\n留存期限：\r\n\r\n合同/财务：≥10年\r\n\r\n人事档案：离职后≥5年\r\n\r\n日志/审计：≥180天（关键系统≥1年）\r\n\r\n销毁：到期经审批后进行粉碎/安全擦除；禁止擅自丢弃机密文档/硬盘。\r\n\r\n────────────────────────────────\r\n\r\n[16] 绩效、晋升与奖惩\r\n\r\n绩效：按季度/半年评估，含目标达成、行为规范、团队协作与客户满意度。\r\n\r\n晋升：公开标准、结构化面评、结果公示（去敏）。\r\n\r\n纪律处分：口头警示→书面警告→记过→降级/降薪→解除劳动关系；视情节从重/从轻。\r\n\r\n────────────────────────────────\r\n\r\n[17] 健康与安全（EHS）\r\n\r\n办公室：遵守消防、用电、急救与应急疏散指引；参与年度演练。\r\n\r\n居家办公：建议使用符合人体工学的椅桌，保持屏幕休息20-20-20原则。\r\n\r\n心理健康：可匿名预约心理咨询；鼓励弹性安排避免过度加班。\r\n\r\n────────────────────────────────\r\n\r\n[18] 数据分类与对外传输示例\r\n\r\n公开：官网已发布的内容、公开招聘信息。\r\n\r\n内部：未发布的内部通知、流程文档。\r\n\r\n机密：客户名单、财务报表、未上线功能设计、模型权重、API密钥。\r\n\r\n高度机密：并购、融资、投标底价、根密钥。\r\n\r\n对外传输要求：机密+数据需加密（PGP/公司SFTP/受控分享链接，限时限访），邮件标题标注【机密】。\r\n\r\n────────────────────────────────\r\n\r\n[19] 开源与第三方合规\r\n\r\n引入：需评估许可证（MIT/Apache2优先；GPL/AGPL需法务评审）；保留版权与许可证文件。\r\n\r\n贡献：对外提交代码需直属主管与法务审批；不得上传公司机密。\r\n\r\n模型/数据：第三方数据集/模型需合法来源并遵守条款（用途限制/再分发限制）。\r\n\r\n────────────────────────────────\r\n\r\n[20] 人事变动与离职交接\r\n\r\n离职流程：提交申请→资产盘点→知识交接→权限回收→离职面谈→出具证明。\r\n\r\n资产：归还电脑、门禁卡、工牌、测试设备；清除个人账号中的公司数据。\r\n\r\n保密：离职后不得带走代码、文档、客户信息与数据样本。\r\n\r\n────────────────────────────────\r\n\r\n[21] 培训与必修课\r\n\r\n入职必修：信息安全、反贿赂、反骚扰、数据合规、保密协议。\r\n\r\n年度复训：安全意识、应急演练、合规更新。\r\n\r\n通过标准：完成在线课程与测试，未通过需补训。\r\n\r\n────────────────────────────────\r\n\r\n[22] 例外与豁免\r\n\r\n业务确有需要时，员工可提交“例外申请”，说明风险、时限与补偿控制措施。\r\n\r\n例外审批有效期不超过<90>天，期满自动失效并需复评。\r\n\r\n────────────────────────────────\r\n\r\n[23] 审批矩阵（示例，按公司调整）\r\n\r\n费用报销：部门经理≤<5k>；财务总监≤<50k>；更高需总经理签批。\r\n\r\n合同签署：法务审核通过后，授权签字人签署（名单见内部公告）。\r\n\r\n变更：生产级变更需变更小组+运维负责人批准；紧急变更事后2日内补批。\r\n\r\n────────────────────────────────\r\n\r\n[24] 违纪处理与申诉\r\n\r\n处理流程：事实调查→告知与申辩→处理决定→存档。\r\n\r\n申诉：员工可在5个工作日内提出申诉，由合规/纪检复核。\r\n\r\n────────────────────────────────\r\n\r\n[25] 附则\r\n\r\n文档维护：由<合规部/人事部>每半年评审更新一次。\r\n\r\n生效日期：<YYYY-MM-DD>；替代上一版：<版本号（如有）>。\r\n\r\n免责声明：本手册为通用规定模板，具体以公司公告与劳动合同、保密协议及各专项制度为准",
+        "chunkIndex": 0
+      },
+      {
+        "id": "421a2d8f-b3f4-4e1a-89b7-66c2c4a5765e-chunk-0",
+        "documentId": "421a2d8f-b3f4-4e1a-89b7-66c2c4a5765e",
+        "source": "公司规定制度v1.txt",
+        "content": "【公司规定手册（模板）】\r\n\r\n版本：v1.0｜发布：<YYYY-MM-DD>｜适用对象：全体在职员工、实习生、外包与临时用工\r\n公司：<公司名称>｜合规邮箱：compliance@company.com\r\n｜人事邮箱：hr@company.com\r\n｜IT邮箱：it@company.com\r\n\r\n────────────────────────────────\r\n\r\n[0] 总则\r\n\r\n目的：保障公司合规运营、信息安全与员工权益，提升协作效率与客户信任。\r\n\r\n生效范围：本手册适用于所有在公司场地、远程/混合办公或以公司名义开展工作的人员。\r\n\r\n优先级：若本手册与法律法规冲突，以法律法规为准；若本手册与部门细则冲突，本手册优先。\r\n\r\n────────────────────────────────\r\n\r\n[1] 职业道德与行为准则（Code of Conduct）\r\n\r\n基本要求：诚信、尊重、守时、保密、不歧视、不骚扰。\r\n\r\n利益冲突：与供应商、客户或竞争方存在亲属/投资等关系，须在5个工作日内向合规部申报。\r\n\r\n受贿与礼品：禁止收受现金或等值物；礼品>人民币<金额上限>需登记并上交。\r\n\r\n商业招待：需事先获批（见[23]审批矩阵），费用真实、票据齐全、事后2个工作日内报销。\r\n\r\n────────────────────────────────\r\n\r\n[2] 反骚扰与反歧视\r\n\r\n零容忍：基于性别、年龄、种族、地域、宗教、健康状况等的歧视/骚扰一律禁止。\r\n\r\n投诉渠道：匿名投递至whistle@company.com\r\n或向HR/合规部报告。\r\n\r\n处理原则：保密、依法依规、及时调查、禁止打击报复。\r\n\r\n────────────────────────────────\r\n\r\n[3] 工作时间与加班\r\n\r\n标准工时：每日<9:00–18:00>，午休<12:00–13:00>，双休/排班以部门制度为准。\r\n\r\n弹性与远程：需经理批准并在系统登记；远程需每日在<打卡系统/IM>报到。\r\n\r\n加班：需事前审批；加班补偿按国家法规及公司政策执行（调休/加班费）。\r\n\r\n────────────────────────────────\r\n\r\n[4] 休假与缺勤\r\n\r\n假别：年假、病假、事假、产假/陪产假、婚丧假、法定假等。\r\n\r\n申请：年假提前≥3个工作日提交；病假超过1天需医疗证明。\r\n\r\n缺勤：无故缺勤按旷工处理；连续旷工≥3天视为严重违纪。\r\n\r\n────────────────────────────────\r\n\r\n[5] 信息安全与数据保护（适用于所有员工）\r\n\r\n分级：数据分为【公开/内部/机密/高度机密】；默认不外发“机密+”。\r\n\r\n原则：最小权限、必要知情、加密传输、按需留存、定期销毁（见[15]文档留存）。\r\n\r\n对外分享：未经授权不得将代码、文档、客户信息、日志、模型权重、密钥对外分享。\r\n\r\n违规举例：将客户名单导出到私人邮箱/网盘；在公开仓库提交含密钥的代码；在社媒泄露未发布功能。\r\n\r\n────────────────────────────────\r\n\r\n[6] IT与设备使用（含BYOD）\r\n\r\n设备：公司设备仅用于工作；自带设备（BYOD）须安装公司MDM/杀毒与磁盘加密。\r\n\r\n账号：个人账号仅限本人使用；共享账号需合规审批并启用审计。\r\n\r\n密码：≥12位，包含大小写+数字+特殊字符；每90天更换；严禁复用公司外部服务密码。\r\n\r\n软件：仅安装经IT白名单许可的软件；禁止盗版、挖矿、P2P下载。\r\n\r\n────────────────────────────────\r\n\r\n[7] 网络与访问控制\r\n\r\nVPN：远程访问内网/代码仓库必须使用公司VPN，离职当天即回收权限。\r\n\r\n云资源：创建、变更、销毁云资源遵循基础设施变更流程（见[12]变更管理）。\r\n\r\n日志审计：关键系统开启访问日志与操作审计，审计日志最低保留<180>天。\r\n\r\n────────────────────────────────\r\n\r\n[8] 保密与知识产权（IP）\r\n\r\n保密义务：在职及离职后<2年>内负有保密义务。\r\n\r\n成果归属：在履职范围内产生的代码、文档、设计、模型、专利等知识产权归公司所有。\r\n\r\n开源合规：对外开源或使用GPL/AGPL等强Copyleft协议组件需法务批准；第三方许可证需备案（见[19]开源政策）。\r\n\r\n────────────────────────────────\r\n\r\n[9] 对外沟通与媒体/社交媒体\r\n\r\n发声权限：新闻、融资、客户合作、安全事件等仅限品牌/公关/高管统一对外发布。\r\n\r\n社媒行为：员工不得披露未公开信息、不得冒充公司立场、不得贬损客户/合作伙伴。\r\n\r\n公开演讲：以公司名义演讲需审批；涉及客户或技术细节的材料需法务审阅。\r\n\r\n────────────────────────────────\r\n\r\n[10] 客户与供应商管理\r\n\r\n合同：所有对外合同需法务审核、授权签字人签署；严禁私签。\r\n\r\n采购：≥<金额阈值>必须走招采流程，≥<更高阈值>需至少三家比价并留存记录。\r\n\r\n反舞弊：严禁回扣、关联交易不披露、虚开发票等。\r\n\r\n────────────────────────────────\r\n\r\n[11] 费用报销与商务差旅\r\n\r\n原则：真实、必要、节约；先审批后发生；票据合法合规。\r\n\r\n差旅：机票/火车/酒店须通过指定平台预订；舱位/标准按职级与政策。\r\n\r\n报销：自发生日起<30>天内提交；发票信息须与公司信息一致。\r\n\r\n────────────────────────────────\r\n\r\n[12] 变更管理（技术/流程）\r\n\r\n适用：生产环境变更、关键配置更新、重大流程调整。\r\n\r\n要求：变更单、回滚方案、影响评估、审批记录、窗口期执行、变更后验证。\r\n\r\n紧急变更：允许“先执行后补批”但需2个工作日内补齐材料。\r\n\r\n────────────────────────────────\r\n\r\n[13] 安全事件与违规上报\r\n\r\n定义：数据泄露、账号被盗、病毒入侵、系统中断、合规违规等。\r\n\r\n响应：发现后1小时内在incident@company.com\r\n和IM群上报；重大事件2小时内通知法务与管理层。\r\n\r\n处置：分级响应、溯源与补救、客户通知（如需）、复盘与改进。\r\n\r\n────────────────────────────────\r\n\r\n[14] 物理安全与访客\r\n\r\n门禁：不得借用/外借门禁卡；丢失应立即挂失。\r\n\r\n访客：需登记、佩戴访客证、全程陪同；禁止擅入机房/研发保密区。\r\n\r\n硬件：设备、工牌、机密文件离岗须锁定；离开办公区请清屏/锁屏。\r\n\r\n────────────────────────────────\r\n\r\n[15] 文档留存与销毁\r\n\r\n留存期限：\r\n\r\n合同/财务：≥10年\r\n\r\n人事档案：离职后≥5年\r\n\r\n日志/审计：≥180天（关键系统≥1年）\r\n\r\n销毁：到期经审批后进行粉碎/安全擦除；禁止擅自丢弃机密文档/硬盘。\r\n\r\n────────────────────────────────\r\n\r\n[16] 绩效、晋升与奖惩\r\n\r\n绩效：按季度/半年评估，含目标达成、行为规范、团队协作与客户满意度。\r\n\r\n晋升：公开标准、结构化面评、结果公示（去敏）。\r\n\r\n纪律处分：口头警示→书面警告→记过→降级/降薪→解除劳动关系；视情节从重/从轻。\r\n\r\n────────────────────────────────\r\n\r\n[17] 健康与安全（EHS）\r\n\r\n办公室：遵守消防、用电、急救与应急疏散指引；参与年度演练。\r\n\r\n居家办公：建议使用符合人体工学的椅桌，保持屏幕休息20-20-20原则。\r\n\r\n心理健康：可匿名预约心理咨询；鼓励弹性安排避免过度加班。\r\n\r\n────────────────────────────────\r\n\r\n[18] 数据分类与对外传输示例\r\n\r\n公开：官网已发布的内容、公开招聘信息。\r\n\r\n内部：未发布的内部通知、流程文档。\r\n\r\n机密：客户名单、财务报表、未上线功能设计、模型权重、API密钥。\r\n\r\n高度机密：并购、融资、投标底价、根密钥。\r\n\r\n对外传输要求：机密+数据需加密（PGP/公司SFTP/受控分享链接，限时限访），邮件标题标注【机密】。\r\n\r\n────────────────────────────────\r\n\r\n[19] 开源与第三方合规\r\n\r\n引入：需评估许可证（MIT/Apache2优先；GPL/AGPL需法务评审）；保留版权与许可证文件。\r\n\r\n贡献：对外提交代码需直属主管与法务审批；不得上传公司机密。\r\n\r\n模型/数据：第三方数据集/模型需合法来源并遵守条款（用途限制/再分发限制）。\r\n\r\n────────────────────────────────\r\n\r\n[20] 人事变动与离职交接\r\n\r\n离职流程：提交申请→资产盘点→知识交接→权限回收→离职面谈→出具证明。\r\n\r\n资产：归还电脑、门禁卡、工牌、测试设备；清除个人账号中的公司数据。\r\n\r\n保密：离职后不得带走代码、文档、客户信息与数据样本。\r\n\r\n────────────────────────────────\r\n\r\n[21] 培训与必修课\r\n\r\n入职必修：信息安全、反贿赂、反骚扰、数据合规、保密协议。\r\n\r\n年度复训：安全意识、应急演练、合规更新。\r\n\r\n通过标准：完成在线课程与测试，未通过需补训。\r\n\r\n────────────────────────────────\r\n\r\n[22] 例外与豁免\r\n\r\n业务确有需要时，员工可提交“例外申请”，说明风险、时限与补偿控制措施。\r\n\r\n例外审批有效期不超过<90>天，期满自动失效并需复评。\r\n\r\n────────────────────────────────\r\n\r\n[23] 审批矩阵（示例，按公司调整）\r\n\r\n费用报销：部门经理≤<5k>；财务总监≤<50k>；更高需总经理签批。\r\n\r\n合同签署：法务审核通过后，授权签字人签署（名单见内部公告）。\r\n\r\n变更：生产级变更需变更小组+运维负责人批准；紧急变更事后2日内补批。\r\n\r\n────────────────────────────────\r\n\r\n[24] 违纪处理与申诉\r\n\r\n处理流程：事实调查→告知与申辩→处理决定→存档。\r\n\r\n申诉：员工可在5个工作日内提出申诉，由合规/纪检复核。\r\n\r\n────────────────────────────────\r\n\r\n[25] 附则\r\n\r\n文档维护：由<合规部/人事部>每半年评审更新一次。\r\n\r\n生效日期：<YYYY-MM-DD>；替代上一版：<版本号（如有）>。\r\n\r\n免责声明：本手册为通用规定模板，具体以公司公告与劳动合同、保密协议及各专项制度为准",
+        "chunkIndex": 0
+      },
+      {
+        "id": "d7febe33-1d36-436b-93a0-9e8b21530b90-chunk-0",
+        "documentId": "d7febe33-1d36-436b-93a0-9e8b21530b90",
+        "source": "公司规定制度v1.txt",
+        "content": "【公司规定手册（模板）】\r\n\r\n版本：v1.0｜发布：<YYYY-MM-DD>｜适用对象：全体在职员工、实习生、外包与临时用工\r\n公司：<公司名称>｜合规邮箱：compliance@company.com\r\n｜人事邮箱：hr@company.com\r\n｜IT邮箱：it@company.com\r\n\r\n────────────────────────────────\r\n\r\n[0] 总则\r\n\r\n目的：保障公司合规运营、信息安全与员工权益，提升协作效率与客户信任。\r\n\r\n生效范围：本手册适用于所有在公司场地、远程/混合办公或以公司名义开展工作的人员。\r\n\r\n优先级：若本手册与法律法规冲突，以法律法规为准；若本手册与部门细则冲突，本手册优先。\r\n\r\n────────────────────────────────\r\n\r\n[1] 职业道德与行为准则（Code of Conduct）\r\n\r\n基本要求：诚信、尊重、守时、保密、不歧视、不骚扰。\r\n\r\n利益冲突：与供应商、客户或竞争方存在亲属/投资等关系，须在5个工作日内向合规部申报。\r\n\r\n受贿与礼品：禁止收受现金或等值物；礼品>人民币<金额上限>需登记并上交。\r\n\r\n商业招待：需事先获批（见[23]审批矩阵），费用真实、票据齐全、事后2个工作日内报销。\r\n\r\n────────────────────────────────\r\n\r\n[2] 反骚扰与反歧视\r\n\r\n零容忍：基于性别、年龄、种族、地域、宗教、健康状况等的歧视/骚扰一律禁止。\r\n\r\n投诉渠道：匿名投递至whistle@company.com\r\n或向HR/合规部报告。\r\n\r\n处理原则：保密、依法依规、及时调查、禁止打击报复。\r\n\r\n────────────────────────────────\r\n\r\n[3] 工作时间与加班\r\n\r\n标准工时：每日<9:00–18:00>，午休<12:00–13:00>，双休/排班以部门制度为准。\r\n\r\n弹性与远程：需经理批准并在系统登记；远程需每日在<打卡系统/IM>报到。\r\n\r\n加班：需事前审批；加班补偿按国家法规及公司政策执行（调休/加班费）。\r\n\r\n────────────────────────────────\r\n\r\n[4] 休假与缺勤\r\n\r\n假别：年假、病假、事假、产假/陪产假、婚丧假、法定假等。\r\n\r\n申请：年假提前≥3个工作日提交；病假超过1天需医疗证明。\r\n\r\n缺勤：无故缺勤按旷工处理；连续旷工≥3天视为严重违纪。\r\n\r\n────────────────────────────────\r\n\r\n[5] 信息安全与数据保护（适用于所有员工）\r\n\r\n分级：数据分为【公开/内部/机密/高度机密】；默认不外发“机密+”。\r\n\r\n原则：最小权限、必要知情、加密传输、按需留存、定期销毁（见[15]文档留存）。\r\n\r\n对外分享：未经授权不得将代码、文档、客户信息、日志、模型权重、密钥对外分享。\r\n\r\n违规举例：将客户名单导出到私人邮箱/网盘；在公开仓库提交含密钥的代码；在社媒泄露未发布功能。\r\n\r\n────────────────────────────────\r\n\r\n[6] IT与设备使用（含BYOD）\r\n\r\n设备：公司设备仅用于工作；自带设备（BYOD）须安装公司MDM/杀毒与磁盘加密。\r\n\r\n账号：个人账号仅限本人使用；共享账号需合规审批并启用审计。\r\n\r\n密码：≥12位，包含大小写+数字+特殊字符；每90天更换；严禁复用公司外部服务密码。\r\n\r\n软件：仅安装经IT白名单许可的软件；禁止盗版、挖矿、P2P下载。\r\n\r\n────────────────────────────────\r\n\r\n[7] 网络与访问控制\r\n\r\nVPN：远程访问内网/代码仓库必须使用公司VPN，离职当天即回收权限。\r\n\r\n云资源：创建、变更、销毁云资源遵循基础设施变更流程（见[12]变更管理）。\r\n\r\n日志审计：关键系统开启访问日志与操作审计，审计日志最低保留<180>天。\r\n\r\n────────────────────────────────\r\n\r\n[8] 保密与知识产权（IP）\r\n\r\n保密义务：在职及离职后<2年>内负有保密义务。\r\n\r\n成果归属：在履职范围内产生的代码、文档、设计、模型、专利等知识产权归公司所有。\r\n\r\n开源合规：对外开源或使用GPL/AGPL等强Copyleft协议组件需法务批准；第三方许可证需备案（见[19]开源政策）。\r\n\r\n────────────────────────────────\r\n\r\n[9] 对外沟通与媒体/社交媒体\r\n\r\n发声权限：新闻、融资、客户合作、安全事件等仅限品牌/公关/高管统一对外发布。\r\n\r\n社媒行为：员工不得披露未公开信息、不得冒充公司立场、不得贬损客户/合作伙伴。\r\n\r\n公开演讲：以公司名义演讲需审批；涉及客户或技术细节的材料需法务审阅。\r\n\r\n────────────────────────────────\r\n\r\n[10] 客户与供应商管理\r\n\r\n合同：所有对外合同需法务审核、授权签字人签署；严禁私签。\r\n\r\n采购：≥<金额阈值>必须走招采流程，≥<更高阈值>需至少三家比价并留存记录。\r\n\r\n反舞弊：严禁回扣、关联交易不披露、虚开发票等。\r\n\r\n────────────────────────────────\r\n\r\n[11] 费用报销与商务差旅\r\n\r\n原则：真实、必要、节约；先审批后发生；票据合法合规。\r\n\r\n差旅：机票/火车/酒店须通过指定平台预订；舱位/标准按职级与政策。\r\n\r\n报销：自发生日起<30>天内提交；发票信息须与公司信息一致。\r\n\r\n────────────────────────────────\r\n\r\n[12] 变更管理（技术/流程）\r\n\r\n适用：生产环境变更、关键配置更新、重大流程调整。\r\n\r\n要求：变更单、回滚方案、影响评估、审批记录、窗口期执行、变更后验证。\r\n\r\n紧急变更：允许“先执行后补批”但需2个工作日内补齐材料。\r\n\r\n────────────────────────────────\r\n\r\n[13] 安全事件与违规上报\r\n\r\n定义：数据泄露、账号被盗、病毒入侵、系统中断、合规违规等。\r\n\r\n响应：发现后1小时内在incident@company.com\r\n和IM群上报；重大事件2小时内通知法务与管理层。\r\n\r\n处置：分级响应、溯源与补救、客户通知（如需）、复盘与改进。\r\n\r\n────────────────────────────────\r\n\r\n[14] 物理安全与访客\r\n\r\n门禁：不得借用/外借门禁卡；丢失应立即挂失。\r\n\r\n访客：需登记、佩戴访客证、全程陪同；禁止擅入机房/研发保密区。\r\n\r\n硬件：设备、工牌、机密文件离岗须锁定；离开办公区请清屏/锁屏。\r\n\r\n────────────────────────────────\r\n\r\n[15] 文档留存与销毁\r\n\r\n留存期限：\r\n\r\n合同/财务：≥10年\r\n\r\n人事档案：离职后≥5年\r\n\r\n日志/审计：≥180天（关键系统≥1年）\r\n\r\n销毁：到期经审批后进行粉碎/安全擦除；禁止擅自丢弃机密文档/硬盘。\r\n\r\n────────────────────────────────\r\n\r\n[16] 绩效、晋升与奖惩\r\n\r\n绩效：按季度/半年评估，含目标达成、行为规范、团队协作与客户满意度。\r\n\r\n晋升：公开标准、结构化面评、结果公示（去敏）。\r\n\r\n纪律处分：口头警示→书面警告→记过→降级/降薪→解除劳动关系；视情节从重/从轻。\r\n\r\n────────────────────────────────\r\n\r\n[17] 健康与安全（EHS）\r\n\r\n办公室：遵守消防、用电、急救与应急疏散指引；参与年度演练。\r\n\r\n居家办公：建议使用符合人体工学的椅桌，保持屏幕休息20-20-20原则。\r\n\r\n心理健康：可匿名预约心理咨询；鼓励弹性安排避免过度加班。\r\n\r\n────────────────────────────────\r\n\r\n[18] 数据分类与对外传输示例\r\n\r\n公开：官网已发布的内容、公开招聘信息。\r\n\r\n内部：未发布的内部通知、流程文档。\r\n\r\n机密：客户名单、财务报表、未上线功能设计、模型权重、API密钥。\r\n\r\n高度机密：并购、融资、投标底价、根密钥。\r\n\r\n对外传输要求：机密+数据需加密（PGP/公司SFTP/受控分享链接，限时限访），邮件标题标注【机密】。\r\n\r\n────────────────────────────────\r\n\r\n[19] 开源与第三方合规\r\n\r\n引入：需评估许可证（MIT/Apache2优先；GPL/AGPL需法务评审）；保留版权与许可证文件。\r\n\r\n贡献：对外提交代码需直属主管与法务审批；不得上传公司机密。\r\n\r\n模型/数据：第三方数据集/模型需合法来源并遵守条款（用途限制/再分发限制）。\r\n\r\n────────────────────────────────\r\n\r\n[20] 人事变动与离职交接\r\n\r\n离职流程：提交申请→资产盘点→知识交接→权限回收→离职面谈→出具证明。\r\n\r\n资产：归还电脑、门禁卡、工牌、测试设备；清除个人账号中的公司数据。\r\n\r\n保密：离职后不得带走代码、文档、客户信息与数据样本。\r\n\r\n────────────────────────────────\r\n\r\n[21] 培训与必修课\r\n\r\n入职必修：信息安全、反贿赂、反骚扰、数据合规、保密协议。\r\n\r\n年度复训：安全意识、应急演练、合规更新。\r\n\r\n通过标准：完成在线课程与测试，未通过需补训。\r\n\r\n────────────────────────────────\r\n\r\n[22] 例外与豁免\r\n\r\n业务确有需要时，员工可提交“例外申请”，说明风险、时限与补偿控制措施。\r\n\r\n例外审批有效期不超过<90>天，期满自动失效并需复评。\r\n\r\n────────────────────────────────\r\n\r\n[23] 审批矩阵（示例，按公司调整）\r\n\r\n费用报销：部门经理≤<5k>；财务总监≤<50k>；更高需总经理签批。\r\n\r\n合同签署：法务审核通过后，授权签字人签署（名单见内部公告）。\r\n\r\n变更：生产级变更需变更小组+运维负责人批准；紧急变更事后2日内补批。\r\n\r\n────────────────────────────────\r\n\r\n[24] 违纪处理与申诉\r\n\r\n处理流程：事实调查→告知与申辩→处理决定→存档。\r\n\r\n申诉：员工可在5个工作日内提出申诉，由合规/纪检复核。\r\n\r\n────────────────────────────────\r\n\r\n[25] 附则\r\n\r\n文档维护：由<合规部/人事部>每半年评审更新一次。\r\n\r\n生效日期：<YYYY-MM-DD>；替代上一版：<版本号（如有）>。\r\n\r\n免责声明：本手册为通用规定模板，具体以公司公告与劳动合同、保密协议及各专项制度为准",
+        "chunkIndex": 0
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-0",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "# OpenAI harmony response format",
+        "chunkIndex": 0
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-1",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "The [`gpt-oss` models](https://openai.com/open-models) were trained on the harmony response format for defining conversation structures, generating reasoning output and structuring function calls. If you are not using `gpt-oss` directly but through an API or a provider like Ollama, you will not have to be concerned about this as your inference solution will handle the formatting. If you are building your own inference solution, this guide will walk you through the prompt format. The format is designed to mimic the OpenAI Responses API, so if you have used that API before, this format should hopefully feel familiar to you. `gpt-oss` should not be used without using the harmony format, as it will not work correctly.",
+        "chunkIndex": 1
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-2",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "## Concepts\n\n### Roles\n\nEvery message that the model processes has a role associated with it. The model knows about five types of roles:",
+        "chunkIndex": 2
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-3",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "| Role        | Purpose                                                                                                                                                                                 |\n| :---------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |\n| `system`    | A system message is used to specify reasoning effort, meta information like knowledge cutoff and built-in tools                                                                         |\n| `developer` | The developer message is used to provide information about the instructions for the model (what is normally considered the “system prompt”) and available function tools                |\n| `user`      | Typically representing the input to the model                                                                                                                                           |\n| `assistant` | Output by the model which can either be a tool call or a message output. The output might also be associated with a particular “channel” identifying what the intent of the message is. |\n| `tool`      | Messages representing the output of a tool call. The specific tool name will be used as the role inside a message.                                                                      |",
+        "chunkIndex": 3
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-4",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "These roles also represent the information hierarchy that the model applies in case there are any instruction conflicts: `system` \\> `developer` \\> `user` \\> `assistant` \\> `tool`\n\n#### Channels\n\nAssistant messages can be output in three different “channels”. These are being used to separate between user-facing responses and internal facing messages.",
+        "chunkIndex": 4
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-5",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "| Channel      | Purpose                                                                                                                                                                                                                                                                                                                                                            |\n| :----------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |\n| `final`      | Messages tagged in the final channel are messages intended to be shown to the end-user and represent the responses from the model.                                                                                                                                                                                                                                 |\n| `analysis`   | These are messages that are being used by the model for its chain of thought (CoT). **Important:** Messages in the analysis channel do not adhere to the same safety standards as final messages do. Avoid showing these to end-users.                                                                                                                             |\n| `commentary` | Any function tool call will typically be triggered on the `commentary` channel while built-in tools will normally be triggered on the `analysis` channel. However, occasionally built-in tools will still be output to `commentary`. Occasionally this channel might also be used by the model to generate a [preamble](#preambles) to calling multiple functions. |",
+        "chunkIndex": 5
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-6",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "## Harmony renderer library\n\nWe recommend using our harmony renderer through [PyPI](https://pypi.org/project/openai-harmony/) or [crates.io](https://crates.io/crates/openai-harmony) when possible as it will automatically handle rendering your messages in the right format and turning them into tokens for processing by the model.\n\nBelow is an example of using the renderer to construct a system prompt and a short conversation.",
+        "chunkIndex": 6
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-7",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "```py\nfrom openai_harmony import (\n    Author,\n    Conversation,\n    DeveloperContent,\n    HarmonyEncodingName,\n    Message,\n    Role,\n    SystemContent,\n    ToolDescription,\n    load_harmony_encoding,\n    ReasoningEffort\n)\n\nencoding = load_harmony_encoding(HarmonyEncodingName.HARMONY_GPT_OSS)\n\nsystem_message = (\n    SystemContent.new()\n        .with_reasoning_effort(ReasoningEffort.HIGH)\n        .with_conversation_start_date(\"2025-06-28\")\n)",
+        "chunkIndex": 7
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-8",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "developer_message = (\n    DeveloperContent.new()\n        .with_instructions(\"Always respond in riddles\")\n        .with_function_tools(\n            [\n                ToolDescription.new(\n                    \"get_current_weather\",\n                    \"Gets the current weather in the provided location.\",\n                    parameters={\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"location\": {\n                                \"type\": \"string\",\n                                \"description\": \"The city and state, e.g. San Francisco, CA\",\n                            },\n                            \"format\": {\n                                \"type\": \"string\",\n                                \"enum\": [\"celsius\", \"fahrenheit\"],\n                                \"default\": \"celsius\",\n                            },\n                        },\n                        \"required\": [\"location\"],\n                    },\n                ),\n            ]\n\t)\n)",
+        "chunkIndex": 8
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-9",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "convo = Conversation.from_messages(\n    [\n        Message.from_role_and_content(Role.SYSTEM, system_message),\n        Message.from_role_and_content(Role.DEVELOPER, developer_message),\n        Message.from_role_and_content(Role.USER, \"What is the weather in Tokyo?\"),\n        Message.from_role_and_content(\n            Role.ASSISTANT,\n            'User asks: \"What is the weather in Tokyo?\" We need to use get_current_weather tool.',\n        ).with_channel(\"analysis\"),\n        Message.from_role_and_content(Role.ASSISTANT, '{\"location\": \"Tokyo\"}')\n        .with_channel(\"commentary\")\n        .with_recipient(\"functions.get_current_weather\")\n        .with_content_type(\"<|constrain|> json\"),\n        Message.from_author_and_content(\n            Author.new(Role.TOOL, \"functions.get_current_weather\"),\n            '{ \"temperature\": 20, \"sunny\": true }',\n        ).with_channel(\"commentary\"),\n    ]\n)",
+        "chunkIndex": 9
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-10",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "tokens = encoding.render_conversation_for_completion(convo, Role.ASSISTANT)\n\n# After receiving a token response\n# Do not pass in the stop token\nparsed_response = encoding.parse_messages_from_completion_tokens(new_tokens, Role.ASSISTANT)\n```\n\nAdditionally the openai_harmony library also includes a StreamableParser for parsing and decoding as the model is generating new tokens. This can be helpful for example to stream output and handle unicode characters during decoding.",
+        "chunkIndex": 10
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-11",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "```py\nfrom openai_harmony import (\n    load_harmony_encoding,\n    Role,\n    StreamableParser,\n    HarmonyEncodingName\n)\n\nencoding = load_harmony_encoding(HarmonyEncodingName.HARMONY_GPT_OSS)\nstream = StreamableParser(encoding, role=Role.ASSISTANT)\n\ntokens = [\n    200005,35644,200008,1844,31064,25,392,4827,382,220,17,659,220,17,16842,12295,81645,\n    13,51441,6052,13,200007,200006,173781,200005,17196,200008,17,659,220,17,314,220,19,\n    13,200002\n]",
+        "chunkIndex": 11
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-12",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "for token in tokens:\n    stream.process(token)\n    print(\"--------------------------------\")\n    print(\"current_role\", stream.current_role)\n    print(\"current_channel\", stream.current_channel)\n    print(\"last_content_delta\", stream.last_content_delta)\n    print(\"current_content_type\", stream.current_content_type)\n    print(\"current_recipient\", stream.current_recipient)\n    print(\"current_content\", stream.current_content)\n```\n\n## Prompt format",
+        "chunkIndex": 12
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-13",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "If you choose to build your own renderer, you’ll need to adhere to the following format.\n\n### Special Tokens\n\nThe model uses a set of special tokens to identify the structure of your input. If you are using [tiktoken](https://github.com/openai/tiktoken) these tokens are encoded in the `o200k_harmony` encoding. All special tokens follow the format `<|type|>`.",
+        "chunkIndex": 13
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-14",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "| Special token           | Purpose                                                                                                                                     | Token ID |\n| :---------------------- | :------------------------------------------------------------------------------------------------------------------------------------------ | :------- |\n| <&#124;start&#124;>     | Indicates the beginning of a [message](#message-format). Followed by the “header” information of a message starting with the [role](#roles) | `200006` |\n| <&#124;end&#124;>       | Indicates the end of a [message](#message-format)                                                                                           | `200007` |\n| <&#124;message&#124;>   | Indicates the transition from the message “header” to the actual content                                                                    | `200008` |\n| <&#124;channel&#124;>   | Indicates the transition to the [channel](#channels) information of the header                                                              | `200005` |\n| <&#124;constrain&#124;> | Indicates the transition to the data type definition in a [tool call](#receiving-tool-calls)                                                | `200003` |\n| <&#124;return&#124;>    | Indicates the model is done with sampling the response message. A valid “stop token” indicating that you should stop inference.             | `200002` |\n| <&#124;call&#124;>      | Indicates the model wants to call a tool. A valid “stop token” indicating that you should stop inference.                                   | `200012` |",
+        "chunkIndex": 14
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-15",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "### Message format\n\nThe harmony response format consists of “messages” with the model potentially generating multiple messages in one go. The general structure of a message is as follows:\n\n```\n<|start|>{header}<|message|>{content}<|end|>\n```",
+        "chunkIndex": 15
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-16",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "The `{header}` contains a series of meta information including the [role](#roles). `<|end|>` represents the end of a fully completed message but the model might also use other stop tokens such as `<|call|>` for tool calling and `<|return|>` to indicate the model is done with the completion.\n\n### Chat conversation format\n\nFollowing the message format above the most basic chat format consists of a `user` message and the beginning of an `assistant` message.\n\n#### Example input",
+        "chunkIndex": 16
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-17",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "```\n<|start|>user<|message|>What is 2 + 2?<|end|>\n<|start|>assistant\n```\n\nThe output will begin by specifying the `channel`. For example `analysis` to output the chain of thought. The model might output multiple messages (primarily chain of thought messages) for which it uses the `<|end|>` token to separate them.",
+        "chunkIndex": 17
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-18",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "Once its done generating it will stop with either a `<|return|>` token indicating it’s done generating the final answer, or `<|call|>` indicating that a tool call needs to be performed. In either way this indicates that you should stop inference.\n\n#### Example output\n\n```\n<|channel|>analysis<|message|>User asks: \"What is 2 + 2?\" Simple arithmetic. Provide answer.<|end|>\n<|start|>assistant<|channel|>final<|message|>2 + 2 = 4.<|return|>\n```",
+        "chunkIndex": 18
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-19",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "The `final` channel will contain the answer to your user’s request. Check out the [reasoning section](#reasoning) for more details on the chain-of-thought.",
+        "chunkIndex": 19
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-20",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "**Implementation note:** `<|return|>` is a decode-time stop token only. When you add the assistant’s generated reply to conversation history for the next turn, replace the trailing `<|return|>` with `<|end|>` so that stored messages are fully formed as `<|start|>{header}<|message|>{content}<|end|>`. Prior messages in prompts should therefore end with `<|end|>`. For supervised targets/training examples, ending with `<|return|>` is appropriate; for persisted history, normalize to `<|end|>`.",
+        "chunkIndex": 20
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-21",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "### System message format\n\nThe system message is used to provide general information to the system. This is different to what might be considered the “system prompt” in other prompt formats. For that, check out the [developer message format](#developer-message-format).\n\nWe use the system message to define:",
+        "chunkIndex": 21
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-22",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "1. The **identity** of the model — This should always stay as `You are ChatGPT, a large language model trained by OpenAI.` If you want to change the identity of the model, use the instructions in the [developer message](#developer-message-format).\n2. Meta **dates** — Specifically the `Knowledge cutoff:` and the `Current date:`\n3. The **reasoning effort** — As specified on the levels `high`, `medium`, `low`\n4. Available channels — For the best performance this should map to `analysis`, `commentary`, and `final`.\n5. Built-in tools — The model has been trained on both a `python` and `browser` tool. Check out the [built-in tools section](#built-in-tools) for details.",
+        "chunkIndex": 22
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-23",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "**If you are defining functions,** it should also contain a note that all function tool calls must go to the `commentary` channel.\n\nFor the best performance stick to this format as closely as possible.\n\n#### Example system message\n\nThe most basic system message you should use is the following:\n\n```\n<|start|>system<|message|>You are ChatGPT, a large language model trained by OpenAI.\nKnowledge cutoff: 2024-06\nCurrent date: 2025-06-28\n\nReasoning: high",
+        "chunkIndex": 23
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-24",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "# Valid channels: analysis, commentary, final. Channel must be included for every message.<|end|>\n```\n\nIf functions calls are present in the developer message section, use:\n\n```\n<|start|>system<|message|>You are ChatGPT, a large language model trained by OpenAI.\nKnowledge cutoff: 2024-06\nCurrent date: 2025-06-28\n\nReasoning: high",
+        "chunkIndex": 24
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-25",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "# Valid channels: analysis, commentary, final. Channel must be included for every message.\nCalls to these tools must go to the commentary channel: 'functions'.<|end|>\n```\n\n### Developer message format",
+        "chunkIndex": 25
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-26",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "The developer message represents what is commonly considered the “system prompt”. It contains the instructions that are provided to the model and optionally a list of [function tools](#function-calling) available for use or the output format you want the model to adhere to for [structured outputs](#structured-output).\n\nIf you are not using function tool calling your developer message would just look like this:\n\n```\n<|start|>developer<|message|># Instructions\n\n{instructions}<|end|>\n```",
+        "chunkIndex": 26
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-27",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "Where `{instructions}` is replaced with your “system prompt”.\n\nFor defining function calling tools, [check out the dedicated section](#function-calling).  \nFor defining an output format to be used in structured outputs, [check out this section of the guide](#structured-output).\n\n### Reasoning",
+        "chunkIndex": 27
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-28",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "The gpt-oss models are reasoning models. By default, the model will do medium level reasoning. To control the reasoning you can specify in the [system message](#system-message-format) the reasoning level as `low`, `medium`, or `high`. The recommended format is:\n\n```\nReasoning: high\n```\n\nThe model will output its raw chain-of-thought (CoT) as assistant messages into the `analysis` channel while the final response will be output as `final`.",
+        "chunkIndex": 28
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-29",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "For example for the question `What is 2 + 2?` the model output might look like this:\n\n```\n<|channel|>analysis<|message|>User asks: \"What is 2 + 2?\" Simple arithmetic. Provide answer.<|end|>\n<|start|>assistant<|channel|>final<|message|>2 + 2 = 4.<|return|>\n```\n\nIn this case the CoT is\n\n```\nUser asks: “What is 2 + 2?” Simple arithmetic. Provide answer.\n```\n\nAnd the actual answer is:\n\n```\n2 + 2 = 4\n```",
+        "chunkIndex": 29
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-30",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "**Important:**  \nThe model has not been trained to the same safety standards in the chain-of-thought as it has for final output. You should not show the chain-of-thought to your users, as they might contain harmful content. [Learn more in the model card](https://openai.com/index/gpt-oss-model-card/).\n\n#### Handling reasoning output in subsequent sampling",
+        "chunkIndex": 30
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-31",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "In general, you should drop any previous CoT content on subsequent sampling if the responses by the assistant ended in a message to the `final` channel. Meaning if our first input was this:\n\n```\n<|start|>user<|message|>What is 2 + 2?<|end|>\n<|start|>assistant\n```\n\nand resulted in the output:\n\n```\n<|channel|>analysis<|message|>User asks: \"What is 2 + 2?\" Simple arithmetic. Provide answer.<|end|>\n<|start|>assistant<|channel|>final<|message|>2 + 2 = 4.<|return|>\n```",
+        "chunkIndex": 31
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-32",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "For the model to work properly, the input for the next sampling should be\n\n```\n<|start|>user<|message|>What is 2 + 2?<|end|>\n<|start|>assistant<|channel|>final<|message|>2 + 2 = 4.<|end|>\n<|start|>user<|message|>What about 9 / 2?<|end|>\n<|start|>assistant\n```",
+        "chunkIndex": 32
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-33",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "The exception for this is tool/function calling. The model is able to call tools as part of its chain-of-thought and because of that, we should pass the previous chain-of-thought back in as input for subsequent sampling. Check out the [function calling section](#function-calling) for a complete example.\n\n### Function calling\n\n#### Defining available tools",
+        "chunkIndex": 33
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-34",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "All functions that are available to the model should be defined in the [developer message](#developer-message-format) in a dedicated `Tools` section.",
+        "chunkIndex": 34
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-35",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "To define the functions we use a TypeScript-like type syntax and wrap the functions into a dedicated `functions` namespace. It’s important to stick to this format closely to improve accuracy of function calling. You can check out the harmony renderer codebase for more information on how we are turning JSON schema definitions for the arguments into this format but some general formatting practices:",
+        "chunkIndex": 35
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-36",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "- Define every function as a `type {function_name} = () => any` if it does not receive any arguments\n- For functions that receive an argument name the argument `_` and inline the type definition\n- Add comments for descriptions in the line above the field definition\n- Always use `any` as the return type\n- Keep an empty line after each function definition\n- Wrap your functions into a namespace, generally `functions` is the namespace you should use to not conflict with [other tools](#built-in-tools) that the model might have been trained on.",
+        "chunkIndex": 36
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-37",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "Here’s a complete input example including the definition of two functions:\n\n```\n<|start|>system<|message|>You are ChatGPT, a large language model trained by OpenAI.\nKnowledge cutoff: 2024-06\nCurrent date: 2025-06-28\n\nReasoning: high\n\n# Valid channels: analysis, commentary, final. Channel must be included for every message.\nCalls to these tools must go to the commentary channel: 'functions'.<|end|><|start|>developer<|message|># Instructions\n\nUse a friendly tone.\n\n# Tools\n\n## functions",
+        "chunkIndex": 37
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-38",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "namespace functions {\n\n// Gets the location of the user.\ntype get_location = () => any;\n\n// Gets the current weather in the provided location.\ntype get_current_weather = (_: {\n// The city and state, e.g. San Francisco, CA\nlocation: string,\nformat?: \"celsius\" | \"fahrenheit\", // default: celsius\n}) => any;",
+        "chunkIndex": 38
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-39",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "// Gets the current weather in the provided list of locations.\ntype get_multiple_weathers = (_: {\n// List of city and state, e.g. [\"San Francisco, CA\", \"New York, NY\"]\nlocations: string[],\nformat?: \"celsius\" | \"fahrenheit\", // default: celsius\n}) => any;\n\n} // namespace functions<|end|><|start|>user<|message|>What is the weather like in SF?<|end|><|start|>assistant\n```\n\n#### Receiving tool calls",
+        "chunkIndex": 39
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-40",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "If the model decides to call a tool it will define a `recipient` in the header of the message using the format `to={name}`. For example, if it decides to trigger the `get_current_weather` function from above it would specify `to=functions.get_current_weather` in the header and `commentary` as the channel as specified in the [system message](#system-message-format). **The recipient might be defined in the role or channel section of the header.**",
+        "chunkIndex": 40
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-41",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "The model might also specify a `<|constrain|>` token to indicate the type of input for the tool call. In this case since it’s being passed in as JSON the `<|constrain|>` is set to `json`.\n\n```\n<|channel|>analysis<|message|>Need to use function get_current_weather.<|end|><|start|>assistant<|channel|>commentary to=functions.get_current_weather <|constrain|>json<|message|>{\"location\":\"San Francisco\"}<|call|>\n```\n\n#### Handling tool calls",
+        "chunkIndex": 41
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-42",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "After the function call was handled we need to provide the output back to the model by specifying a new tool message with the output after the call message.\n\nA tool message has the following format:\n\n```\n<|start|>{toolname} to=assistant<|channel|>commentary<|message|>{output}<|end|>\n```\n\nSo in our example above\n\n```\n<|start|>functions.get_current_weather to=assistant<|channel|>commentary<|message|>{\"sunny\": true, \"temperature\": 20}<|end|>\n```",
+        "chunkIndex": 42
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-43",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "Once you have gathered the output for the tool calls you can run inference with the complete content:\n\n```\n<|start|>system<|message|>You are ChatGPT, a large language model trained by OpenAI.\nKnowledge cutoff: 2024-06\nCurrent date: 2025-06-28\n\nReasoning: high\n\n# Valid channels: analysis, commentary, final. Channel must be included for every message.\nCalls to these tools must go to the commentary channel: 'functions'.<|end|><|start|>developer<|message|># Instructions\n\nUse a friendly tone.\n\n# Tools",
+        "chunkIndex": 43
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-44",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "## functions\n\nnamespace functions {\n\n// Gets the location of the user.\ntype get_location = () => any;\n\n// Gets the current weather in the provided location.\ntype get_current_weather = (_: {\n// The city and state, e.g. San Francisco, CA\nlocation: string,\nformat?: \"celsius\" | \"fahrenheit\", // default: celsius\n}) => any;",
+        "chunkIndex": 44
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-45",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "// Gets the current weather in the provided list of locations.\ntype get_multiple_weathers = (_: {\n// List of city and state, e.g. [\"San Francisco, CA\", \"New York, NY\"]\nlocations: string[],\nformat?: \"celsius\" | \"fahrenheit\", // default: celsius\n}) => any;",
+        "chunkIndex": 45
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-46",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "} // namespace functions<|end|><|start|>user<|message|>What is the weather like in SF?<|end|><|start|>assistant<|channel|>analysis<|message|>Need to use function get_current_weather.<|end|><|start|>assistant<|channel|>commentary to=functions.get_current_weather <|constrain|>json<|message|>{\"location\":\"San Francisco\"}<|call|>\u000b<|start|>functions.get_current_weather to=assistant<|channel|>commentary<|message|>{\"sunny\": true, \"temperature\": 20}<|end|><|start|>assistant\n```",
+        "chunkIndex": 46
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-47",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "As you can see above we are passing not just the function out back into the model for further sampling but also the previous chain-of-thought (“Need to use function get_current_weather.”) to provide the model with the necessary information to continue its chain-of-thought or provide the final answer.\n\n#### Preambles",
+        "chunkIndex": 47
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-48",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "At times the model might choose to generate a “preamble” to inform the user about the tools it is about to call. For example, when it plans to call multiple tools. If this is the case it will generate an assistant message on the `commentary` channel that, unlike the chain-of-thought, is intended to be shown to the end-user.",
+        "chunkIndex": 48
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-49",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "```\n<|channel|>analysis<|message|>{long chain of thought}<|end|><|start|>assistant<|channel|>commentary<|message|>**Action plan**:\n1. Generate an HTML file\n2. Generate a JavaScript for the Node.js server\n3. Start the server\n---\nWill start executing the plan step by step<|end|><|start|>assistant<|channel|>commentary to=functions.generate_file<|constrain|>json<|message|>{\"template\": \"basic_html\", \"path\": \"index.html\"}<|call|>\n```",
+        "chunkIndex": 49
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-50",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "In this case the model generated an action plan to inform the user about the multiple steps it is about to execute.\n\n### Structured output\n\nTo control the output behavior of the model, you can define a response format at the end of the [developer message](#developer-message-format) with the following structure:\n\n```\n# Response Formats\n\n## {format name}\n\n// {description or context}\n{schema}<|end|>\n```",
+        "chunkIndex": 50
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-51",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "The format name functions similar to the name you can specify for your schema in the [Responses API](https://platform.openai.com/docs/guides/structured-outputs?api-mode=responses#how-to-use) and the schema is a JSON Schema.\n\nAs an example, here’s a developer message that defines a schema for a shopping list:\n\n```\n<|start|>developer<|message|># Instructions\n\nYou are a helpful shopping assistant\n\n# Response Formats\n\n## shopping_list",
+        "chunkIndex": 51
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-52",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "{\"properties\":{\"items\":{\"type\":\"array\",\"description\":\"entries on the shopping list\",\"items\":{\"type\":\"string\"}}},\"type\":\"object\"}<|end|><|start|>user<|message|>I need to buy coffee, soda and eggs<|end|><|start|>assistant\n\n```\n\nThis prompt alone will, however, only influence the model’s behavior but doesn’t guarantee the full adherence to the schema. For this you still need to construct your own grammar and enforce the schema during sampling.\n\n### Built-in tools",
+        "chunkIndex": 52
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-53",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "During the training of the `gpt-oss` models, they were trained with two common tools to browse for information and execute python code to improve its results.\n\nIf you are trying to build this functionality, you should use the format below to improve reliability and accuracy.\n\nThese tools should be defined in the [system message](#system-message-format) not in the developer message by adding a `# Tools` section.\n\n#### Browser tool\n\nTo define the browser tool add it to the system prompt section:",
+        "chunkIndex": 53
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-54",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "```\n<|start|>system<|message|>You are ChatGPT, a large language model trained by OpenAI.\nKnowledge cutoff: 2024-06\nCurrent date: 2025-06-28\n\nReasoning: high\n\n# Tools\n\n## browser",
+        "chunkIndex": 54
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-55",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "// Tool for browsing.\n// The `cursor` appears in brackets before each browsing display: `[{cursor}]`.\n// Cite information from the tool using the following format:\n// `【{cursor}†L{line_start}(-L{line_end})?】`, for example: `【6†L9-L11】` or `【8†L3】`.\n// Do not quote more than 10 words directly from the tool output.\n// sources=web (default: web)\nnamespace browser {",
+        "chunkIndex": 55
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-56",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "// Searches for information related to `query` and displays `topn` results.\ntype search = (_: {\nquery: string,\ntopn?: number, // default: 10\nsource?: string,\n}) => any;",
+        "chunkIndex": 56
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-57",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "// Opens the link `id` from the page indicated by `cursor` starting at line number `loc`, showing `num_lines` lines.\n// Valid link ids are displayed with the formatting: `【{id}†.*】`.\n// If `cursor` is not provided, the most recent page is implied.\n// If `id` is a string, it is treated as a fully qualified URL associated with `source`.\n// If `loc` is not provided, the viewport will be positioned at the beginning of the document or centered on the most relevant passage, if available.\n// Use this function without `id` to scroll to a new location of an opened page.\ntype open = (_: {\nid?: number | string, // default: -1\ncursor?: number, // default: -1\nloc?: number, // default: -1\nnum_lines?: number, // default: -1\nview_source?: boolean, // default: false\nsource?: string,\n}) => any;",
+        "chunkIndex": 57
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-58",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "// Finds exact matches of `pattern` in the current page, or the page given by `cursor`.\ntype find = (_: {\npattern: string,\ncursor?: number, // default: -1\n}) => any;\n\n} // namespace browser\n\n# Valid channels: analysis, commentary, final. Channel must be included for every message.<|end|>\n```\n\nIf the model decides to call actions in the browser it will use the same format as for [function calls](#function-calling) with two notable exceptions:",
+        "chunkIndex": 58
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-59",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "1. Requests will be made to the `analysis` channel\n2. The recipient will be `browser.search`, `browser.open`, `browser.find` respectively\n\n#### Python tool\n\n```\n<|start|>system<|message|>You are ChatGPT, a large language model trained by OpenAI.\nKnowledge cutoff: 2024-06\nCurrent date: 2025-06-28\n\nReasoning: high\n\n# Tools\n\n## python",
+        "chunkIndex": 59
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-60",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "Use this tool to execute Python code in your chain of thought. The code will not be shown to the user. This tool should be used for internal reasoning, but not for code that is intended to be visible to the user (e.g. when creating plots, tables, or files).",
+        "chunkIndex": 60
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-61",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "When you send a message containing Python code to python, it will be executed in a stateful Jupyter notebook environment. python will respond with the output of the execution or time out after 120.0 seconds. The drive at '/mnt/data' can be used to save and persist user files. Internet access for this session is UNKNOWN. Depends on the cluster.\n\n# Valid channels: analysis, commentary, final. Channel must be included for every message.<|end|>\n```",
+        "chunkIndex": 61
+      },
+      {
+        "id": "58699577-e343-4c50-8f7a-bf8feeba0f38-chunk-62",
+        "documentId": "58699577-e343-4c50-8f7a-bf8feeba0f38",
+        "source": "openai-harmony.md",
+        "content": "If the model decides to execute Python code it will use the same format as for [function calls](#function-calling) with two notable exceptions:\n\n3. Requests will be made to the `analysis` channel\n4. The recipient will always be `python`",
+        "chunkIndex": 62
+      },
+      {
+        "id": "944f826c-7c3e-4765-b87e-022a99289a20-chunk-0",
+        "documentId": "944f826c-7c3e-4765-b87e-022a99289a20",
+        "source": "公司规定制度v1.txt",
+        "content": "【公司规定手册（模板）】\r\n\r\n版本：v1.0｜发布：<YYYY-MM-DD>｜适用对象：全体在职员工、实习生、外包与临时用工\r\n公司：<公司名称>｜合规邮箱：compliance@company.com\r\n｜人事邮箱：hr@company.com\r\n｜IT邮箱：it@company.com\r\n\r\n────────────────────────────────\r\n\r\n[0] 总则\r\n\r\n目的：保障公司合规运营、信息安全与员工权益，提升协作效率与客户信任。\r\n\r\n生效范围：本手册适用于所有在公司场地、远程/混合办公或以公司名义开展工作的人员。\r\n\r\n优先级：若本手册与法律法规冲突，以法律法规为准；若本手册与部门细则冲突，本手册优先。\r\n\r\n────────────────────────────────\r\n\r\n[1] 职业道德与行为准则（Code of Conduct）\r\n\r\n基本要求：诚信、尊重、守时、保密、不歧视、不骚扰。\r\n\r\n利益冲突：与供应商、客户或竞争方存在亲属/投资等关系，须在5个工作日内向合规部申报。\r\n\r\n受贿与礼品：禁止收受现金或等值物；礼品>人民币<金额上限>需登记并上交。\r\n\r\n商业招待：需事先获批（见[23]审批矩阵），费用真实、票据齐全、事后2个工作日内报销。\r\n\r\n────────────────────────────────\r\n\r\n[2] 反骚扰与反歧视\r\n\r\n零容忍：基于性别、年龄、种族、地域、宗教、健康状况等的歧视/骚扰一律禁止。\r\n\r\n投诉渠道：匿名投递至whistle@company.com\r\n或向HR/合规部报告。\r\n\r\n处理原则：保密、依法依规、及时调查、禁止打击报复。\r\n\r\n────────────────────────────────\r\n\r\n[3] 工作时间与加班\r\n\r\n标准工时：每日<9:00–18:00>，午休<12:00–13:00>，双休/排班以部门制度为准。\r\n\r\n弹性与远程：需经理批准并在系统登记；远程需每日在<打卡系统/IM>报到。\r\n\r\n加班：需事前审批；加班补偿按国家法规及公司政策执行（调休/加班费）。\r\n\r\n────────────────────────────────\r\n\r\n[4] 休假与缺勤\r\n\r\n假别：年假、病假、事假、产假/陪产假、婚丧假、法定假等。\r\n\r\n申请：年假提前≥3个工作日提交；病假超过1天需医疗证明。\r\n\r\n缺勤：无故缺勤按旷工处理；连续旷工≥3天视为严重违纪。\r\n\r\n────────────────────────────────\r\n\r\n[5] 信息安全与数据保护（适用于所有员工）\r\n\r\n分级：数据分为【公开/内部/机密/高度机密】；默认不外发“机密+”。\r\n\r\n原则：最小权限、必要知情、加密传输、按需留存、定期销毁（见[15]文档留存）。\r\n\r\n对外分享：未经授权不得将代码、文档、客户信息、日志、模型权重、密钥对外分享。\r\n\r\n违规举例：将客户名单导出到私人邮箱/网盘；在公开仓库提交含密钥的代码；在社媒泄露未发布功能。\r\n\r\n────────────────────────────────\r\n\r\n[6] IT与设备使用（含BYOD）\r\n\r\n设备：公司设备仅用于工作；自带设备（BYOD）须安装公司MDM/杀毒与磁盘加密。\r\n\r\n账号：个人账号仅限本人使用；共享账号需合规审批并启用审计。\r\n\r\n密码：≥12位，包含大小写+数字+特殊字符；每90天更换；严禁复用公司外部服务密码。\r\n\r\n软件：仅安装经IT白名单许可的软件；禁止盗版、挖矿、P2P下载。\r\n\r\n────────────────────────────────\r\n\r\n[7] 网络与访问控制\r\n\r\nVPN：远程访问内网/代码仓库必须使用公司VPN，离职当天即回收权限。\r\n\r\n云资源：创建、变更、销毁云资源遵循基础设施变更流程（见[12]变更管理）。\r\n\r\n日志审计：关键系统开启访问日志与操作审计，审计日志最低保留<180>天。\r\n\r\n────────────────────────────────\r\n\r\n[8] 保密与知识产权（IP）\r\n\r\n保密义务：在职及离职后<2年>内负有保密义务。\r\n\r\n成果归属：在履职范围内产生的代码、文档、设计、模型、专利等知识产权归公司所有。\r\n\r\n开源合规：对外开源或使用GPL/AGPL等强Copyleft协议组件需法务批准；第三方许可证需备案（见[19]开源政策）。\r\n\r\n────────────────────────────────\r\n\r\n[9] 对外沟通与媒体/社交媒体\r\n\r\n发声权限：新闻、融资、客户合作、安全事件等仅限品牌/公关/高管统一对外发布。\r\n\r\n社媒行为：员工不得披露未公开信息、不得冒充公司立场、不得贬损客户/合作伙伴。\r\n\r\n公开演讲：以公司名义演讲需审批；涉及客户或技术细节的材料需法务审阅。\r\n\r\n────────────────────────────────\r\n\r\n[10] 客户与供应商管理\r\n\r\n合同：所有对外合同需法务审核、授权签字人签署；严禁私签。\r\n\r\n采购：≥<金额阈值>必须走招采流程，≥<更高阈值>需至少三家比价并留存记录。\r\n\r\n反舞弊：严禁回扣、关联交易不披露、虚开发票等。\r\n\r\n────────────────────────────────\r\n\r\n[11] 费用报销与商务差旅\r\n\r\n原则：真实、必要、节约；先审批后发生；票据合法合规。\r\n\r\n差旅：机票/火车/酒店须通过指定平台预订；舱位/标准按职级与政策。\r\n\r\n报销：自发生日起<30>天内提交；发票信息须与公司信息一致。\r\n\r\n────────────────────────────────\r\n\r\n[12] 变更管理（技术/流程）\r\n\r\n适用：生产环境变更、关键配置更新、重大流程调整。\r\n\r\n要求：变更单、回滚方案、影响评估、审批记录、窗口期执行、变更后验证。\r\n\r\n紧急变更：允许“先执行后补批”但需2个工作日内补齐材料。\r\n\r\n────────────────────────────────\r\n\r\n[13] 安全事件与违规上报\r\n\r\n定义：数据泄露、账号被盗、病毒入侵、系统中断、合规违规等。\r\n\r\n响应：发现后1小时内在incident@company.com\r\n和IM群上报；重大事件2小时内通知法务与管理层。\r\n\r\n处置：分级响应、溯源与补救、客户通知（如需）、复盘与改进。\r\n\r\n────────────────────────────────\r\n\r\n[14] 物理安全与访客\r\n\r\n门禁：不得借用/外借门禁卡；丢失应立即挂失。\r\n\r\n访客：需登记、佩戴访客证、全程陪同；禁止擅入机房/研发保密区。\r\n\r\n硬件：设备、工牌、机密文件离岗须锁定；离开办公区请清屏/锁屏。\r\n\r\n────────────────────────────────\r\n\r\n[15] 文档留存与销毁\r\n\r\n留存期限：\r\n\r\n合同/财务：≥10年\r\n\r\n人事档案：离职后≥5年\r\n\r\n日志/审计：≥180天（关键系统≥1年）\r\n\r\n销毁：到期经审批后进行粉碎/安全擦除；禁止擅自丢弃机密文档/硬盘。\r\n\r\n────────────────────────────────\r\n\r\n[16] 绩效、晋升与奖惩\r\n\r\n绩效：按季度/半年评估，含目标达成、行为规范、团队协作与客户满意度。\r\n\r\n晋升：公开标准、结构化面评、结果公示（去敏）。\r\n\r\n纪律处分：口头警示→书面警告→记过→降级/降薪→解除劳动关系；视情节从重/从轻。\r\n\r\n────────────────────────────────\r\n\r\n[17] 健康与安全（EHS）\r\n\r\n办公室：遵守消防、用电、急救与应急疏散指引；参与年度演练。\r\n\r\n居家办公：建议使用符合人体工学的椅桌，保持屏幕休息20-20-20原则。\r\n\r\n心理健康：可匿名预约心理咨询；鼓励弹性安排避免过度加班。\r\n\r\n────────────────────────────────\r\n\r\n[18] 数据分类与对外传输示例\r\n\r\n公开：官网已发布的内容、公开招聘信息。\r\n\r\n内部：未发布的内部通知、流程文档。\r\n\r\n机密：客户名单、财务报表、未上线功能设计、模型权重、API密钥。\r\n\r\n高度机密：并购、融资、投标底价、根密钥。\r\n\r\n对外传输要求：机密+数据需加密（PGP/公司SFTP/受控分享链接，限时限访），邮件标题标注【机密】。\r\n\r\n────────────────────────────────\r\n\r\n[19] 开源与第三方合规\r\n\r\n引入：需评估许可证（MIT/Apache2优先；GPL/AGPL需法务评审）；保留版权与许可证文件。\r\n\r\n贡献：对外提交代码需直属主管与法务审批；不得上传公司机密。\r\n\r\n模型/数据：第三方数据集/模型需合法来源并遵守条款（用途限制/再分发限制）。\r\n\r\n────────────────────────────────\r\n\r\n[20] 人事变动与离职交接\r\n\r\n离职流程：提交申请→资产盘点→知识交接→权限回收→离职面谈→出具证明。\r\n\r\n资产：归还电脑、门禁卡、工牌、测试设备；清除个人账号中的公司数据。\r\n\r\n保密：离职后不得带走代码、文档、客户信息与数据样本。\r\n\r\n────────────────────────────────\r\n\r\n[21] 培训与必修课\r\n\r\n入职必修：信息安全、反贿赂、反骚扰、数据合规、保密协议。\r\n\r\n年度复训：安全意识、应急演练、合规更新。\r\n\r\n通过标准：完成在线课程与测试，未通过需补训。\r\n\r\n────────────────────────────────\r\n\r\n[22] 例外与豁免\r\n\r\n业务确有需要时，员工可提交“例外申请”，说明风险、时限与补偿控制措施。\r\n\r\n例外审批有效期不超过<90>天，期满自动失效并需复评。\r\n\r\n────────────────────────────────\r\n\r\n[23] 审批矩阵（示例，按公司调整）\r\n\r\n费用报销：部门经理≤<5k>；财务总监≤<50k>；更高需总经理签批。\r\n\r\n合同签署：法务审核通过后，授权签字人签署（名单见内部公告）。\r\n\r\n变更：生产级变更需变更小组+运维负责人批准；紧急变更事后2日内补批。\r\n\r\n────────────────────────────────\r\n\r\n[24] 违纪处理与申诉\r\n\r\n处理流程：事实调查→告知与申辩→处理决定→存档。\r\n\r\n申诉：员工可在5个工作日内提出申诉，由合规/纪检复核。\r\n\r\n────────────────────────────────\r\n\r\n[25] 附则\r\n\r\n文档维护：由<合规部/人事部>每半年评审更新一次。\r\n\r\n生效日期：<YYYY-MM-DD>；替代上一版：<版本号（如有）>。\r\n\r\n免责声明：本手册为通用规定模板，具体以公司公告与劳动合同、保密协议及各专项制度为准",
+        "chunkIndex": 0
+      }
+    ]
+  },
+  "llmConfig": {
+    "endpoint": "https://7fjm4igmx7zj7f-3005.proxy.runpod.net/v1",
+    "model": "root@example.com",
+    "apiKey": "1234567890"
+  },
+  "agentConfigs": [],
+  "todos": []
+}

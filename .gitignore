@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+
+# Build output
+/dist/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Coverage
+coverage/
+
+# Environment variables
+.env
+
+# Editor directories
+.vscode/
+.idea/
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# Misc
+*.swp
+
+# claude
+.claude/
+
+# Pycache
+**/__pycache__/
+**/*.pyc
+
+venv/
+server/chroma_rag_db/chroma.sqlite3
+server/chroma_rag_db/0a6cdb3b-d3e4-412f-b085-fb28562bf5c0/data_level0.bin
+server/chroma_rag_db/0a6cdb3b-d3e4-412f-b085-fb28562bf5c0/header.bin
+server/chroma_rag_db/0a6cdb3b-d3e4-412f-b085-fb28562bf5c0/length.bin
+server/chroma_rag_db/0a6cdb3b-d3e4-412f-b085-fb28562bf5c0/link_lists.bin
+Screenshot 2025-12-06 160118.png

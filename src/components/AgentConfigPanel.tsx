@@ -1,0 +1,1707 @@
+import { FormEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import { Bot, Plus, Trash2, X, Link, Loader2, CheckCircle, AlertCircle, RefreshCw } from 'lucide-react';
+import clsx from 'clsx';
+import toast from 'react-hot-toast';
+import { api } from '../api/client';
+import { useChat } from '../context/ChatContext';
+import { Agent, AgentConfigPayload, ReasoningLevel } from '../types/chat';
+
+interface MCPTool {
+    name: string;
+    description: string;
+    inputSchema?: Record<string, unknown>;
+}
+
+interface MCPConfig {
+    url: string;
+    apiKey: string;
+    endpoint?: string;      // Actual endpoint for tool execution (from backend)
+    transport?: 'streamable-http' | 'sse' | 'rest';  // Transport type discovered during connection
+    availableTools: MCPTool[];
+    enabledTools: string[];
+    connected: boolean;
+    lastError?: string;
+}
+
+interface AgentFormState {
+    id?: string;
+    name: string;
+    description: string;
+    avatar: string;
+    status: 'active' | 'inactive';
+    systemPrompt: string;
+    model: { provider: string; name: string; temperature: number; maxTokens: number; endpoint: string; apiKey: string };
+    capabilities: {
+        answer_active: boolean;
+        answer_passive: boolean;
+        like: boolean;
+        summarize: boolean;
+    };
+    runtime: { type: string; proactiveCooldown: number; maxToolRounds: number };
+    mcp: MCPConfig;
+    tools: string[];
+    reasoning: ReasoningLevel;
+    userId?: string;
+}
+
+// Capability configuration: each capability maps to required tools
+const CAPABILITY_CONFIG = {
+    answer_passive: {
+        label: 'Passive Response',
+        description: 'Reply when mentioned (@)',
+        requiredTools: ['chat.send_message', 'chat.reply_to_message'],
+        modeCategory: 'response',
+    },
+    answer_active: {
+        label: 'Proactive Response',
+        description: 'Actively participate in conversation (may reply without @)',
+        requiredTools: ['chat.send_message', 'chat.reply_to_message'],
+        modeCategory: 'response',
+    },
+    like: {
+        label: 'Emoji Reactions',
+        description: 'Add emoji reactions to messages (works with passive/proactive modes)',
+        requiredTools: ['chat.react_to_message'],
+        modeCategory: 'reaction',
+    },
+    summarize: {
+        label: 'Conversation Summary',
+        description: 'Generate conversation summaries',
+        requiredTools: ['chat.send_message', 'chat.get_recent_history'],
+        modeCategory: 'utility',
+    },
+} as const;
+
+// General tools - can be enabled independently, not dependent on specific capabilities
+const GENERAL_TOOLS_CONFIG = {
+    'chat.get_context': {
+        label: 'Get Context',
+        description: 'Get 10 messages around a specific message',
+        icon: '📍',
+    },
+    'chat.get_long_context': {
+        label: 'Get Long Context',
+        description: 'Get full conversation history for deep understanding',
+        icon: '📜',
+    },
+    'tools.web_search': {
+        label: 'Web Search',
+        description: 'Search the web for real-time information',
+        icon: '🔍',
+    },
+    'tools.local_rag': {
+        label: 'Knowledge Base Search',
+        description: 'Retrieve relevant information from uploaded documents',
+        icon: '📚',
+    },
+} as const;
+
+// Helper to determine agent mode
+const getAgentMode = (capabilities: Partial<AgentFormState['capabilities']> | undefined) => {
+    const caps = capabilities || {};
+    if (caps.answer_active && caps.answer_passive) {
+        return { mode: 'hybrid', label: 'Hybrid Mode', description: 'Supports both passive and proactive responses' };
+    }
+    if (caps.answer_active) {
+        return { mode: 'proactive', label: 'Proactive Mode', description: 'Decides autonomously whether to participate' };
+    }
+    if (caps.answer_passive) {
+        return { mode: 'passive', label: 'Passive Mode', description: 'Only replies when mentioned (@)' };
+    }
+    return { mode: 'none', label: 'No Response', description: 'Will not reply to messages' };
+};
+
+const PROVIDERS = ['openai', 'azure', 'anthropic', 'parallax', 'custom'];
+const RUNTIMES = ['internal-function-calling', 'function-calling-proxy', 'custom'];
+
+const buildFormState = (agent?: Agent): AgentFormState => ({
+    id: agent?.id,
+    name: agent?.name || '',
+    description: agent?.description || '',
+    avatar: agent?.avatar || agent?.user?.avatar || '',
+    status: agent?.status || 'active',
+    systemPrompt:
+        agent?.systemPrompt ||
+        'You are a friendly chat assistant. Please provide concise and accurate answers based on context, citing message content when necessary.',
+    model: {
+        provider: agent?.model?.provider || 'openai',
+        name: agent?.model?.name || 'gpt-4o-mini',
+        temperature: agent?.model?.temperature ?? 0.6,
+        maxTokens: agent?.model?.maxTokens ?? 800,
+        endpoint: (agent?.runtime?.endpoint as string) || '',
+        apiKey: (agent?.runtime?.apiKeyAlias as string) || '',
+    },
+    capabilities: {
+        answer_active: agent?.capabilities?.answer_active ?? false,
+        answer_passive: agent?.capabilities?.answer_passive ?? true,
+        like: agent?.capabilities?.like ?? false,
+        summarize: agent?.capabilities?.summarize ?? false,
+    },
+    runtime: {
+        type: agent?.runtime?.type || 'internal-function-calling',
+        proactiveCooldown: agent?.runtime?.proactiveCooldown ?? 30,
+        maxToolRounds: agent?.runtime?.maxToolRounds ?? 3,
+    },
+    mcp: {
+        url: (agent?.mcp?.url as string) || '',
+        apiKey: (agent?.mcp?.apiKey as string) || '',
+        endpoint: (agent?.mcp?.endpoint as string) || undefined,
+        transport: (agent?.mcp?.transport as 'streamable-http' | 'sse' | 'rest') || undefined,
+        availableTools: (agent?.mcp?.availableTools as MCPTool[]) || [],
+        enabledTools: (agent?.mcp?.enabledTools as string[]) || [],
+        connected: !!agent?.mcp?.url && ((agent?.mcp?.availableTools as MCPTool[])?.length || 0) > 0,
+    },
+    tools: agent?.tools?.length ? agent.tools : ['chat.send_message'],
+    reasoning: agent?.reasoning || 'low',
+    userId: agent?.userId,
+});
+
+const toPayload = (state: AgentFormState): AgentConfigPayload => {
+    // Runtime includes model endpoint for backwards compatibility
+    const runtime = {
+        ...state.runtime,
+        endpoint: state.model.endpoint.trim() || undefined,
+        apiKeyAlias: state.model.apiKey.trim() || undefined,
+        maxToolRounds: state.runtime.maxToolRounds,
+    };
+
+    // MCP config (only include if URL is set)
+    const mcp = state.mcp.url.trim() ? {
+        url: state.mcp.url.trim(),
+        apiKey: state.mcp.apiKey.trim() || undefined,
+        endpoint: state.mcp.endpoint || undefined,       // Store the actual endpoint for tool execution
+        transport: state.mcp.transport || undefined,     // Store the transport type
+        enabledTools: state.mcp.enabledTools,
+        availableTools: state.mcp.availableTools,
+    } : undefined;
+
+    const tools = Array.from(new Set(state.tools.filter(Boolean)));
+
+    return {
+        id: state.id,
+        name: state.name.trim(),
+        description: state.description.trim() || undefined,
+        avatar: state.avatar.trim() || undefined,
+        status: state.status,
+        systemPrompt: state.systemPrompt.trim(),
+        model: {
+            provider: state.model.provider,
+            name: state.model.name,
+            temperature: state.model.temperature,
+            maxTokens: state.model.maxTokens,
+        },
+        capabilities: { ...state.capabilities },
+        runtime,
+        mcp,
+        tools,
+        reasoning: state.reasoning,
+        userId: state.userId || undefined,
+    };
+};
+
+interface AgentConfigPanelProps {
+    isOpen: boolean;
+    onClose: () => void;
+}
+
+// API base URL
+const API_URL = import.meta.env.VITE_API_URL ?? (import.meta.env.PROD ? '' : 'http://localhost:4000');
+
+export const AgentConfigPanel = ({ isOpen, onClose }: AgentConfigPanelProps) => {
+    const { state, dispatch } = useChat();
+    const [selectedId, setSelectedId] = useState<string>('new');
+    const [formState, setFormState] = useState<AgentFormState>(() => buildFormState());
+    const [busy, setBusy] = useState(false);
+    const [mcpConnecting, setMcpConnecting] = useState(false);
+
+    const activeAgent = useMemo(
+        () => (selectedId === 'new' ? undefined : state.agents.find((agent) => agent.id === selectedId)),
+        [selectedId, state.agents],
+    );
+
+    const orderedAgents = useMemo(
+        () =>
+            [...state.agents].sort((a, b) => {
+                const ta = a.updatedAt || a.createdAt || 0;
+                const tb = b.updatedAt || b.createdAt || 0;
+                return tb - ta;
+            }),
+        [state.agents],
+    );
+
+    // Track if we've initialized for current selection to avoid resetting on agent list refresh
+    const [initializedFor, setInitializedFor] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (!isOpen) {
+            setInitializedFor(null); // Reset when panel closes
+            return;
+        }
+
+        // Only initialize form if we haven't already for this selection
+        const currentKey = selectedId;
+        if (initializedFor === currentKey) {
+            return; // Already initialized, don't reset
+        }
+
+        if (selectedId === 'new') {
+            setFormState(buildFormState());
+            setInitializedFor(currentKey);
+            return;
+        }
+
+        const match = state.agents.find((agent) => agent.id === selectedId);
+        if (match) {
+            setFormState(buildFormState(match));
+            setInitializedFor(currentKey);
+        } else {
+            setSelectedId('new');
+            setFormState(buildFormState());
+            setInitializedFor('new');
+        }
+    }, [isOpen, selectedId, state.agents, initializedFor]);
+
+    const refreshAgents = useCallback(
+        async (opts?: { silent?: boolean }) => {
+            try {
+                const res = await api.agents.list();
+                dispatch({ type: 'SET_AGENTS', payload: res.agents || [] });
+                if (res.users?.length) {
+                    dispatch({ type: 'SET_USERS', payload: res.users });
+                }
+            } catch (err: any) {
+                console.error('refresh agents failed', err);
+                if (!opts?.silent) {
+                    toast.error(err?.body?.error || err?.message || 'Failed to refresh agent list');
+                }
+                throw err;
+            }
+        },
+        [dispatch],
+    );
+
+    useEffect(() => {
+        if (!isOpen) return;
+        refreshAgents({ silent: true }).catch(() => undefined);
+    }, [isOpen, refreshAgents]);
+
+    const handleSelect = (agent?: Agent) => {
+        const newId = agent?.id ?? 'new';
+        if (newId !== selectedId) {
+            setInitializedFor(null); // Reset so form will reinitialize for new selection
+        }
+        setSelectedId(newId);
+    };
+
+    const handleChange = <K extends keyof AgentFormState>(key: K, value: AgentFormState[K]) => {
+        setFormState((prev) => ({ ...prev, [key]: value }));
+    };
+
+    const handleCapabilityToggle = (key: keyof AgentFormState['capabilities']) => {
+        setFormState((prev) => {
+            const newCapValue = !prev.capabilities[key];
+            const config = CAPABILITY_CONFIG[key];
+            let newTools = [...prev.tools];
+
+            if (newCapValue) {
+                // When enabling capability, automatically add required tools
+                config.requiredTools.forEach((tool) => {
+                    if (!newTools.includes(tool)) {
+                        newTools.push(tool);
+                    }
+                });
+            } else {
+                // When disabling capability, check if other capabilities still need these tools
+                const otherActiveCapabilities = Object.entries(prev.capabilities)
+                    .filter(([k, v]) => k !== key && v)
+                    .map(([k]) => k as keyof typeof CAPABILITY_CONFIG);
+
+                const stillNeededTools = new Set<string>();
+                otherActiveCapabilities.forEach((capKey) => {
+                    CAPABILITY_CONFIG[capKey].requiredTools.forEach((t) => stillNeededTools.add(t));
+                });
+
+                // Only remove tools that are no longer needed
+                config.requiredTools.forEach((tool) => {
+                    if (!stillNeededTools.has(tool)) {
+                        newTools = newTools.filter((t) => t !== tool);
+                    }
+                });
+            }
+
+            return {
+                ...prev,
+                capabilities: { ...prev.capabilities, [key]: newCapValue },
+                tools: newTools,
+            };
+        });
+    };
+
+    const handleGeneralToolToggle = (toolId: string) => {
+        setFormState((prev) => {
+            const hasIt = prev.tools.includes(toolId);
+            const newTools = hasIt
+                ? prev.tools.filter((t) => t !== toolId)
+                : [...prev.tools, toolId];
+            return { ...prev, tools: newTools };
+        });
+    };
+
+    // MCP connection handler
+    const handleMcpConnect = async () => {
+        const mcpUrl = formState.mcp.url.trim();
+        if (!mcpUrl) {
+            toast.error('Please enter MCP server address');
+            return;
+        }
+
+        setMcpConnecting(true);
+        try {
+            const token = document.cookie
+                .split('; ')
+                .find(row => row.startsWith('token='))
+                ?.split('=')[1] || localStorage.getItem('token') || '';
+
+            const response = await fetch(`${API_URL}/mcp/connect`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    url: mcpUrl,
+                    apiKey: formState.mcp.apiKey.trim() || undefined,
+                }),
+                credentials: 'include',
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.error || 'Connection failed');
+            }
+
+            const data = await response.json();
+            const tools: MCPTool[] = data.tools || [];
+            const mcpEndpoint = data.mcpEndpoint || mcpUrl;
+            const mcpTransport = data.mcpTransport || 'rest';
+
+            setFormState((prev) => ({
+                ...prev,
+                mcp: {
+                    ...prev.mcp,
+                    availableTools: tools,
+                    endpoint: mcpEndpoint,
+                    transport: mcpTransport,
+                    connected: true,
+                    lastError: undefined,
+                },
+            }));
+
+            const transportLabel = mcpTransport === 'streamable-http' ? 'Streamable HTTP'
+                : mcpTransport === 'sse' ? 'SSE' : 'REST';
+            toast.success(`Connected to MCP server (${transportLabel}), found ${tools.length} tools`);
+        } catch (err: any) {
+            console.error('MCP connect failed', err);
+            const errorMsg = err?.message || 'MCP connection failed';
+            setFormState((prev) => ({
+                ...prev,
+                mcp: {
+                    ...prev.mcp,
+                    connected: false,
+                    lastError: errorMsg,
+                },
+            }));
+            toast.error(errorMsg);
+        } finally {
+            setMcpConnecting(false);
+        }
+    };
+
+    // MCP tool toggle handler
+    const handleMcpToolToggle = (toolName: string) => {
+        setFormState((prev) => {
+            const isEnabled = prev.mcp.enabledTools.includes(toolName);
+            const newEnabledTools = isEnabled
+                ? prev.mcp.enabledTools.filter((t) => t !== toolName)
+                : [...prev.mcp.enabledTools, toolName];
+            return {
+                ...prev,
+                mcp: {
+                    ...prev.mcp,
+                    enabledTools: newEnabledTools,
+                },
+            };
+        });
+    };
+
+    // Toggle all MCP tools
+    const handleMcpToggleAll = (enable: boolean) => {
+        setFormState((prev) => ({
+            ...prev,
+            mcp: {
+                ...prev.mcp,
+                enabledTools: enable ? prev.mcp.availableTools.map(t => t.name) : [],
+            },
+        }));
+    };
+
+    const handleSave = async (evt?: FormEvent) => {
+        evt?.preventDefault();
+        if (!formState.name.trim()) {
+            toast.error('Please enter Agent name');
+            return;
+        }
+        if (busy) return;
+        setBusy(true);
+        try {
+            const payload = toPayload(formState);
+            const result = formState.id
+                ? await api.agents.update(formState.id, payload)
+                : await api.agents.create(payload);
+            await refreshAgents();
+            handleSelect(result.agent);
+            toast.success(formState.id ? 'Agent updated' : 'Agent created');
+        } catch (err: any) {
+            console.error('save agent failed', err);
+            toast.error(err?.body?.error || err?.message || 'Save failed');
+        } finally {
+            setBusy(false);
+        }
+    };
+
+    const handleDelete = async () => {
+        if (!formState.id || busy) return;
+        setBusy(true);
+        try {
+            const result = await api.agents.remove(formState.id);
+            // Remove the associated user from the users list
+            if (result.deletedUserId) {
+                dispatch({ type: 'REMOVE_USER', payload: { userId: result.deletedUserId } });
+            }
+            await refreshAgents();
+            handleSelect(undefined);
+            toast.success('Agent deleted');
+        } catch (err: any) {
+            console.error('delete agent failed', err);
+            toast.error(err?.body?.error || err?.message || 'Delete failed');
+        } finally {
+            setBusy(false);
+        }
+    };
+
+    if (!isOpen) return null;
+
+    return (
+        <div className="agent-config-overlay">
+            <div className="agent-config-modal">
+                <header className="agent-config-header">
+                    <div>
+                        <h2>Agent Configuration</h2>
+                        <p>Configure LLM Agents available in the room. Customize models, capabilities, and runtime.</p>
+                    </div>
+                    <button className="ghost-btn" onClick={onClose} aria-label="Close Agent Configuration">
+                        <X size={18} />
+                    </button>
+                </header>
+
+                <div className="agent-config-content">
+                    <aside className="agent-config-sidebar">
+                        <div className="sidebar-header">
+                            <span>Agent List</span>
+                            <button className="secondary-btn" onClick={() => handleSelect(undefined)}>
+                                <Plus size={14} />
+                                New
+                            </button>
+                        </div>
+                        {orderedAgents.length === 0 ? (
+                            <div className="empty-block">
+                                <Bot size={28} />
+                                <p>No Agents yet. Click "New" to create one.</p>
+                            </div>
+                        ) : (
+                            <div className="agent-items">
+                                {orderedAgents.map((agent) => (
+                                    <button
+                                        key={agent.id}
+                                        onClick={() => handleSelect(agent)}
+                                        className={clsx('agent-item', selectedId === agent.id && 'active')}
+                                    >
+                                        <div className="avatar">
+                                            <img
+                                                src={
+                                                    agent.avatar ||
+                                                    agent.user?.avatar ||
+                                                    `https://api.dicebear.com/7.x/bottts/svg?seed=${agent.name}`
+                                                }
+                                                alt={agent.name}
+                                            />
+                                        </div>
+                                        <div className="meta">
+                                            <div className="title-row">
+                                                <strong>{agent.name}</strong>
+                                                <span className={clsx('status-dot', agent.status || 'active')} />
+                                            </div>
+                                            <div className="agent-mode-row">
+                                                <small>{agent.model?.name || 'gpt-4o-mini'}</small>
+                                                <span className={clsx('mode-badge', getAgentMode(agent.capabilities || {}).mode)}>
+                                                    {getAgentMode(agent.capabilities || {}).label}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                    </aside>
+
+                    <form className="agent-config-form" onSubmit={handleSave}>
+                        <div className="agent-highlight">
+                            <div className="highlight-avatar">
+                                <img
+                                    src={
+                                        formState.avatar ||
+                                        activeAgent?.avatar ||
+                                        activeAgent?.user?.avatar ||
+                                        `https://api.dicebear.com/7.x/bottts/svg?seed=${formState.name || 'agent-draft'}`
+                                    }
+                                    alt="agent avatar"
+                                />
+                            </div>
+                            <div className="highlight-meta">
+                                <div className="highlight-row">
+                                    <strong>{formState.name || activeAgent?.name || 'New Agent'}</strong>
+                                    <span className={clsx('status-pill', formState.status)}>
+                                        {formState.status === 'active' ? 'Active' : 'Inactive'}
+                                    </span>
+                                </div>
+                                <p>{formState.description || activeAgent?.description || 'Fill in basic information to create a custom Agent.'}</p>
+                                <div className="highlight-mode">
+                                    <span className={clsx('mode-indicator', getAgentMode(formState.capabilities).mode)}>
+                                        {getAgentMode(formState.capabilities).label}
+                                    </span>
+                                    <span className="mode-desc">{getAgentMode(formState.capabilities).description}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <section>
+                            <div className="section-title">Basic Information</div>
+                            <label>
+                                Name
+                                <input value={formState.name} onChange={(e) => handleChange('name', e.target.value)} />
+                            </label>
+                            <label>
+                                Description
+                                <input
+                                    value={formState.description}
+                                    onChange={(e) => handleChange('description', e.target.value)}
+                                />
+                            </label>
+                            <label>
+                                Avatar URL
+                                <input value={formState.avatar} onChange={(e) => handleChange('avatar', e.target.value)} />
+                            </label>
+                            <label>
+                                Status
+                                <select value={formState.status} onChange={(e) => handleChange('status', e.target.value as any)}>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                </select>
+                            </label>
+                        </section>
+
+                        <section>
+                            <div className="section-title">Model & Prompt</div>
+                            <label>
+                                Provider
+                                <select
+                                    value={formState.model.provider}
+                                    onChange={(e) => {
+                                        const newProvider = e.target.value;
+                                        setFormState((prev) => ({
+                                            ...prev,
+                                            model: {
+                                                ...prev.model,
+                                                provider: newProvider,
+                                                // Auto-set default model name when selecting parallax
+                                                name: newProvider === 'parallax' ? 'default' : prev.model.name,
+                                            },
+                                        }));
+                                    }}
+                                >
+                                    {PROVIDERS.map((provider) => (
+                                        <option key={provider} value={provider}>
+                                            {provider}
+                                        </option>
+                                    ))}
+                                </select>
+                            </label>
+                            <label>
+                                Model Endpoint
+                                <input
+                                    value={formState.model.endpoint}
+                                    onChange={(e) =>
+                                        setFormState((prev) => ({ ...prev, model: { ...prev.model, endpoint: e.target.value } }))
+                                    }
+                                    placeholder={formState.model.provider === 'parallax' ? 'https://your-llm-endpoint/v1' : 'https://api.openai.com/v1'}
+                                />
+                                <span className="input-hint">API URL of the model service (custom or third-party)</span>
+                            </label>
+                            <label>
+                                API Key
+                                <input
+                                    type="password"
+                                    value={formState.model.apiKey}
+                                    onChange={(e) =>
+                                        setFormState((prev) => ({ ...prev, model: { ...prev.model, apiKey: e.target.value } }))
+                                    }
+                                    placeholder={
+                                        formState.model.provider === 'openai' ? 'sk-xxx (required)' :
+                                        formState.model.provider === 'anthropic' ? 'sk-ant-xxx (required)' :
+                                        formState.model.provider === 'azure' ? 'Azure API Key (required)' :
+                                        'not-needed or leave empty'
+                                    }
+                                />
+                                <span className="input-hint">
+                                    {formState.model.provider === 'openai' || formState.model.provider === 'anthropic' || formState.model.provider === 'azure'
+                                        ? 'API Key is required for official APIs'
+                                        : 'For local models (Ollama) or self-hosted services like Parallax, use not-needed or leave empty'}
+                                </span>
+                            </label>
+                            <label>
+                                Model Name
+                                <input
+                                    value={formState.model.name}
+                                    onChange={(e) =>
+                                        setFormState((prev) => ({ ...prev, model: { ...prev.model, name: e.target.value } }))
+                                    }
+                                />
+                            </label>
+                            <div className="inline-inputs">
+                                <label>
+                                    Temperature
+                                    <input
+                                        type="number"
+                                        min={0}
+                                        max={2}
+                                        step={0.1}
+                                        value={formState.model.temperature}
+                                        onChange={(e) =>
+                                            setFormState((prev) => ({
+                                                ...prev,
+                                                model: { ...prev.model, temperature: Number(e.target.value) },
+                                            }))
+                                        }
+                                    />
+                                </label>
+                                <label>
+                                    Max Tokens
+                                    <input
+                                        type="number"
+                                        min={128}
+                                        max={16000}
+                                        value={formState.model.maxTokens}
+                                        onChange={(e) =>
+                                            setFormState((prev) => ({
+                                                ...prev,
+                                                model: { ...prev.model, maxTokens: Number(e.target.value) },
+                                            }))
+                                        }
+                                    />
+                                </label>
+                            </div>
+                            <label>
+                                System Prompt
+                                <textarea
+                                    rows={3}
+                                    value={formState.systemPrompt}
+                                    onChange={(e) => handleChange('systemPrompt', e.target.value)}
+                                />
+                            </label>
+                            {formState.model.provider === 'parallax' && (
+                                <label>
+                                    Reasoning Level
+                                    <select
+                                        value={formState.reasoning}
+                                        onChange={(e) => handleChange('reasoning', e.target.value as ReasoningLevel)}
+                                    >
+                                        <option value="low">Low - Fast response</option>
+                                        <option value="medium">Medium - Balanced</option>
+                                        <option value="high">High - Deep thinking</option>
+                                    </select>
+                                    <span className="input-hint">GPT-OSS Harmony format reasoning depth: Low for quick responses, High for deep analysis</span>
+                                </label>
+                            )}
+                        </section>
+
+                        <section>
+                            <div className="section-title">Capabilities & Tools</div>
+                            <p className="section-hint">Enabling capabilities automatically enables required tools</p>
+                            <div className="capability-cards">
+                                {(Object.entries(CAPABILITY_CONFIG) as [keyof typeof CAPABILITY_CONFIG, typeof CAPABILITY_CONFIG[keyof typeof CAPABILITY_CONFIG]][]).map(([key, config]) => {
+                                    const isActive = formState.capabilities[key];
+                                    return (
+                                        <button
+                                            type="button"
+                                            key={key}
+                                            className={clsx('capability-card', isActive && 'active')}
+                                            onClick={() => handleCapabilityToggle(key)}
+                                        >
+                                            <div className="cap-header">
+                                                <span className="cap-label">{config.label}</span>
+                                                <span className={clsx('cap-toggle', isActive && 'on')}>{isActive ? 'On' : 'Off'}</span>
+                                            </div>
+                                            <p className="cap-desc">{config.description}</p>
+                                            <div className="cap-tools">
+                                                {config.requiredTools.map((tool) => (
+                                                    <span key={tool} className="tool-tag">{tool.replace('chat.', '')}</span>
+                                                ))}
+                                            </div>
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                            {formState.tools.length > 0 && (
+                                <div className="active-tools">
+                                    <span className="tools-label">Enabled tools:</span>
+                                    {formState.tools.map((tool) => (
+                                        <span key={tool} className="tool-badge">{tool}</span>
+                                    ))}
+                                </div>
+                            )}
+                        </section>
+
+                        <section>
+                            <div className="section-title">General Tools</div>
+                            <p className="section-hint">Tools that can be enabled independently, available in all modes</p>
+                            <div className="general-tools-row">
+                                {(Object.entries(GENERAL_TOOLS_CONFIG) as [string, typeof GENERAL_TOOLS_CONFIG[keyof typeof GENERAL_TOOLS_CONFIG]][]).map(([toolId, config]) => {
+                                    const isEnabled = formState.tools.includes(toolId);
+                                    return (
+                                        <button
+                                            type="button"
+                                            key={toolId}
+                                            className={clsx('general-tool-chip', isEnabled && 'active')}
+                                            onClick={() => handleGeneralToolToggle(toolId)}
+                                        >
+                                            <span className="gtool-icon">{config.icon}</span>
+                                            <span className="gtool-label">{config.label}</span>
+                                            <span className={clsx('gtool-status', isEnabled && 'on')} />
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        </section>
+
+                        <section>
+                            <div className="section-title">
+                                <Link size={16} />
+                                MCP External Tools
+                            </div>
+                            <p className="section-hint">Connect to MCP servers to use external tools (GitHub, databases, etc.)</p>
+
+                            <div className="mcp-connection-row">
+                                <label className="mcp-url-input">
+                                    MCP Server Address
+                                    <input
+                                        value={formState.mcp.url}
+                                        onChange={(e) => setFormState((prev) => ({
+                                            ...prev,
+                                            mcp: { ...prev.mcp, url: e.target.value }
+                                        }))}
+                                        placeholder="http://localhost:3000/mcp or wss://..."
+                                    />
+                                </label>
+                                <label className="mcp-key-input">
+                                    API Key (Optional)
+                                    <input
+                                        type="password"
+                                        value={formState.mcp.apiKey}
+                                        onChange={(e) => setFormState((prev) => ({
+                                            ...prev,
+                                            mcp: { ...prev.mcp, apiKey: e.target.value }
+                                        }))}
+                                        placeholder="Bearer token or leave empty"
+                                    />
+                                </label>
+                                <button
+                                    type="button"
+                                    className={clsx('mcp-connect-btn', formState.mcp.connected && 'connected')}
+                                    onClick={handleMcpConnect}
+                                    disabled={mcpConnecting || !formState.mcp.url.trim()}
+                                >
+                                    {mcpConnecting ? (
+                                        <>
+                                            <Loader2 size={14} className="spinning" />
+                                            Connecting...
+                                        </>
+                                    ) : formState.mcp.connected ? (
+                                        <>
+                                            <RefreshCw size={14} />
+                                            Refresh
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Link size={14} />
+                                            Connect
+                                        </>
+                                    )}
+                                </button>
+                            </div>
+
+                            {formState.mcp.lastError && (
+                                <div className="mcp-error">
+                                    <AlertCircle size={14} />
+                                    <span>{formState.mcp.lastError}</span>
+                                </div>
+                            )}
+
+                            {formState.mcp.connected && formState.mcp.availableTools.length > 0 && (
+                                <div className="mcp-tools-section">
+                                    <div className="mcp-tools-header">
+                                        <span className="mcp-tools-title">
+                                            <CheckCircle size={14} className="connected-icon" />
+                                            Available Tools ({formState.mcp.availableTools.length})
+                                        </span>
+                                        <div className="mcp-tools-actions">
+                                            <button
+                                                type="button"
+                                                className="mcp-toggle-all"
+                                                onClick={() => handleMcpToggleAll(true)}
+                                            >
+                                                Select All
+                                            </button>
+                                            <button
+                                                type="button"
+                                                className="mcp-toggle-all"
+                                                onClick={() => handleMcpToggleAll(false)}
+                                            >
+                                                Clear
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className="mcp-tools-grid">
+                                        {formState.mcp.availableTools.map((tool) => {
+                                            const isEnabled = formState.mcp.enabledTools.includes(tool.name);
+                                            return (
+                                                <button
+                                                    type="button"
+                                                    key={tool.name}
+                                                    className={clsx('mcp-tool-card', isEnabled && 'active')}
+                                                    onClick={() => handleMcpToolToggle(tool.name)}
+                                                    title={tool.description}
+                                                >
+                                                    <div className="mcp-tool-header">
+                                                        <span className="mcp-tool-name">{tool.name}</span>
+                                                        <span className={clsx('mcp-tool-toggle', isEnabled && 'on')}>
+                                                            {isEnabled ? '✓' : ''}
+                                                        </span>
+                                                    </div>
+                                                    <p className="mcp-tool-desc">{tool.description || 'No description'}</p>
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+                                    {formState.mcp.enabledTools.length > 0 && (
+                                        <div className="mcp-enabled-summary">
+                                            {formState.mcp.enabledTools.length} MCP tools enabled
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+
+                            {formState.mcp.connected && formState.mcp.availableTools.length === 0 && (
+                                <div className="mcp-no-tools">
+                                    <span>Connected, but server provides no tools</span>
+                                </div>
+                            )}
+                        </section>
+
+                        <section>
+                            <div className="section-title">Runtime Settings</div>
+                            <label>
+                                Runtime Type
+                                <select
+                                    value={formState.runtime.type}
+                                    onChange={(e) => handleChange('runtime', { ...formState.runtime, type: e.target.value })}
+                                >
+                                    {RUNTIMES.map((type) => (
+                                        <option key={type} value={type}>
+                                            {type}
+                                        </option>
+                                    ))}
+                                </select>
+                            </label>
+                            {formState.capabilities.answer_active && (
+                                <label>
+                                    Proactive Response Cooldown (seconds)
+                                    <input
+                                        type="number"
+                                        min={5}
+                                        max={300}
+                                        value={formState.runtime.proactiveCooldown}
+                                        onChange={(e) =>
+                                            handleChange('runtime', {
+                                                ...formState.runtime,
+                                                proactiveCooldown: Math.max(5, Math.min(300, Number(e.target.value) || 30)),
+                                            })
+                                        }
+                                    />
+                                    <span className="input-hint">Minimum interval between proactive responses/reactions</span>
+                                </label>
+                            )}
+                            <label>
+                                Max Tool Rounds
+                                <input
+                                    type="number"
+                                    min={1}
+                                    max={10}
+                                    value={formState.runtime.maxToolRounds}
+                                    onChange={(e) =>
+                                        handleChange('runtime', {
+                                            ...formState.runtime,
+                                            maxToolRounds: Math.max(1, Math.min(10, Number(e.target.value) || 3)),
+                                        })
+                                    }
+                                />
+                                <span className="input-hint">Maximum tool call rounds per response (default 3)</span>
+                            </label>
+                        </section>
+
+                        <div className="form-actions">
+                            {formState.id && (
+                                <button type="button" className="danger-btn" disabled={busy} onClick={handleDelete}>
+                                    <Trash2 size={14} />
+                                    Delete
+                                </button>
+                            )}
+                            <div className="spacer" />
+                            <button type="button" className="ghost-btn" onClick={onClose}>
+                                Cancel
+                            </button>
+                            <button type="submit" className="primary-btn" disabled={busy}>
+                                {busy ? 'Saving...' : 'Save'}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <style>{`
+                .agent-config-overlay {
+                    position: fixed;
+                    inset: 0;
+                    background: rgba(8, 15, 35, 0.55);
+                    backdrop-filter: blur(4px);
+                    display: flex;
+                    align-items: flex-start;
+                    justify-content: center;
+                    padding: 32px;
+                    z-index: 120;
+                }
+                .agent-config-modal {
+                    width: min(1100px, 100%);
+                    background: var(--bg-primary);
+                    border-radius: 20px;
+                    box-shadow: 0 30px 80px rgba(15, 23, 42, 0.35);
+                    padding: 24px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 24px;
+                }
+                .agent-config-header {
+                    display: flex;
+                    justify-content: space-between;
+                    gap: 16px;
+                }
+                .agent-config-header h2 {
+                    margin: 0;
+                }
+                .agent-config-header p {
+                    margin: 4px 0 0;
+                    color: var(--text-secondary);
+                }
+                .agent-config-content {
+                    display: grid;
+                    grid-template-columns: 280px 1fr;
+                    gap: 20px;
+                }
+                .agent-config-sidebar {
+                    border: 1px solid var(--border-light);
+                    border-radius: 16px;
+                    padding: 16px;
+                    background: var(--bg-secondary);
+                    display: flex;
+                    flex-direction: column;
+                    gap: 12px;
+                }
+                .sidebar-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                .agent-items {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+                    max-height: 420px;
+                    overflow-y: auto;
+                    padding: 6px 4px;
+                }
+                .agent-item {
+                    border-radius: 12px;
+                    padding: 10px;
+                    display: flex;
+                    gap: 10px;
+                    align-items: center;
+                    border: 1px solid transparent;
+                    background: var(--bg-primary);
+                    text-align: left;
+                    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+                }
+                .agent-item.active {
+                    border-color: var(--accent-primary);
+                    box-shadow: 0 6px 18px rgba(51, 144, 236, 0.12);
+                    outline: 2px solid rgba(51, 144, 236, 0.35);
+                    outline-offset: 2px;
+                    transform: translateY(-1px);
+                }
+                .agent-item:hover {
+                    border-color: var(--border-light);
+                    transform: translateY(-1px);
+                }
+                .avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 10px;
+                    overflow: hidden;
+                }
+                .avatar img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+                .meta {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 2px;
+                }
+                .title-row {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+                .status-dot {
+                    width: 8px;
+                    height: 8px;
+                    border-radius: 50%;
+                    background: #10b981;
+                }
+                .status-dot.inactive {
+                    background: #f97316;
+                }
+                .agent-config-form {
+                    border: 1px solid var(--border-light);
+                    border-radius: 16px;
+                    padding: 18px;
+                    background: var(--bg-secondary);
+                    display: flex;
+                    flex-direction: column;
+                    gap: 18px;
+                    max-height: 75vh;
+                    overflow-y: auto;
+                }
+                .agent-highlight {
+                    display: grid;
+                    grid-template-columns: auto 1fr;
+                    gap: 12px;
+                    align-items: center;
+                    padding: 12px 14px;
+                    border-radius: 14px;
+                    background: linear-gradient(120deg, rgba(51, 144, 236, 0.12), rgba(51, 144, 236, 0.05));
+                    border: 1px solid rgba(51, 144, 236, 0.25);
+                    box-shadow: 0 10px 30px rgba(51, 144, 236, 0.15);
+                }
+                .highlight-avatar {
+                    width: 48px;
+                    height: 48px;
+                    border-radius: 12px;
+                    overflow: hidden;
+                    border: 2px solid rgba(255, 255, 255, 0.6);
+                    background: #0f172a;
+                }
+                .highlight-avatar img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+                .highlight-meta {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 6px;
+                }
+                .highlight-row {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                }
+                .highlight-meta p {
+                    margin: 0;
+                    color: var(--text-secondary);
+                    font-size: 0.9rem;
+                }
+                .status-pill {
+                    padding: 4px 10px;
+                    border-radius: 999px;
+                    font-size: 0.8rem;
+                    background: rgba(51, 144, 236, 0.15);
+                    color: var(--accent-primary);
+                    border: 1px solid rgba(51, 144, 236, 0.35);
+                }
+                .status-pill.inactive {
+                    background: rgba(239, 68, 68, 0.12);
+                    color: #ef4444;
+                    border-color: rgba(239, 68, 68, 0.25);
+                }
+                section {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                }
+                label {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 6px;
+                    color: var(--text-secondary);
+                    font-size: 0.9rem;
+                }
+                input, select, textarea {
+                    border-radius: 10px;
+                    border: 1px solid var(--border-light);
+                    padding: 8px 10px;
+                    background: var(--bg-primary);
+                    color: var(--text-primary);
+                    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+                }
+                input:focus, select:focus, textarea:focus {
+                    border-color: var(--accent-primary);
+                    box-shadow: 0 0 0 3px rgba(51, 144, 236, 0.12);
+                    outline: none;
+                }
+                textarea {
+                    resize: vertical;
+                }
+                .section-title {
+                    font-weight: 600;
+                    color: var(--text-primary);
+                }
+                .section-hint {
+                    margin: 0;
+                    font-size: 0.8rem;
+                    color: var(--text-tertiary);
+                }
+                .input-hint {
+                    font-size: 0.75rem;
+                    color: var(--text-tertiary);
+                    margin-top: 2px;
+                }
+                .capability-cards {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                    gap: 10px;
+                }
+                .capability-card {
+                    border-radius: 14px;
+                    border: 1px solid var(--border-light);
+                    padding: 14px;
+                    background: var(--bg-primary);
+                    text-align: left;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+                }
+                .capability-card:hover {
+                    border-color: rgba(51, 144, 236, 0.4);
+                    transform: translateY(-1px);
+                }
+                .capability-card.active {
+                    border-color: var(--accent-primary);
+                    background: linear-gradient(135deg, rgba(51, 144, 236, 0.08), rgba(51, 144, 236, 0.02));
+                    box-shadow: 0 4px 16px rgba(51, 144, 236, 0.12);
+                }
+                .cap-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                .cap-label {
+                    font-weight: 600;
+                    color: var(--text-primary);
+                    font-size: 0.95rem;
+                }
+                .cap-toggle {
+                    font-size: 0.7rem;
+                    padding: 3px 8px;
+                    border-radius: 999px;
+                    background: rgba(0, 0, 0, 0.06);
+                    color: var(--text-tertiary);
+                }
+                .cap-toggle.on {
+                    background: rgba(16, 185, 129, 0.15);
+                    color: #10b981;
+                }
+                .cap-desc {
+                    margin: 0;
+                    font-size: 0.82rem;
+                    color: var(--text-secondary);
+                    line-height: 1.4;
+                }
+                .cap-tools {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 4px;
+                    margin-top: 4px;
+                }
+                .tool-tag {
+                    font-size: 0.7rem;
+                    padding: 2px 6px;
+                    border-radius: 4px;
+                    background: rgba(124, 58, 237, 0.1);
+                    color: #7c3aed;
+                    font-family: monospace;
+                }
+                .active-tools {
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: center;
+                    gap: 6px;
+                    padding: 10px 12px;
+                    background: rgba(51, 144, 236, 0.06);
+                    border-radius: 10px;
+                    border: 1px dashed rgba(51, 144, 236, 0.2);
+                }
+                .tools-label {
+                    font-size: 0.8rem;
+                    color: var(--text-secondary);
+                }
+                .tool-badge {
+                    font-size: 0.75rem;
+                    padding: 3px 8px;
+                    border-radius: 6px;
+                    background: var(--accent-primary);
+                    color: #fff;
+                    font-family: monospace;
+                }
+                .inline-inputs {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                    gap: 12px;
+                }
+                .capability-row {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 8px;
+                }
+                .chip {
+                    padding: 6px 14px;
+                    border-radius: 999px;
+                    border: 1px solid var(--border-light);
+                    background: var(--bg-primary);
+                    cursor: pointer;
+                    font-size: 0.85rem;
+                }
+                .chip.active {
+                    border-color: var(--accent-primary);
+                    color: var(--accent-primary);
+                    background: rgba(51, 144, 236, 0.1);
+                }
+                .tool-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                    gap: 8px;
+                }
+                .tool-chip {
+                    border-radius: 12px;
+                    border: 1px dashed var(--border-light);
+                    padding: 8px 10px;
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    font-size: 0.8rem;
+                    transition: border-color 0.2s ease, background 0.2s ease;
+                }
+                .tool-chip.checked {
+                    border-style: solid;
+                    border-color: var(--accent-primary);
+                    background: rgba(51, 144, 236, 0.08);
+                }
+                .tool-chip input {
+                    margin: 0;
+                }
+                .form-actions {
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                }
+                .spacer {
+                    flex: 1;
+                }
+                .primary-btn, .secondary-btn, .ghost-btn, .danger-btn {
+                    border-radius: 999px;
+                    padding: 8px 16px;
+                    border: 1px solid transparent;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                    font-weight: 600;
+                }
+                .primary-btn {
+                    background: linear-gradient(120deg, #3390ec, #5fbdff);
+                    color: #fff;
+                    border: none;
+                    box-shadow: 0 8px 25px rgba(51, 144, 236, 0.25);
+                }
+                .secondary-btn {
+                    border: 1px solid var(--border-light);
+                    background: var(--bg-primary);
+                    color: var(--text-primary);
+                    transition: background 0.2s ease, box-shadow 0.2s ease;
+                }
+                .ghost-btn {
+                    background: transparent;
+                    color: var(--text-secondary);
+                }
+                .danger-btn {
+                    border: 1px solid rgba(239, 68, 68, 0.3);
+                    color: #ef4444;
+                    background: rgba(239, 68, 68, 0.1);
+                }
+                .empty-block {
+                    border: 1px dashed var(--border-light);
+                    border-radius: 14px;
+                    padding: 20px;
+                    text-align: center;
+                    color: var(--text-secondary);
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+                    align-items: center;
+                }
+                @media (max-width: 980px) {
+                    .agent-config-content {
+                        grid-template-columns: 1fr;
+                        max-height: 70vh;
+                        overflow-y: auto;
+                    }
+                }
+                @media (max-width: 640px) {
+                    .agent-config-overlay {
+                        padding: 16px;
+                    }
+                    .agent-config-modal {
+                        padding: 16px;
+                    }
+                }
+
+                /* Agent Mode Indicators */
+                .agent-mode-row {
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                }
+                .mode-badge {
+                    font-size: 0.65rem;
+                    padding: 2px 6px;
+                    border-radius: 4px;
+                    font-weight: 500;
+                    white-space: nowrap;
+                }
+                .mode-badge.passive {
+                    background: rgba(59, 130, 246, 0.15);
+                    color: #3b82f6;
+                }
+                .mode-badge.proactive {
+                    background: rgba(16, 185, 129, 0.15);
+                    color: #10b981;
+                }
+                .mode-badge.hybrid {
+                    background: rgba(139, 92, 246, 0.15);
+                    color: #8b5cf6;
+                }
+                .mode-badge.none {
+                    background: rgba(156, 163, 175, 0.15);
+                    color: #9ca3af;
+                }
+
+                /* Highlight Mode Section */
+                .highlight-mode {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    margin-top: 4px;
+                }
+                .mode-indicator {
+                    font-size: 0.75rem;
+                    padding: 4px 10px;
+                    border-radius: 6px;
+                    font-weight: 600;
+                }
+                .mode-indicator.passive {
+                    background: rgba(59, 130, 246, 0.15);
+                    color: #3b82f6;
+                    border: 1px solid rgba(59, 130, 246, 0.3);
+                }
+                .mode-indicator.proactive {
+                    background: rgba(16, 185, 129, 0.15);
+                    color: #10b981;
+                    border: 1px solid rgba(16, 185, 129, 0.3);
+                }
+                .mode-indicator.hybrid {
+                    background: rgba(139, 92, 246, 0.15);
+                    color: #8b5cf6;
+                    border: 1px solid rgba(139, 92, 246, 0.3);
+                }
+                .mode-indicator.none {
+                    background: rgba(156, 163, 175, 0.15);
+                    color: #9ca3af;
+                    border: 1px solid rgba(156, 163, 175, 0.3);
+                }
+                .mode-desc {
+                    font-size: 0.8rem;
+                    color: var(--text-tertiary);
+                }
+
+                /* General Tools Section */
+                .general-tools-row {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 8px;
+                }
+                .general-tool-chip {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                    padding: 8px 14px;
+                    border-radius: 999px;
+                    border: 1px solid var(--border-light);
+                    background: var(--bg-primary);
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                    font-size: 0.85rem;
+                }
+                .general-tool-chip:hover {
+                    border-color: rgba(245, 158, 11, 0.5);
+                    background: rgba(245, 158, 11, 0.05);
+                }
+                .general-tool-chip.active {
+                    border-color: #f59e0b;
+                    background: rgba(245, 158, 11, 0.12);
+                    color: #d97706;
+                }
+                .gtool-icon {
+                    font-size: 1rem;
+                }
+                .gtool-label {
+                    font-weight: 500;
+                }
+                .gtool-status {
+                    width: 8px;
+                    height: 8px;
+                    border-radius: 50%;
+                    background: var(--border-light);
+                    margin-left: 4px;
+                }
+                .gtool-status.on {
+                    background: #10b981;
+                }
+
+                /* MCP Section Styles */
+                .section-title {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                }
+                .mcp-connection-row {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr auto;
+                    gap: 12px;
+                    align-items: end;
+                }
+                .mcp-url-input, .mcp-key-input {
+                    flex: 1;
+                }
+                .mcp-connect-btn {
+                    padding: 8px 16px;
+                    border-radius: 10px;
+                    border: 1px solid var(--accent-primary);
+                    background: rgba(51, 144, 236, 0.1);
+                    color: var(--accent-primary);
+                    font-weight: 600;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                    height: 38px;
+                }
+                .mcp-connect-btn:hover:not(:disabled) {
+                    background: rgba(51, 144, 236, 0.2);
+                }
+                .mcp-connect-btn:disabled {
+                    opacity: 0.5;
+                    cursor: not-allowed;
+                }
+                .mcp-connect-btn.connected {
+                    border-color: #10b981;
+                    background: rgba(16, 185, 129, 0.1);
+                    color: #10b981;
+                }
+                .spinning {
+                    animation: spin 1s linear infinite;
+                }
+                @keyframes spin {
+                    from { transform: rotate(0deg); }
+                    to { transform: rotate(360deg); }
+                }
+                .mcp-error {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    padding: 10px 14px;
+                    border-radius: 10px;
+                    background: rgba(239, 68, 68, 0.1);
+                    border: 1px solid rgba(239, 68, 68, 0.3);
+                    color: #ef4444;
+                    font-size: 0.85rem;
+                }
+                .mcp-tools-section {
+                    border: 1px solid var(--border-light);
+                    border-radius: 12px;
+                    padding: 14px;
+                    background: var(--bg-primary);
+                }
+                .mcp-tools-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 12px;
+                }
+                .mcp-tools-title {
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                    font-weight: 600;
+                    color: var(--text-primary);
+                }
+                .connected-icon {
+                    color: #10b981;
+                }
+                .mcp-tools-actions {
+                    display: flex;
+                    gap: 8px;
+                }
+                .mcp-toggle-all {
+                    padding: 4px 10px;
+                    border-radius: 6px;
+                    border: 1px solid var(--border-light);
+                    background: var(--bg-secondary);
+                    color: var(--text-secondary);
+                    font-size: 0.75rem;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                }
+                .mcp-toggle-all:hover {
+                    border-color: var(--accent-primary);
+                    color: var(--accent-primary);
+                }
+                .mcp-tools-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                    gap: 10px;
+                }
+                .mcp-tool-card {
+                    border-radius: 10px;
+                    border: 1px solid var(--border-light);
+                    padding: 12px;
+                    background: var(--bg-secondary);
+                    text-align: left;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                }
+                .mcp-tool-card:hover {
+                    border-color: rgba(139, 92, 246, 0.4);
+                    transform: translateY(-1px);
+                }
+                .mcp-tool-card.active {
+                    border-color: #8b5cf6;
+                    background: rgba(139, 92, 246, 0.08);
+                }
+                .mcp-tool-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 6px;
+                }
+                .mcp-tool-name {
+                    font-weight: 600;
+                    font-size: 0.85rem;
+                    color: var(--text-primary);
+                    font-family: monospace;
+                }
+                .mcp-tool-toggle {
+                    width: 18px;
+                    height: 18px;
+                    border-radius: 4px;
+                    border: 1px solid var(--border-light);
+                    background: var(--bg-primary);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 0.7rem;
+                    color: transparent;
+                }
+                .mcp-tool-toggle.on {
+                    background: #8b5cf6;
+                    border-color: #8b5cf6;
+                    color: #fff;
+                }
+                .mcp-tool-desc {
+                    margin: 0;
+                    font-size: 0.75rem;
+                    color: var(--text-tertiary);
+                    line-height: 1.4;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                }
+                .mcp-enabled-summary {
+                    margin-top: 12px;
+                    padding: 8px 12px;
+                    border-radius: 8px;
+                    background: rgba(139, 92, 246, 0.1);
+                    color: #8b5cf6;
+                    font-size: 0.8rem;
+                    font-weight: 500;
+                    text-align: center;
+                }
+                .mcp-no-tools {
+                    padding: 20px;
+                    text-align: center;
+                    color: var(--text-tertiary);
+                    font-size: 0.85rem;
+                    border: 1px dashed var(--border-light);
+                    border-radius: 10px;
+                }
+                @media (max-width: 640px) {
+                    .mcp-connection-row {
+                        grid-template-columns: 1fr;
+                    }
+                }
+            `}</style>
+        </div>
+    );
+};

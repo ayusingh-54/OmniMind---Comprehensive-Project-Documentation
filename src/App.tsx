@@ -1,0 +1,309 @@
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { ChatProvider, useChat } from './context/ChatContext';
+import { TypingProvider, useTyping } from './context/TypingContext';
+import { UsersLookupProvider } from './context/UsersLookupContext';
+import { Layout } from './components/Layout';
+import { MessageList } from './components/MessageList';
+import { MessageInput } from './components/MessageInput';
+import { api } from './api/client';
+import { DEFAULT_CONVERSATION_ID, Message, User } from './types/chat';
+import { AuthScreen } from './components/AuthScreen';
+
+const mergeUsers = (users: User[]) => {
+    const map = new Map<string, User>();
+    users.forEach((u) => map.set(u.id, u));
+    return Array.from(map.values());
+};
+
+// Browser notification helper
+const requestNotificationPermission = () => {
+    if ('Notification' in window && Notification.permission === 'default') {
+        Notification.requestPermission();
+    }
+};
+
+const sendNotification = (title: string, body: string, icon?: string) => {
+    if (
+        'Notification' in window &&
+        Notification.permission === 'granted' &&
+        document.hidden
+    ) {
+        new Notification(title, { body, icon: icon || '/favicon.ico' });
+    }
+};
+
+const LoadingScreen = ({ text, error, onRetry }: { text: string; error?: string | null; onRetry?: () => void }) => (
+    <div className="loading-screen">
+        <div className="spinner" />
+        <div>{text}</div>
+        {error && <div className="error">{error}</div>}
+        {onRetry && (
+            <button className="retry-btn" onClick={onRetry}>
+                重试
+            </button>
+        )}
+        <style>{`
+            .loading-screen {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+                color: var(--text-secondary);
+            }
+            .spinner {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                border: 4px solid #e5e7eb;
+                border-top-color: var(--accent-primary);
+                animation: spin 1s linear infinite;
+            }
+            .error {
+                color: #b91c1c;
+            }
+            .retry-btn {
+                padding: 8px 12px;
+                border-radius: 10px;
+                border: 1px solid var(--border-light);
+                background: var(--bg-secondary);
+                cursor: pointer;
+            }
+            @keyframes spin {
+                to { transform: rotate(360deg); }
+            }
+        `}</style>
+    </div>
+);
+
+const ChatApp = () => {
+    return (
+        <Layout>
+            <MessageList />
+            <MessageInput />
+        </Layout>
+    );
+};
+
+const AppShell = () => {
+    const { state, dispatch } = useChat();
+    const { setTypingUsers } = useTyping();
+    const [error, setError] = useState<string | null>(null);
+    const lastFetchedTimestampRef = useRef(0);
+    const lastFullSyncRef = useRef(0);
+    const knownUserIdsRef = useRef<Set<string>>(new Set());
+
+    const updateLastFetchedTimestamp = useCallback((messages: { timestamp: number }[]) => {
+        if (!messages.length) return;
+        const latestTimestamp = messages[messages.length - 1].timestamp;
+        lastFetchedTimestampRef.current = Math.max(lastFetchedTimestampRef.current, latestTimestamp);
+    }, []);
+
+    const fetchAllMessages = useCallback(async () => {
+        const allMessages: Message[] = [];
+        const usersMap = new Map<string, User>();
+        let before: number | undefined;
+        const limit = 200;
+
+        while (true) {
+            const res = await api.messages.list({
+                limit,
+                conversationId: DEFAULT_CONVERSATION_ID,
+                before,
+            });
+
+            res.users.forEach((u) => usersMap.set(u.id, u));
+            if (!res.messages.length) break;
+
+            allMessages.unshift(...res.messages);
+            if (res.messages.length < limit) break;
+
+            const nextBefore = res.messages[0].timestamp;
+            if (nextBefore === before) break;
+            before = nextBefore;
+        }
+
+        return { messages: allMessages, users: Array.from(usersMap.values()) };
+    }, []);
+
+    const bootstrap = useCallback(async () => {
+        dispatch({ type: 'SET_AUTH_STATUS', payload: 'loading' });
+        setError(null);
+        try {
+            const me = await api.auth.me();
+            const [{ users }, { messages, users: messageUsers }, agentsRes] = await Promise.all([
+                api.users.list(),
+                fetchAllMessages(),
+                api.agents.list(),
+            ]);
+            lastFetchedTimestampRef.current = 0;
+            lastFullSyncRef.current = Date.now();
+            const agentUsers = agentsRes?.users || [];
+            const allUsers = mergeUsers([...users, ...messageUsers, ...agentUsers, me.user]);
+            knownUserIdsRef.current = new Set(allUsers.map((u) => u.id));
+            updateLastFetchedTimestamp(messages);
+            dispatch({
+                type: 'HYDRATE',
+                payload: { currentUser: me.user, users: allUsers, messages, agents: agentsRes?.agents || [] },
+            });
+            // Request notification permission after login
+            requestNotificationPermission();
+        } catch (err: any) {
+            console.error('Bootstrap failed', err);
+            setError(err?.message || '加载会话失败');
+            dispatch({ type: 'SET_AUTH_STATUS', payload: 'unauthenticated' });
+        }
+    }, [dispatch, fetchAllMessages, updateLastFetchedTimestamp]);
+
+    useEffect(() => {
+        bootstrap();
+    }, [bootstrap]);
+
+    useEffect(() => {
+        if (state.authStatus !== 'authenticated') return;
+        let cancelled = false;
+        const pollMessages = async () => {
+            const now = Date.now();
+            const shouldFullSync = now - lastFullSyncRef.current >= 30_000;
+            try {
+                if (shouldFullSync) {
+                    const [messagesResult, agentsResult] = await Promise.all([
+                        fetchAllMessages(),
+                        api.agents.list().catch((err) => {
+                            console.error('agents fetch failed', err);
+                            return null;
+                        }),
+                    ]);
+                    const { messages, users } = messagesResult;
+                    if (!cancelled) {
+                        lastFullSyncRef.current = now;
+                        if (users.length) {
+                            const newUsers = users.filter((u) => !knownUserIdsRef.current.has(u.id));
+                            if (newUsers.length) {
+                                newUsers.forEach((u) => knownUserIdsRef.current.add(u.id));
+                                dispatch({ type: 'SET_USERS', payload: newUsers });
+                            }
+                        }
+                        if (agentsResult) {
+                            const agentUsers = agentsResult.users || [];
+                            const newAgentUsers = agentUsers.filter((u) => !knownUserIdsRef.current.has(u.id));
+                            if (newAgentUsers.length) {
+                                newAgentUsers.forEach((u) => knownUserIdsRef.current.add(u.id));
+                                dispatch({ type: 'SET_USERS', payload: newAgentUsers });
+                            }
+                            dispatch({ type: 'SET_AGENTS', payload: agentsResult.agents || [] });
+                        }
+                        updateLastFetchedTimestamp(messages);
+                        dispatch({ type: 'SET_MESSAGES', payload: messages });
+                    }
+                    return;
+                }
+
+                const res = await api.messages.list({
+                    limit: 100,
+                    conversationId: DEFAULT_CONVERSATION_ID,
+                    since: lastFetchedTimestampRef.current || undefined,
+                });
+                if (!cancelled) {
+                    if (res.messages.length) {
+                        updateLastFetchedTimestamp(res.messages);
+                        dispatch({ type: 'UPSERT_MESSAGES', payload: res.messages });
+
+                        // Send browser notification for new messages from others
+                        const otherMessages = res.messages.filter(
+                            (m) => m.senderId !== state.currentUser?.id
+                        );
+                        if (otherMessages.length > 0) {
+                            const latestMsg = otherMessages[otherMessages.length - 1];
+                            const sender = state.users.find((u) => u.id === latestMsg.senderId);
+                            const senderName = sender?.name || '新消息';
+                            const preview = latestMsg.content.length > 50
+                                ? latestMsg.content.slice(0, 50) + '...'
+                                : latestMsg.content;
+                            sendNotification(senderName, preview, sender?.avatar);
+                        }
+                    }
+                    if (res.users.length) {
+                        const newUsers = res.users.filter((u) => !knownUserIdsRef.current.has(u.id));
+                        if (newUsers.length) {
+                            newUsers.forEach((u) => knownUserIdsRef.current.add(u.id));
+                            dispatch({ type: 'SET_USERS', payload: newUsers });
+                        }
+                    }
+                }
+            } catch (err) {
+                console.error('message poll failed', err);
+            }
+        };
+        pollMessages();
+        const id = setInterval(pollMessages, 800);
+        return () => {
+            cancelled = true;
+            clearInterval(id);
+        };
+    }, [dispatch, fetchAllMessages, state.authStatus, updateLastFetchedTimestamp]);
+
+    useEffect(() => {
+        if (!state.users.length) return;
+        knownUserIdsRef.current = new Set(state.users.map((u) => u.id));
+    }, [state.users]);
+
+    useEffect(() => {
+        if (state.authStatus !== 'authenticated' || !state.currentUser) return;
+        let cancelled = false;
+        const fetchTyping = async () => {
+            try {
+                const res = await api.typing.list();
+                if (!cancelled) {
+                    setTypingUsers(res.typingUsers);
+                }
+            } catch (err) {
+                console.error('typing poll failed', err);
+            }
+        };
+        fetchTyping();
+        const id = setInterval(fetchTyping, 1000);
+        return () => {
+            cancelled = true;
+            clearInterval(id);
+        };
+    }, [setTypingUsers, state.authStatus, state.currentUser]);
+
+    const showAuth = state.authStatus === 'unauthenticated';
+    const loading = state.authStatus === 'loading';
+
+    if (loading) {
+        return <LoadingScreen text="正在加载会话..." error={error} onRetry={bootstrap} />;
+    }
+
+    if (showAuth) {
+        return <AuthScreen onAuthenticated={bootstrap} error={error ?? undefined} />;
+    }
+
+    if (!state.currentUser) {
+        return <LoadingScreen text="会话中无用户" onRetry={bootstrap} />;
+    }
+
+    return <ChatApp />;
+};
+
+import { ErrorBoundary } from './components/ErrorBoundary';
+import { Toaster } from 'react-hot-toast';
+
+function App() {
+    return (
+        <ErrorBoundary>
+            <ChatProvider>
+                <TypingProvider>
+                    <UsersLookupProvider>
+                        <AppShell />
+                        <Toaster position="top-center" />
+                    </UsersLookupProvider>
+                </TypingProvider>
+            </ChatProvider>
+        </ErrorBoundary>
+    );
+}
+
+export default App;

@@ -1,0 +1,276 @@
+【Company Policy Manual (Template)】
+
+Version: v1.0 | Published: <YYYY-MM-DD> | Applicable to: All employees, interns, outsourced and temporary workers
+Company: <Company Name> | Compliance Email: compliance@company.com
+| HR Email: hr@company.com
+| IT Email: it@company.com
+
+────────────────────────────────
+
+[0] General Provisions
+
+Purpose: To safeguard compliant company operations, information security, and employee rights; to enhance collaboration efficiency and customer trust.
+
+Scope: This manual applies to all personnel working on company premises, remotely/hybrid, or conducting work on behalf of the company.
+
+Priority: If this manual conflicts with laws and regulations, laws and regulations shall prevail; if this manual conflicts with departmental rules, this manual shall prevail.
+
+────────────────────────────────
+
+[1] Professional Ethics and Code of Conduct
+
+Basic Requirements: Integrity, respect, punctuality, confidentiality, non-discrimination, non-harassment.
+
+Conflicts of Interest: Relationships involving relatives/investments with suppliers, customers, or competitors must be reported to the Compliance Department within 5 business days.
+
+Bribery and Gifts: Accepting cash or cash equivalents is prohibited; gifts exceeding <amount limit> must be registered and surrendered.
+
+Business Entertainment: Prior approval required (see [23] Approval Matrix); expenses must be genuine with complete receipts; reimbursement within 2 business days after the event.
+
+────────────────────────────────
+
+[2] Anti-Harassment and Anti-Discrimination Policy
+
+Zero Tolerance: Discrimination/harassment based on gender, age, race, region, religion, health status, etc. is strictly prohibited.
+
+Complaint Channels: Submit anonymously to whistle@company.com or report to HR/Compliance Department.
+
+Processing Principles: Confidentiality, legal compliance, timely investigation, prohibition of retaliation.
+
+────────────────────────────────
+
+[3] Working Hours and Overtime
+
+Standard Hours: Daily <9:00-18:00>, lunch break <12:00-13:00>, weekends off/shift schedules per department policy.
+
+Flexibility and Remote Work: Manager approval required with system registration; remote work requires daily check-in via <attendance system/IM>.
+
+Overtime: Prior approval required; overtime compensation per national laws and company policy (compensatory leave/overtime pay).
+
+────────────────────────────────
+
+[4] Leave and Absence
+
+Leave Types: Annual leave, sick leave, personal leave, maternity/paternity leave, marriage/bereavement leave, public holidays, etc.
+
+Application: Annual leave requests must be submitted ≥3 business days in advance; sick leave exceeding 1 day requires medical certificate.
+
+Absence: Unnotified absence is treated as unauthorized absence; consecutive unauthorized absence ≥3 days is considered serious misconduct.
+
+────────────────────────────────
+
+[5] Information Security and Data Protection (Applicable to All Employees)
+
+Classification: Data is classified as 【Public/Internal/Confidential/Highly Confidential】; "Confidential+" data should not be shared externally by default.
+
+Principles: Minimum privilege, need-to-know basis, encrypted transmission, retention as needed, regular destruction (see [15] Document Retention).
+
+External Sharing: Do not share code, documents, customer information, logs, model weights, or keys externally without authorization.
+
+Violation Examples: Exporting customer lists to personal email/cloud; committing code containing keys to public repositories; leaking unreleased features on social media.
+
+────────────────────────────────
+
+[6] IT and Equipment Usage (Including BYOD)
+
+Equipment: Company equipment is for work use only; personal devices (BYOD) must have company MDM/antivirus and disk encryption installed.
+
+Accounts: Personal accounts are for individual use only; shared accounts require compliance approval with audit enabled.
+
+Passwords: ≥12 characters including uppercase, lowercase, numbers, and special characters; change every 90 days; reusing passwords from external services is prohibited.
+
+Software: Only install software from the IT-approved whitelist; pirated software, mining, and P2P downloads are prohibited.
+
+────────────────────────────────
+
+[7] Network and Access Control
+
+VPN: Remote access to internal network/code repositories must use company VPN; access rights are revoked on the day of departure.
+
+Cloud Resources: Creation, modification, and deletion of cloud resources must follow infrastructure change procedures (see [12] Change Management).
+
+Log Auditing: Critical systems must have access logs and operation audits enabled; audit logs must be retained for a minimum of <180> days.
+
+────────────────────────────────
+
+[8] Confidentiality and Intellectual Property (IP)
+
+Confidentiality Obligation: Confidentiality obligations apply during employment and for <2 years> after departure.
+
+Ownership of Work: Code, documents, designs, models, patents, and other intellectual property created within the scope of employment belong to the company.
+
+Open Source Compliance: External open-sourcing or use of strong Copyleft components like GPL/AGPL requires legal approval; third-party licenses must be registered (see [19] Open Source Policy).
+
+────────────────────────────────
+
+[9] External Communications and Media/Social Media
+
+Spokesperson Authority: News, funding announcements, customer partnerships, security incidents, etc. may only be released by Brand/PR/Senior Management.
+
+Social Media Conduct: Employees must not disclose unpublished information, impersonate company positions, or disparage customers/partners.
+
+Public Speaking: Speaking on behalf of the company requires approval; materials involving customer or technical details require legal review.
+
+────────────────────────────────
+
+[10] Customer and Supplier Management
+
+Contracts: All external contracts require legal review and signature by authorized signatories; private signing is prohibited.
+
+Procurement: Purchases ≥<amount threshold> must follow procurement procedures; purchases ≥<higher threshold> require at least three quotes with records retained.
+
+Anti-Fraud: Kickbacks, undisclosed related-party transactions, and fraudulent invoices are strictly prohibited.
+
+────────────────────────────────
+
+[11] Expense Reimbursement and Business Travel
+
+Principles: Genuine, necessary, economical; approval before expenditure; legitimate and compliant receipts.
+
+Travel: Flights/trains/hotels must be booked through designated platforms; class/standard per position level and policy.
+
+Reimbursement: Submit within <30> days of expenditure; invoice details must match company information.
+
+────────────────────────────────
+
+[12] Change Management (Technical/Process)
+
+Applicable To: Production environment changes, critical configuration updates, major process adjustments.
+
+Requirements: Change request, rollback plan, impact assessment, approval records, execution during designated windows, post-change verification.
+
+Emergency Changes: "Execute first, approve later" is permitted but documentation must be completed within 2 business days.
+
+────────────────────────────────
+
+[13] Security Incident and Violation Reporting
+
+Definition: Data breaches, account theft, virus attacks, system outages, compliance violations, etc.
+
+Response: Report to incident@company.com and IM group within 1 hour of discovery; major incidents must be reported to Legal and Management within 2 hours.
+
+Resolution: Tiered response, root cause analysis and remediation, customer notification (if required), review and improvement.
+
+────────────────────────────────
+
+[14] Physical Security and Visitors
+
+Access Cards: Lending or borrowing access cards is prohibited; report loss immediately.
+
+Visitors: Registration, visitor badge, and full-time escort required; unauthorized entry to server rooms/R&D restricted areas is prohibited.
+
+Hardware: Equipment, ID cards, and confidential documents must be locked when leaving; clear/lock screen when leaving the office area.
+
+────────────────────────────────
+
+[15] Document Retention and Destruction
+
+Retention Periods:
+
+Contracts/Financial: ≥10 years
+
+Personnel Records: ≥5 years after departure
+
+Logs/Audits: ≥180 days (critical systems ≥1 year)
+
+Destruction: Shredding/secure wiping after approval upon expiration; unauthorized disposal of confidential documents/hard drives is prohibited.
+
+────────────────────────────────
+
+[16] Performance, Promotion, and Rewards/Discipline
+
+Performance: Quarterly/semi-annual evaluations including goal achievement, behavioral standards, team collaboration, and customer satisfaction.
+
+Promotion: Open criteria, structured interviews, results publication (with sensitive information redacted).
+
+Disciplinary Action: Verbal warning → Written warning → Recorded penalty → Demotion/pay reduction → Termination; severity adjusted per circumstances.
+
+────────────────────────────────
+
+[17] Health and Safety (EHS)
+
+Office: Follow fire safety, electrical usage, first aid, and emergency evacuation guidelines; participate in annual drills.
+
+Work from Home: Ergonomic chair and desk recommended; follow the 20-20-20 screen break rule.
+
+Mental Health: Anonymous psychological counseling available; flexible arrangements encouraged to avoid excessive overtime.
+
+────────────────────────────────
+
+[18] Data Classification and External Transmission Examples
+
+Public: Content published on the website, public recruitment information.
+
+Internal: Unpublished internal notices, process documents.
+
+Confidential: Customer lists, financial statements, unreleased feature designs, model weights, API keys.
+
+Highly Confidential: Mergers & acquisitions, funding, bid floor prices, root keys.
+
+External Transmission Requirements: Encrypt Confidential+ data (PGP/company SFTP/controlled share links with time and access limits); mark email subjects with 【Confidential】.
+
+────────────────────────────────
+
+[19] Open Source and Third-Party Compliance
+
+Import: Evaluate licenses (MIT/Apache2 preferred; GPL/AGPL require legal review); retain copyright and license files.
+
+Contribution: External code submissions require direct supervisor and legal approval; do not upload company confidential information.
+
+Models/Data: Third-party datasets/models must be from legitimate sources and comply with terms (usage restrictions/redistribution restrictions).
+
+────────────────────────────────
+
+[20] Personnel Changes and Departure Handover
+
+Departure Process: Submit application → Asset inventory → Knowledge transfer → Access revocation → Exit interview → Issue certificate.
+
+Assets: Return laptop, access card, ID card, test equipment; delete company data from personal accounts.
+
+Confidentiality: Taking code, documents, customer information, and data samples after departure is prohibited.
+
+────────────────────────────────
+
+[21] Training and Mandatory Courses
+
+Onboarding Required: Information security, anti-bribery, anti-harassment, data compliance, confidentiality agreement.
+
+Annual Refresher: Security awareness, emergency drills, compliance updates.
+
+Passing Standards: Complete online courses and tests; retraining required if failed.
+
+────────────────────────────────
+
+[22] Exceptions and Exemptions
+
+When business needs require, employees may submit an "Exception Request" stating risks, time limits, and compensating control measures.
+
+Exception approvals are valid for no more than <90> days; automatically expire upon expiration and require re-evaluation.
+
+────────────────────────────────
+
+[23] Approval Matrix (Example, adjust per company)
+
+Expense Reimbursement: Department Manager ≤<$5k>; Finance Director ≤<$50k>; higher amounts require General Manager approval.
+
+Contract Signing: After legal review, signature by authorized signatory (see internal announcement for list).
+
+Changes: Production-level changes require Change Team + Operations Head approval; emergency changes must be approved within 2 days.
+
+────────────────────────────────
+
+[24] Disciplinary Action and Appeals
+
+Process: Fact investigation → Notification and defense → Decision → Record.
+
+Appeal: Employees may appeal within 5 business days; review by Compliance/Disciplinary Committee.
+
+────────────────────────────────
+
+[25] Supplementary Provisions
+
+Document Maintenance: Reviewed and updated every six months by <Compliance Department/HR Department>.
+
+Effective Date: <YYYY-MM-DD>; replaces previous version: <version number (if any)>.
+
+Disclaimer: This manual is a general policy template; specific cases are governed by company announcements, employment contracts, confidentiality agreements, and various specific policies.

@@ -1,0 +1,150 @@
+// In production, when frontend is served by the backend, use relative paths (empty string)
+// In development, use VITE_API_URL or default to localhost:4000
+const API_BASE = import.meta.env.VITE_API_URL ?? (import.meta.env.PROD ? '' : 'http://localhost:4000');
+
+const request = async <T>(path: string, options: RequestInit = {}): Promise<T> => {
+    const res = await fetch(`${API_BASE}${path}`, {
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json', ...(options.headers || {}) },
+        ...options,
+    });
+    const body = await res.json().catch(() => ({}));
+    if (!res.ok) {
+        const error = new Error(body?.error || res.statusText || `Request failed: ${res.status}`);
+        (error as any).status = res.status;
+        (error as any).body = body;
+        throw error;
+    }
+    return body as T;
+};
+
+export const api = {
+    // Generic methods for ad-hoc requests
+    get: <T>(path: string) => request<T>(path),
+    post: <T>(path: string, data?: unknown) =>
+        request<T>(path, { method: 'POST', body: data ? JSON.stringify(data) : undefined }),
+    delete: <T>(path: string) => request<T>(path, { method: 'DELETE' }),
+
+    auth: {
+        me: () => request<{ user: User }>('/auth/me'),
+        login: (payload: { email: string; password: string }) =>
+            request<{ user: User }>('/auth/login', { method: 'POST', body: JSON.stringify(payload) }),
+        register: (payload: { email: string; password: string; name: string }) =>
+            request<{ user: User }>('/auth/register', { method: 'POST', body: JSON.stringify(payload) }),
+        logout: () => request<{ ok: boolean }>('/auth/logout', { method: 'POST' }),
+    },
+    messages: {
+        list: (params?: { limit?: number; before?: number; since?: number; conversationId?: string }) => {
+            const search = new URLSearchParams();
+            const conversation = params?.conversationId || DEFAULT_CONVERSATION_ID;
+            search.set('conversationId', conversation);
+            if (params?.limit) search.set('limit', String(params.limit));
+            if (params?.before) search.set('before', String(params.before));
+            if (params?.since) search.set('since', String(params.since));
+            const suffix = search.toString() ? `?${search.toString()}` : '';
+            return request<{ messages: Message[]; users: User[] }>(`/messages${suffix}`);
+        },
+        create: (payload: {
+            content: string;
+            replyToId?: string;
+            conversationId?: string;
+            role?: string;
+            metadata?: Record<string, unknown>;
+            mentions?: string[];
+        }) =>
+            request<{ message: Message; users?: User[] }>('/messages', {
+                method: 'POST',
+                body: JSON.stringify({
+                    conversationId: DEFAULT_CONVERSATION_ID,
+                    role: 'user',
+                    metadata: {},
+                    mentions: [],
+                    ...payload,
+                }),
+            }),
+        react: (messageId: string, emoji: string, conversationId?: string) =>
+            request<{ message: Message }>(`/messages/${messageId}/reactions`, {
+                method: 'POST',
+                body: JSON.stringify({ emoji, conversationId }),
+            }),
+        delete: (messageId: string, conversationId?: string) => {
+            const search = new URLSearchParams();
+            if (conversationId) search.set('conversationId', conversationId);
+            const suffix = search.toString() ? `?${search.toString()}` : '';
+            return request<{ deletedMessageId?: string; deletedMessageIds?: string[] }>(`/messages/${messageId}${suffix}`, {
+                method: 'DELETE',
+            });
+        },
+    },
+    typing: {
+        set: (isTyping: boolean) => request<{ typingUsers: string[] }>('/typing', { method: 'POST', body: JSON.stringify({ isTyping }) }),
+        list: () => request<{ typingUsers: string[] }>('/typing'),
+    },
+    users: {
+        list: () => request<{ users: User[] }>('/users'),
+        remove: (userId: string) => request<{ removedUserId: string; removedUserName: string }>(`/users/${userId}`, { method: 'DELETE' }),
+    },
+    llm: {
+        getConfig: () =>
+            request<{ endpoint: string; model?: string; hasApiKey: boolean }>('/llm/config'),
+        saveConfig: (payload: { endpoint: string; model?: string; apiKey?: string; clearApiKey?: boolean }) =>
+            request<{ endpoint: string; model?: string; hasApiKey: boolean }>('/llm/config', {
+                method: 'POST',
+                body: JSON.stringify(payload),
+            }),
+    },
+    knowledgeBase: {
+        delete: (documentId: string) =>
+            request<{ success: boolean; deletedDocument: string; deletedFromRag: boolean }>(
+                `/knowledge-base/documents/${documentId}`,
+                { method: 'DELETE' }
+            ),
+    },
+    agents: {
+        list: () => request<{ agents: Agent[]; users: User[] }>('/agents'),
+        create: (payload: AgentConfigPayload) =>
+            request<{ agent: Agent; user?: User }>('/agents/configs', {
+                method: 'POST',
+                body: JSON.stringify(payload),
+            }),
+        update: (agentId: string, payload: Partial<AgentConfigPayload>) =>
+            request<{ agent: Agent; user?: User }>(`/agents/configs/${agentId}`, {
+                method: 'PATCH',
+                body: JSON.stringify(payload),
+            }),
+        remove: (agentId: string) =>
+            request<{ deletedAgentId: string; deletedUserId: string | null }>(`/agents/configs/${agentId}`, {
+                method: 'DELETE',
+            }),
+        looking: () =>
+            request<{
+                lookingAgents: Array<{
+                    agentId: string;
+                    agentName: string;
+                    userName: string;
+                    avatar: string;
+                }>;
+            }>('/agents/looking'),
+    },
+    todos: {
+        list: () => request<{ todos: Todo[] }>('/todos'),
+        create: (payload: { text: string; sourceMessageId?: string; senderId?: string }) =>
+            request<{ todo: Todo }>('/todos', {
+                method: 'POST',
+                body: JSON.stringify(payload),
+            }),
+        update: (todoId: string, payload: { completed?: boolean; text?: string }) =>
+            request<{ todo: Todo }>(`/todos/${todoId}`, {
+                method: 'PATCH',
+                body: JSON.stringify(payload),
+            }),
+        delete: (todoId: string) =>
+            request<{ deletedTodoId: string }>(`/todos/${todoId}`, { method: 'DELETE' }),
+        sync: (todos: Array<{ text: string; sourceMessageId: string; senderId?: string; timestamp?: number }>) =>
+            request<{ todos: Todo[]; newCount: number; syncedIds: string[] }>('/todos/sync', {
+                method: 'POST',
+                body: JSON.stringify({ todos }),
+            }),
+    },
+};
+import { Agent, AgentConfigPayload, DEFAULT_CONVERSATION_ID, Message, Todo, User } from '../types/chat';

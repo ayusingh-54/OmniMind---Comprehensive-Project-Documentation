@@ -1,0 +1,8 @@
+# Requirements for MCP Research Server
+# Pinned to versions verified with fastmcp 2.13.2
+fastmcp==2.13.2
+requests==2.32.2
+beautifulsoup4==4.12.2
+feedparser==6.0.12
+starlette==0.37.2
+uvicorn==0.38.0
