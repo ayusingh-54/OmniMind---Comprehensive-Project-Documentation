@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <strong>🏆 Privacy-First AI-Native Local Workspace Platform</strong>
+  <strong>Privacy-First AI-Native Local Workspace Platform</strong>
 </p>
 
 <p align="center">
@@ -16,50 +16,50 @@
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
-1. [What is OmniMind?](#-what-is-omnimind)
-2. [The Problem We Solve](#-the-problem-we-solve)
-3. [Key Features](#-key-features)
-4. [System Architecture](#-system-architecture)
-5. [Technology Stack](#-technology-stack)
-6. [Project Structure](#-project-structure)
-7. [Installation & Setup](#-installation--setup)
-8. [Configuration Guide](#-configuration-guide)
-9. [API Reference](#-api-reference)
-10. [Agent System](#-agent-system)
-11. [RAG Knowledge Base](#-rag-knowledge-base)
-12. [MCP Integration](#-mcp-integration)
-13. [Security](#-security)
-14. [Troubleshooting](#-troubleshooting)
+1. [What is OmniMind?](#what-is-omnimind)
+2. [The Problem We Solve](#the-problem-we-solve)
+3. [Key Features](#key-features)
+4. [System Architecture](#system-architecture)
+5. [Technology Stack](#technology-stack)
+6. [Project Structure](#project-structure)
+7. [Installation and Setup](#installation-and-setup)
+8. [Configuration Guide](#configuration-guide)
+9. [API Reference](#api-reference)
+10. [Agent System](#agent-system)
+11. [RAG Knowledge Base](#rag-knowledge-base)
+12. [MCP Integration](#mcp-integration)
+13. [Security](#security)
+14. [Troubleshooting](#troubleshooting)
 
 ---
 
-## 🎯 What is OmniMind?
+## What is OmniMind?
 
 **OmniMind** is a **privacy-first, AI-native local workspace platform** designed to empower teams and individuals with secure, intelligent collaboration. Unlike cloud-based AI solutions that send your data to third-party servers, OmniMind runs entirely on **YOUR infrastructure** using local LLM inference powered by [Parallax](https://github.com/GradientHQ/parallax).
 
 ### Core Philosophy
 
-- **🔒 Privacy First**: All data stays on your hardware - chat history, documents, and vector embeddings never leave your infrastructure
-- **💰 Zero Token Costs**: After initial setup, there are no pay-per-token fees - you own the compute
-- **⚡ Low Latency**: Local inference ensures millisecond-level responses
-- **🎛️ Full Control**: You own the models, the data, and the entire infrastructure
+- **Privacy First**: All data stays on your hardware - chat history, documents, and vector embeddings never leave your infrastructure
+- **Zero Token Costs**: After initial setup, there are no pay-per-token fees - you own the compute
+- **Low Latency**: Local inference ensures millisecond-level responses
+- **Full Control**: You own the models, the data, and the entire infrastructure
 
 ---
 
-## 🔥 The Problem We Solve
+## The Problem We Solve
 
 ### Current Pain Points with Cloud AI Solutions
 
-| Problem                 | Cloud AI Reality                                                               | OmniMind Solution                                      |
-| ----------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------ |
-| **Data Privacy**        | Sensitive conversations, documents, and business data sent to external servers | All data processed and stored locally on YOUR hardware |
-| **Cost Explosion**      | Pay-per-token pricing accumulates rapidly for teams                            | Zero inference costs after hardware setup              |
-| **Latency Issues**      | Network round-trips add 200-500ms+ delay                                       | Local inference = instant responses                    |
-| **Vendor Lock-in**      | Dependent on provider's API availability and pricing changes                   | Complete ownership of models and infrastructure        |
-| **Context Isolation**   | Each conversation starts fresh, no memory across sessions                      | Persistent context with RAG knowledge base             |
-| **Passive Interaction** | Traditional bots only respond when asked                                       | Agents proactively participate in discussions          |
+| Problem | Cloud AI Reality | OmniMind Solution |
+|---------|------------------|-------------------|
+| **Data Privacy** | Sensitive data sent to external servers | All data processed locally on YOUR hardware |
+| **Cost Explosion** | Pay-per-token pricing accumulates rapidly | Zero inference costs after hardware setup |
+| **Latency Issues** | Network round-trips add 200-500ms+ delay | Local inference = instant responses |
+| **Vendor Lock-in** | Dependent on provider API availability | Complete ownership of models and infrastructure |
+| **Context Isolation** | Each conversation starts fresh | Persistent context with RAG knowledge base |
+| **Passive Interaction** | Traditional bots only respond when asked | Agents proactively participate in discussions |
 
 ### Who Is This For?
 
@@ -71,16 +71,16 @@
 
 ---
 
-## ✨ Key Features
+## Key Features
 
-### 🤖 Multi-Agent System
+### Multi-Agent System
 
-OmniMind supports multiple AI agents running simultaneously, each with distinct personalities, capabilities, and tools:
+OmniMind supports multiple AI agents running simultaneously:
 
 ```
-@AI-Assistant  → General Q&A, code help, document analysis
-@Writer        → Content creation, editing, summarization
-@Researcher    → Web search, academic paper retrieval, fact-checking
+@AI-Assistant  -> General Q&A, code help, document analysis
+@Writer        -> Content creation, editing, summarization
+@Researcher    -> Web search, academic paper retrieval
 ```
 
 **Agent Capabilities:**
@@ -90,284 +90,180 @@ OmniMind supports multiple AI agents running simultaneously, each with distinct 
 - **Emoji Reactions**: React to messages with contextual emojis
 - **Summarization**: Generate conversation summaries on demand
 
-### 📚 RAG Knowledge Base (Retrieval-Augmented Generation)
+### RAG Knowledge Base
 
 Upload your documents and the AI gains access to your private knowledge:
 
 - **Supported Formats**: PDF, DOCX, PPTX, TXT, Markdown
 - **Semantic Search**: ChromaDB vector database with cosine similarity
-- **Auto-Chunking**: Intelligent document splitting with overlap for context preservation
-- **Deduplication**: Hash-based document tracking to prevent duplicates
+- **Auto-Chunking**: Intelligent document splitting with overlap
+- **Deduplication**: Hash-based document tracking
 
-### 🔍 Built-in Tools
+### MCP Tool Integration
 
-| Tool               | Description                                               |
-| ------------------ | --------------------------------------------------------- |
-| `GET_CONTEXT`      | Retrieve messages around a specific point in conversation |
-| `GET_LONG_CONTEXT` | Get full conversation history for deep understanding      |
-| `WEB_SEARCH`       | Real-time web search for current information              |
-| `LOCAL_RAG`        | Search your uploaded knowledge base                       |
-| `MCP Tools`        | Extensible Model Context Protocol integration             |
+Extend AI capabilities through Model Context Protocol:
 
-### 💬 Modern Chat Experience
+- **Web Research**: Real-time web search and content extraction
+- **Custom Tools**: Add your own tools via MCP servers
+- **Function Calling**: Structured tool invocation with validation
 
-- **Smart Context Management**: Fine-tuned context engineering for @mentions, reply threads, and conversation history
-- **Rich Text Support**: Markdown rendering with code syntax highlighting
-- **Interactive Features**: Emoji reactions, quote replies, typing indicators
-- **Real-time Sync**: Live message updates across all connected clients
-- **File Attachments**: Upload and share documents directly in chat
+### Real-Time Collaboration
 
-### 🔌 MCP (Model Context Protocol) Integration
-
-Extend agent capabilities with external tools via MCP servers:
-
-```python
-# Example: Research MCP Server provides:
-- arxiv_search      # Search academic papers
-- semantic_scholar  # Find research by topic
-- paper_details     # Get paper metadata
-- summarize_paper   # Generate paper summaries
-```
+- **Multiple Chat Rooms**: Create unlimited rooms for different topics
+- **User Presence**: See who is online and typing in real-time
+- **Message Threading**: Reply to specific messages with context
+- **Reactions**: Add emoji reactions to messages
 
 ---
 
-## 🏗️ System Architecture
+## System Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                         USER / BROWSER                               │
-└─────────────────────────────────────────────────────────────────────┘
-                                    │
-                                    ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│                     REACT FRONTEND (Vite + TypeScript)              │
-│  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐   │
-│  │  ChatContext │ │ MessageList │ │ MessageInput│ │ AgentConfig │   │
-│  └─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘   │
-└─────────────────────────────────────────────────────────────────────┘
-                                    │
-                                    ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│                     EXPRESS BACKEND (Node.js)                        │
-│  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐   │
-│  │  Auth/JWT   │ │  Messages   │ │   Agents    │ │  LLM Config │   │
-│  └─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘   │
-│                          │                                           │
-│                          ▼                                           │
-│                   ┌─────────────┐                                    │
-│                   │  LowDB JSON │                                    │
-│                   └─────────────┘                                    │
-└─────────────────────────────────────────────────────────────────────┘
-                                    │
-                    ┌───────────────┼───────────────┐
-                    ▼               ▼               ▼
-┌───────────────────────┐ ┌───────────────┐ ┌───────────────────────┐
-│   AGENT SERVICE       │ │  RAG SERVICE  │ │    MCP SERVICE        │
-│   (Python)            │ │  (Python)     │ │    (Python)           │
-│ ┌───────────────────┐ │ │ ┌───────────┐ │ │ ┌───────────────────┐ │
-│ │ Multi-Agent Mgr   │ │ │ │ ChromaDB  │ │ │ │ Research Tools    │ │
-│ │ Tool Executor     │ │ │ │ Embeddings│ │ │ │ Web Search        │ │
-│ │ Harmony Parser    │ │ │ │ Doc Parser│ │ │ │ Paper Retrieval   │ │
-│ └───────────────────┘ │ │ └───────────┘ │ │ └───────────────────┘ │
-└───────────────────────┘ └───────────────┘ └───────────────────────┘
-                    │
-                    ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│                    PARALLAX LOCAL LLM INFERENCE                      │
-│              (Llama 3 / Mistral / Qwen / GPT-OSS 20B)               │
-└─────────────────────────────────────────────────────────────────────┘
++------------------+     +------------------+     +------------------+
+|                  |     |                  |     |                  |
+|   React Frontend | <-> |  Express Backend | <-> |   Parallax LLM   |
+|   (Vite + TS)    |     |   (Node.js)      |     |  (Local Model)   |
+|                  |     |                  |     |                  |
++------------------+     +--------+---------+     +------------------+
+                                 |
+         +-----------------------+-----------------------+
+         |                       |                       |
+         v                       v                       v
++------------------+    +------------------+    +------------------+
+|                  |    |                  |    |                  |
+|   RAG Service    |    |  Agent Service   |    |   MCP Server     |
+|  (Flask+Chroma)  |    |  (Multi-Agent)   |    | (Research Tools) |
+|                  |    |                  |    |                  |
++------------------+    +------------------+    +------------------+
 ```
 
-### Service Communication Flow
+### Data Flow
 
-1. **User sends message** → Frontend → Backend API
-2. **Backend stores message** → Notifies Agent Service
-3. **Agent detects @mention** → Fetches context → Queries RAG if needed
-4. **Agent calls LLM** → Local Parallax inference
-5. **LLM may use tools** → Web search, RAG lookup, MCP tools
-6. **Agent posts response** → Backend → Frontend updates
+1. **User Input**: User sends message in React frontend
+2. **Backend Processing**: Express server receives and validates
+3. **Agent Detection**: Checks for @mentions or proactive triggers
+4. **RAG Enhancement**: Retrieves relevant context from knowledge base
+5. **LLM Inference**: Parallax generates response locally
+6. **Response Delivery**: Real-time WebSocket update to all clients
 
 ---
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 ### Frontend
 
-| Technology         | Purpose                                  |
-| ------------------ | ---------------------------------------- |
-| **React 18**       | UI framework with hooks and context      |
-| **TypeScript**     | Type safety and better DX                |
-| **Vite**           | Fast dev server and build tool           |
-| **Framer Motion**  | Smooth animations                        |
-| **React Virtuoso** | Virtualized message list for performance |
-| **Lucide React**   | Icon library                             |
+| Technology | Purpose |
+|------------|---------|
+| React 18.3 | Modern React with hooks |
+| TypeScript 5.8 | Type-safe development |
+| Vite 6.3 | Fast build tool and dev server |
+| Framer Motion | Smooth animations |
+| Socket.IO Client | Real-time communication |
 
 ### Backend
 
-| Technology     | Purpose                       |
-| -------------- | ----------------------------- |
-| **Express.js** | REST API server               |
-| **LowDB**      | JSON file-based database      |
-| **JWT**        | Authentication tokens         |
-| **bcrypt**     | Password hashing              |
-| **Multer**     | File upload handling          |
-| **CORS**       | Cross-origin resource sharing |
+| Technology | Purpose |
+|------------|---------|
+| Node.js 18+ | JavaScript runtime |
+| Express.js | Web framework |
+| Socket.IO | WebSocket server |
+| UUID | Unique identifier generation |
 
 ### AI/ML Services
 
-| Technology     | Purpose                                      |
-| -------------- | -------------------------------------------- |
-| **OpenAI SDK** | LLM client (compatible with local endpoints) |
-| **ChromaDB**   | Vector database for RAG                      |
-| **FastMCP**    | Model Context Protocol server                |
-| **Parallax**   | Local LLM inference engine                   |
-
-### Python Services
-
-| Technology                        | Purpose                   |
-| --------------------------------- | ------------------------- |
-| **Flask**                         | RAG service HTTP API      |
-| **Requests**                      | HTTP client for API calls |
-| **PyPDF/python-docx/python-pptx** | Document parsing          |
+| Technology | Purpose |
+|------------|---------|
+| Parallax | Local LLM inference engine |
+| ChromaDB | Vector database for RAG |
+| Flask | Python web framework for RAG |
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 OmniMind/
-├── 📁 src/                          # Frontend React application
-│   ├── 📁 api/
-│   │   └── client.ts                # API client for backend communication
-│   ├── 📁 components/
-│   │   ├── AgentConfigPanel.tsx     # Agent creation/editing UI
-│   │   ├── AuthScreen.tsx           # Login/Register forms
-│   │   ├── ChatSidebar.tsx          # Conversation list
-│   │   ├── EmojiPicker.tsx          # Emoji selection widget
-│   │   ├── Layout.tsx               # Main app layout
-│   │   ├── MessageBubble/           # Message display components
-│   │   ├── MessageInput.tsx         # Chat input with mentions
-│   │   ├── MessageList.tsx          # Virtualized message list
-│   │   ├── SettingsModal.tsx        # LLM configuration
-│   │   └── Sidebar.tsx              # Navigation sidebar
-│   ├── 📁 context/
-│   │   ├── ChatContext.tsx          # Global chat state management
-│   │   ├── TypingContext.tsx        # Typing indicators
-│   │   └── UsersLookupContext.tsx   # User data cache
-│   ├── 📁 hooks/
-│   │   ├── useDevicePerformance.ts  # Performance detection
-│   │   ├── useNetworkStatus.ts      # Online/offline detection
-│   │   └── useReducedMotion.ts      # Accessibility
-│   ├── 📁 types/
-│   │   └── chat.ts                  # TypeScript type definitions
-│   ├── App.tsx                      # Main application component
-│   └── main.tsx                     # Application entry point
-│
-├── 📁 server/
-│   ├── server.js                    # Express backend (3000+ lines)
-│   └── data.json                    # LowDB database file
-│
-├── 📁 agents/                       # Python AI services
-│   ├── agent_runner.py              # Entry point for agent service
-│   ├── agent_service.py             # Main agent logic (~1000 lines)
-│   ├── base_agent.py                # Base agent class
-│   ├── multi_agent_manager.py       # Concurrent agent management
-│   ├── 📁 core/
-│   │   ├── config.py                # Environment configuration
-│   │   ├── llm_client.py            # OpenAI-compatible LLM client
-│   │   ├── tool_executor.py         # Built-in tool implementations
-│   │   ├── tool_formatters.py       # Tool prompt formatting
-│   │   ├── harmony_parser.py        # GPT-OSS response parsing
-│   │   └── response_cleaner.py      # Output sanitization
-│   ├── 📁 rag/
-│   │   ├── rag_service.py           # RAG API server (~550 lines)
-│   │   ├── document_parser.py       # PDF/DOCX/PPTX parsing
-│   │   └── requirements.txt         # RAG dependencies
-│   └── 📁 mcp/
-│       ├── mcp_research_server.py   # Research tools MCP server
-│       └── requirements.txt         # MCP dependencies
-│
-├── 📁 public/                       # Static assets
-├── 📁 assets/                       # Images and media
-├── package.json                     # Node.js dependencies
-├── vite.config.ts                   # Vite configuration
-├── tsconfig.json                    # TypeScript configuration
-└── README.md                        # Main documentation
+├── src/                          # Frontend source code
+│   ├── components/               # React components
+│   │   ├── MessageBubble/        # Chat message display
+│   │   ├── ChatSidebar.tsx       # Room navigation
+│   │   ├── MessageInput.tsx      # Message composition
+│   │   └── MessageList.tsx       # Message display
+│   ├── api/                      # API client
+│   ├── context/                  # React contexts
+│   ├── hooks/                    # Custom hooks
+│   └── types/                    # TypeScript types
+├── server/                       # Backend server
+│   ├── server.js                 # Express + Socket.IO
+│   └── data.json                 # Local data storage
+├── agents/                       # AI agent services
+│   ├── agent_service.py          # Main agent runner
+│   ├── base_agent.py             # Agent base class
+│   ├── core/                     # Agent core modules
+│   ├── rag/                      # RAG service
+│   └── mcp/                      # MCP server
+└── package.json                  # Node.js dependencies
 ```
 
 ---
 
-## 🚀 Installation & Setup
+## Installation and Setup
 
 ### Prerequisites
 
-- **Node.js 18+** - JavaScript runtime
-- **Python 3.10-3.12** - For AI services (3.14 has compatibility issues)
-- **Parallax** - Local LLM inference engine ([Installation Guide](https://github.com/GradientHQ/parallax))
-- **GPU (Recommended)** - NVIDIA GPU with 8GB+ VRAM for local LLM
+- **Node.js 18+** - [Download](https://nodejs.org/)
+- **Python 3.10+** - [Download](https://python.org/)
+- **Parallax** - [Installation Guide](https://github.com/GradientHQ/parallax)
+- **Git** - [Download](https://git-scm.com/)
 
-### Step 1: Clone and Install Dependencies
+### Step 1: Clone Repository
 
 ```bash
-# Clone the repository
-git clone https://github.com/zengyuzhi/omnimind.git
-cd omnimind
+git clone https://github.com/ayusingh-54/OmniMind---Comprehensive-Project-Documentation.git
+cd OmniMind
+```
 
-# Install Node.js dependencies
+### Step 2: Install Node.js Dependencies
+
+```bash
 npm install
+```
 
-# Create Python virtual environment
+### Step 3: Install Python Dependencies
+
+```bash
+# Create virtual environment
 python -m venv .venv
 
-# Activate virtual environment
-# Windows:
-.\.venv\Scripts\Activate.ps1
-# Linux/Mac:
+# Activate (Windows)
+.venv\Scripts\activate
+
+# Activate (macOS/Linux)
 source .venv/bin/activate
 
-# Install Python dependencies for all services
-pip install -r agents/requirements.txt
+# Install dependencies
 pip install -r agents/rag/requirements.txt
-pip install -r agents/mcp/requirements.txt
+pip install -r agents/requirements.txt
 ```
 
-### Step 2: Configure Environment
+### Step 4: Start Parallax
 
-Create a `.env` file in the project root:
-
-```env
-# Server Configuration
-PORT=4000
-JWT_SECRET=your-secure-secret-key-change-this
-
-# Client Origins (for CORS)
-CLIENT_ORIGIN=http://localhost:5173,http://localhost:5174
-
-# Agent Configuration
-AGENT_API_TOKEN=dev-agent-token
-
-# LLM Configuration (Parallax endpoint)
-LLM_ENDPOINT=http://localhost:8080/v1
-LLM_API_KEY=not-needed
-LLM_MODEL=gpt-oss-20b
-
-# RAG Service
-RAG_SERVICE_URL=http://localhost:4001
-CHROMA_DB_PATH=./server/chroma_rag_db
+```bash
+parallax serve --model llama3.2:3b
 ```
 
-### Step 3: Start All Services
+### Step 5: Start All Services
 
-You need to start **5 services** in separate terminals:
+Open 5 terminal windows:
 
-**Terminal 1 - Backend API Server:**
+**Terminal 1 - Backend Server:**
 
 ```bash
 npm run server
 # Runs on http://localhost:4000
 ```
 
-**Terminal 2 - RAG Knowledge Base:**
+**Terminal 2 - RAG Service:**
 
 ```bash
 cd agents/rag
@@ -375,11 +271,11 @@ python rag_service.py --port 4001
 # Runs on http://localhost:4001
 ```
 
-**Terminal 3 - MCP Research Service (Optional):**
+**Terminal 3 - MCP Server:**
 
 ```bash
 cd agents/mcp
-python mcp_research_server.py --transport sse --port 3001
+python mcp_research_server.py
 # Runs on http://localhost:3001
 ```
 
@@ -387,365 +283,250 @@ python mcp_research_server.py --transport sse --port 3001
 
 ```bash
 cd agents
-python agent_runner.py
-# Connects to backend on port 4000
+python agent_service.py
 ```
 
-**Terminal 5 - Frontend Dev Server:**
+**Terminal 5 - Frontend:**
 
 ```bash
 npm run dev
 # Runs on http://localhost:5173
 ```
 
-### Step 4: Access the Application
+### Step 6: Access Application
 
-Open your browser and navigate to: **http://localhost:5173**
+Open browser: **http://localhost:5173**
 
-Login with default credentials:
+**Default Credentials:**
 
-- **Email**: `root@example.com`
-- **Password**: `1234567890`
+- Email: `root@example.com`
+- Password: `1234567890`
 
 ---
 
-## ⚙️ Configuration Guide
+## Configuration Guide
 
-### LLM Configuration (Settings → AI Settings)
+### Environment Variables
 
-Configure your LLM endpoint through the UI:
+Create a `.env` file in the root directory:
 
-| Setting      | Description               | Example                      |
-| ------------ | ------------------------- | ---------------------------- |
-| **Endpoint** | OpenAI-compatible API URL | `http://localhost:8080/v1`   |
-| **Model**    | Model identifier          | `gpt-oss-20b`, `llama-3-70b` |
-| **API Key**  | Authentication key        | `not-needed` for local       |
+```env
+# Server Configuration
+PORT=4000
+CLIENT_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
 
-### Agent Configuration
+# Parallax Configuration
+PARALLAX_HOST=http://127.0.0.1:11434
+PARALLAX_MODEL=llama3.2:3b
 
-Create and configure agents through the Agent Config Panel:
+# RAG Service
+RAG_SERVICE_URL=http://localhost:4001
+CHROMA_PERSIST_DIR=./chroma_db
 
-```typescript
-interface AgentConfig {
-  name: string; // Display name
-  description: string; // Agent purpose
-  avatar: string; // Avatar URL
-  status: "active" | "inactive";
-
-  // Behavior settings
-  capabilities: {
-    answer_passive: boolean; // Reply when @mentioned
-    answer_active: boolean; // Proactive participation
-    like: boolean; // Emoji reactions
-    summarize: boolean; // Summarization ability
-  };
-
-  // Model settings
-  model: {
-    provider: string; // 'openai', 'parallax', etc.
-    name: string; // Model name
-    temperature: number; // 0.0 - 2.0
-    maxTokens: number; // Max response length
-  };
-
-  // Tool configuration
-  tools: string[]; // Enabled tools
-  mcp?: {
-    url: string; // MCP server URL
-    enabledTools: string[];
-  };
-}
-```
-
-### RAG Knowledge Base Configuration
-
-Upload documents through the UI or API:
-
-```bash
-# Upload via API
-curl -X POST http://localhost:4001/rag/upload-file \
-  -F "file=@document.pdf"
-
-# Search knowledge base
-curl -X POST http://localhost:4001/rag/search \
-  -H "Content-Type: application/json" \
-  -d '{"query": "your search query", "topK": 5}'
+# MCP Server
+MCP_SERVER_URL=http://localhost:3001
 ```
 
 ---
 
-## 📡 API Reference
+## API Reference
 
-### Authentication Endpoints
+### REST Endpoints
 
-| Method | Endpoint         | Description        |
-| ------ | ---------------- | ------------------ |
-| POST   | `/auth/register` | Create new account |
-| POST   | `/auth/login`    | Login and get JWT  |
-| POST   | `/auth/logout`   | Clear session      |
-| GET    | `/auth/me`       | Get current user   |
+#### Messages
 
-### Message Endpoints
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/messages/:roomId` | Get messages for a room |
+| POST | `/api/messages` | Send a new message |
+| PUT | `/api/messages/:id` | Update a message |
+| DELETE | `/api/messages/:id` | Delete a message |
 
-| Method | Endpoint                  | Description               |
-| ------ | ------------------------- | ------------------------- |
-| GET    | `/messages`               | List messages (paginated) |
-| POST   | `/messages`               | Create new message        |
-| DELETE | `/messages/:id`           | Delete message            |
-| POST   | `/messages/:id/reactions` | Add emoji reaction        |
+#### Rooms
 
-### Agent Endpoints
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/rooms` | Get all rooms |
+| POST | `/api/rooms` | Create a new room |
+| DELETE | `/api/rooms/:id` | Delete a room |
 
-| Method | Endpoint      | Description       |
-| ------ | ------------- | ----------------- |
-| GET    | `/agents`     | List all agents   |
-| POST   | `/agents`     | Create new agent  |
-| GET    | `/agents/:id` | Get agent details |
-| PUT    | `/agents/:id` | Update agent      |
-| DELETE | `/agents/:id` | Delete agent      |
+#### RAG
 
-### RAG Endpoints
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/rag/upload` | Upload document |
+| POST | `/api/rag/query` | Query knowledge base |
+| GET | `/api/rag/documents` | List documents |
+| DELETE | `/api/rag/documents/:id` | Delete document |
 
-| Method | Endpoint           | Description                   |
-| ------ | ------------------ | ----------------------------- |
-| POST   | `/rag/upload`      | Upload text content           |
-| POST   | `/rag/upload-file` | Upload file (PDF, DOCX, etc.) |
-| POST   | `/rag/search`      | Semantic search               |
-| GET    | `/rag/files`       | List uploaded documents       |
-| POST   | `/rag/delete`      | Delete document               |
-| GET    | `/rag/stats`       | Get knowledge base stats      |
+### WebSocket Events
 
----
-
-## 🤖 Agent System
-
-### How Agents Work
-
-1. **Polling**: Agent service polls backend for new messages every 1-2 seconds
-2. **Detection**: Checks for @mentions or proactive triggers
-3. **Context Building**: Fetches relevant conversation history
-4. **RAG Integration**: Searches knowledge base if `LOCAL_RAG` tool enabled
-5. **LLM Call**: Sends context to local LLM via Parallax
-6. **Tool Execution**: Executes any tool calls in response
-7. **Response Posting**: Sends final response back to chat
-
-### Multi-Agent Manager
-
-```python
-manager = MultiAgentManager(
-    api_base="http://localhost:4000",
-    agent_token="dev-agent-token",
-    auto_sync=True  # Hot-reload agent configs
-)
-
-manager.login("root@example.com", "password")
-manager.start_all_agents()  # Start all active agents
-
-# Agents run in separate threads
-# Hot-reload: New agents auto-start, deactivated agents auto-stop
-```
-
-### Harmony Format (GPT-OSS)
-
-For GPT-OSS models, OmniMind uses a special "Harmony" format for function calling:
-
-```
-<|channel|>commentary to=WEB_SEARCH
-<|message|>{"query": "latest AI news"}
-```
-
-The `harmony_parser.py` handles parsing and building these special formatted messages.
-
----
-
-## 📚 RAG Knowledge Base
-
-### Architecture
-
-```
-Document Upload → Text Extraction → Chunking → Embedding → ChromaDB
-                         ↓
-                  Query → Embedding → Vector Search → Top-K Results
-```
-
-### Chunking Strategy
-
-- **Chunk Size**: 500 characters (configurable)
-- **Overlap**: 50 characters to preserve context
-- **Boundary Respect**: Tries to split on paragraphs, then sentences
-
-### Supported Formats
-
-| Format     | Extension | Parser      |
-| ---------- | --------- | ----------- |
-| PDF        | `.pdf`    | PyPDF       |
-| Word       | `.docx`   | python-docx |
-| PowerPoint | `.pptx`   | python-pptx |
-| Plain Text | `.txt`    | Native      |
-| Markdown   | `.md`     | Native      |
-
-### Usage in Chat
-
-When an agent has `tools.local_rag` enabled, users can ask questions about uploaded documents:
-
-```
-User: @AI-Assistant What does our company policy say about remote work?
-
-AI-Assistant: Based on the company handbook, remote work is allowed
-up to 3 days per week with manager approval. [Source: company_handbook.pdf]
-```
-
----
-
-## 🔌 MCP Integration
-
-### What is MCP?
-
-Model Context Protocol (MCP) is a standard for extending LLM capabilities with external tools. OmniMind includes a research-focused MCP server.
-
-### Available MCP Tools
-
-| Tool                      | Description             |
-| ------------------------- | ----------------------- |
-| `arxiv_search`            | Search arXiv papers     |
-| `semantic_scholar_search` | Search Semantic Scholar |
-| `get_paper_details`       | Get paper metadata      |
-| `summarize_paper`         | Generate paper summary  |
-| `get_citations`           | Get paper citations     |
-
-### Connecting MCP Server
-
-1. Start the MCP server:
-
-   ```bash
-   python mcp_research_server.py --transport sse --port 3001
-   ```
-
-2. In Agent Config Panel, add MCP connection:
-   - URL: `http://localhost:3001`
-   - Select which tools to enable
-
----
-
-## 🔐 Security
-
-### Authentication
-
-- **JWT Tokens**: 7-day expiry, httpOnly cookies
-- **Password Hashing**: bcrypt with salt rounds
-- **Session Management**: Secure cookie handling
-
-### CORS Configuration
+**Client to Server:**
 
 ```javascript
-// Allowed origins (configurable via CLIENT_ORIGIN env var)
-const CLIENT_ORIGINS = [
-  "http://localhost:5173",
-  "http://localhost:5174",
-  "http://172.20.48.82:5173", // Local network
-];
+socket.emit('join_room', { roomId: 'room-123' });
+socket.emit('send_message', { roomId: 'room-123', content: 'Hello!' });
+socket.emit('typing', { roomId: 'room-123', isTyping: true });
 ```
 
-### Agent API Security
+**Server to Client:**
 
-- **Agent Token**: Required for agent-to-backend communication
-- **Separate Authentication**: Agents use X-Agent-Token header
+```javascript
+socket.on('new_message', (message) => { /* handle */ });
+socket.on('user_typing', ({ userId, isTyping }) => { /* handle */ });
+socket.on('user_presence', ({ userId, status }) => { /* handle */ });
+```
+
+---
+
+## Agent System
+
+### Creating Custom Agents
+
+```python
+from base_agent import BaseAgent
+
+class CustomAgent(BaseAgent):
+    def __init__(self):
+        super().__init__(
+            name="CustomBot",
+            personality="Helpful and friendly",
+            capabilities=["task1", "task2"]
+        )
+    
+    async def process_message(self, message, context):
+        response = await self.generate_response(message, context)
+        return response
+```
+
+---
+
+## RAG Knowledge Base
+
+### Uploading Documents
+
+**Via API:**
+
+```bash
+curl -X POST http://localhost:4001/upload \
+  -F "file=@document.pdf" \
+  -F "collection=default"
+```
+
+**Via Chat:**
+
+Simply ask questions - the RAG system automatically retrieves relevant context:
+
+```
+User: What are the company vacation policies?
+AI: Based on the company handbook, employees receive...
+    [Sources: company_policies.pdf, page 12]
+```
+
+---
+
+## MCP Integration
+
+### Available Tools
+
+| Tool | Description |
+|------|-------------|
+| `web_search` | Search the web using DuckDuckGo |
+| `fetch_url` | Extract content from a URL |
+| `wikipedia` | Search Wikipedia articles |
+
+---
+
+## Security
 
 ### Data Privacy
 
-- **Local Storage**: All data stored in local JSON/ChromaDB files
-- **No Telemetry**: ChromaDB telemetry disabled
-- **No External Calls**: LLM inference runs locally via Parallax
+- All data stored locally in `server/data.json`
+- No external API calls for inference (uses Parallax)
+- Vector embeddings stored in local ChromaDB
+- No telemetry or analytics
+
+### Best Practices
+
+1. **Change default credentials** after first login
+2. **Use HTTPS** in production
+3. **Restrict network access** to trusted IPs
+4. **Regular backups** of `data.json` and `chroma_db/`
 
 ---
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
-### Common Issues
+### Port Already in Use
 
-#### 1. CORS Error: "Access-Control-Allow-Origin"
+```bash
+# Find process using the port (Windows)
+netstat -ano | findstr :4000
 
-**Solution**: Add your IP to `CLIENT_ORIGIN` in `.env` or `server.js`:
+# Kill the process
+taskkill /F /PID <PID>
+```
+
+### CORS Errors
+
+Add your frontend URL to `CLIENT_ORIGINS` in `server/server.js`:
 
 ```javascript
-CLIENT_ORIGIN=http://localhost:5173,http://YOUR_IP:5173
+const CLIENT_ORIGINS = [
+  'http://localhost:5173',
+  'http://your-ip:5173'
+];
 ```
 
-#### 2. "ModuleNotFoundError: No module named 'flask'"
+### ChromaDB Installation Issues
 
-**Solution**: Install dependencies in your virtual environment:
+For Python 3.12+:
 
 ```bash
-.\.venv\Scripts\Activate.ps1
-pip install -r agents/rag/requirements.txt
+pip install chromadb --no-deps
+pip install numpy pydantic tokenizers
 ```
 
-#### 3. Port Already in Use (EADDRINUSE)
+### Parallax Connection Failed
 
-**Solution**: Kill the process using the port:
-
-```bash
-# Windows
-netstat -ano | findstr :4000
-taskkill /F /PID <PID>
-
-# Linux/Mac
-lsof -i :4000
-kill -9 <PID>
-```
-
-#### 4. ChromaDB Build Errors on Python 3.14
-
-**Solution**: Use Python 3.10-3.12 instead:
-
-```bash
-py -3.12 -m venv .venv
-```
-
-#### 5. Agent Not Responding
-
-**Checklist**:
-
-1. Is agent service running? (`python agent_runner.py`)
-2. Is agent status "active" in config?
-3. Is LLM endpoint configured correctly?
-4. Check agent service logs for errors
+1. Ensure Parallax is running: `parallax serve`
+2. Check the port: default is 11434
+3. Test: `curl http://localhost:11434/api/tags`
 
 ---
 
-## 🤝 Contributing
-
-Contributions are welcome! Please:
+## Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Follow existing code style
-4. Test your changes
-5. Submit a pull request
+2. Create feature branch: `git checkout -b feature/my-feature`
+3. Make changes and test: `npm test`
+4. Commit: `git commit -m "Add my feature"`
+5. Push: `git push origin feature/my-feature`
+6. Open a Pull Request
 
 ---
 
-## 📄 License
+## License
 
-MIT License - See [LICENSE](./LICENSE) for details.
+MIT License - see [LICENSE](./LICENSE) for details.
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
-- **[Parallax](https://github.com/GradientHQ/parallax)** - Local LLM inference engine
-- **[ChromaDB](https://www.trychroma.com/)** - Vector database for RAG
-- **[FastMCP](https://github.com/jlowin/fastmcp)** - Model Context Protocol framework
-- **Gradient Network Community** - For the hackathon opportunity
+- [Parallax](https://github.com/GradientHQ/parallax) - Local LLM inference
+- [ChromaDB](https://www.trychroma.com/) - Vector database
+- [Socket.IO](https://socket.io/) - Real-time communication
+- [React](https://react.dev/) - UI framework
 
 ---
 
 <p align="center">
-  <strong>Built with ❤️ for the Gradient Network Community</strong>
+  <strong>Built with privacy in mind</strong>
 </p>
 
 <p align="center">
-  <code>#BuildYourOwnAILab #Parallax #GradientNetwork #PrivacyFirst</code>
+  <a href="https://github.com/ayusingh-54/OmniMind---Comprehensive-Project-Documentation">Star this repo</a> |
+  <a href="https://github.com/ayusingh-54/OmniMind---Comprehensive-Project-Documentation/issues">Report Bug</a> |
+  <a href="https://github.com/ayusingh-54/OmniMind---Comprehensive-Project-Documentation/issues">Request Feature</a>
 </p>
-#   O m n i M i n d - - - C o m p r e h e n s i v e - P r o j e c t - D o c u m e n t a t i o n  
- 
